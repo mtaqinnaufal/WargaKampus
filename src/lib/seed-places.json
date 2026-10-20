@@ -1,0 +1,714 @@
+[
+  {
+    "id": "osm-529588133",
+    "osm_id": "node/529588133",
+    "slug": "rajawali-foto",
+    "name": "Rajawali Foto",
+    "category_slug": "fotokopi",
+    "category_name": "Fotokopi",
+    "description": "Layanan cetak, fotokopi, dan jilid dokumen. Berguna untuk tugas, laporan, dan berkas kuliah.",
+    "address": "Sekitar Duri Kosambi, Cengkareng, Jakarta Barat",
+    "latitude": -6.146783,
+    "longitude": 106.734402,
+    "distance_km": 2.55,
+    "price_min": 500,
+    "price_max": 5000,
+    "price_level": 1,
+    "facilities": [
+      "Cetak",
+      "Fotokopi",
+      "Jilid"
+    ],
+    "open_hours": {
+      "note": "Jam buka belum diverifikasi"
+    },
+    "rating_avg": 4.8,
+    "review_count": 6,
+    "source": "osm",
+    "tone": "purple"
+  },
+  {
+    "id": "osm-13594385084",
+    "osm_id": "node/13594385084",
+    "slug": "pyon-prints",
+    "name": "Pyon Prints",
+    "category_slug": "fotokopi",
+    "category_name": "Fotokopi",
+    "description": "Layanan cetak, fotokopi, dan jilid dokumen. Berguna untuk tugas, laporan, dan berkas kuliah.",
+    "address": "Sekitar Duri Kosambi, Cengkareng, Jakarta Barat",
+    "latitude": -6.136712,
+    "longitude": 106.727557,
+    "distance_km": 3.51,
+    "price_min": 500,
+    "price_max": 5000,
+    "price_level": 1,
+    "facilities": [
+      "Cetak",
+      "Fotokopi",
+      "Jilid"
+    ],
+    "open_hours": {
+      "note": "Jam buka belum diverifikasi"
+    },
+    "rating_avg": 4.6,
+    "review_count": 4,
+    "source": "osm",
+    "tone": "purple"
+  },
+  {
+    "id": "osm-6221279197",
+    "osm_id": "node/6221279197",
+    "slug": "snapy",
+    "name": "Snapy",
+    "category_slug": "fotokopi",
+    "category_name": "Fotokopi",
+    "description": "Layanan cetak, fotokopi, dan jilid dokumen. Berguna untuk tugas, laporan, dan berkas kuliah.",
+    "address": "Sekitar Duri Kosambi, Cengkareng, Jakarta Barat",
+    "latitude": -6.169659,
+    "longitude": 106.766183,
+    "distance_km": 4.4,
+    "price_min": 500,
+    "price_max": 5000,
+    "price_level": 1,
+    "facilities": [
+      "Cetak",
+      "Fotokopi",
+      "Jilid"
+    ],
+    "open_hours": {
+      "note": "Jam buka belum diverifikasi"
+    },
+    "rating_avg": 4.5,
+    "review_count": 5,
+    "source": "osm",
+    "tone": "purple"
+  },
+  {
+    "id": "osm-5423710922",
+    "osm_id": "node/5423710922",
+    "slug": "aura-laundry",
+    "name": "Aura Laundry",
+    "category_slug": "laundry",
+    "category_name": "Laundry",
+    "description": "Laundry kiloan di sekitar Cengkareng. Cek harga per kilo, estimasi selesai, dan layanan antar-jemput.",
+    "address": "Sekitar Duri Kosambi, Cengkareng, Jakarta Barat",
+    "latitude": -6.147631,
+    "longitude": 106.731505,
+    "distance_km": 2.36,
+    "price_min": 6000,
+    "price_max": 12000,
+    "price_level": 1,
+    "facilities": [
+      "Kiloan",
+      "Express"
+    ],
+    "open_hours": {
+      "note": "Jam buka belum diverifikasi"
+    },
+    "rating_avg": 4.4,
+    "review_count": 8,
+    "source": "osm",
+    "tone": "teal"
+  },
+  {
+    "id": "osm-5395340125",
+    "osm_id": "node/5395340125",
+    "slug": "sanggar-laundry",
+    "name": "Sanggar Laundry",
+    "category_slug": "laundry",
+    "category_name": "Laundry",
+    "description": "Laundry kiloan di sekitar Cengkareng. Cek harga per kilo, estimasi selesai, dan layanan antar-jemput.",
+    "address": "Sekitar Duri Kosambi, Cengkareng, Jakarta Barat",
+    "latitude": -6.147348,
+    "longitude": 106.730452,
+    "distance_km": 2.37,
+    "price_min": 6000,
+    "price_max": 12000,
+    "price_level": 1,
+    "facilities": [
+      "Kiloan",
+      "Express"
+    ],
+    "open_hours": {
+      "note": "Jam buka belum diverifikasi"
+    },
+    "rating_avg": 4.7,
+    "review_count": 9,
+    "source": "osm",
+    "tone": "teal"
+  },
+  {
+    "id": "osm-529588132",
+    "osm_id": "node/529588132",
+    "slug": "laundry-mart",
+    "name": "Laundry Mart",
+    "category_slug": "laundry",
+    "category_name": "Laundry",
+    "description": "Laundry kiloan di sekitar Cengkareng. Cek harga per kilo, estimasi selesai, dan layanan antar-jemput.",
+    "address": "Sekitar Duri Kosambi, Cengkareng, Jakarta Barat",
+    "latitude": -6.146852,
+    "longitude": 106.734402,
+    "distance_km": 2.54,
+    "price_min": 6000,
+    "price_max": 12000,
+    "price_level": 1,
+    "facilities": [
+      "Kiloan",
+      "Express"
+    ],
+    "open_hours": {
+      "note": "Jam buka belum diverifikasi"
+    },
+    "rating_avg": 4.5,
+    "review_count": 14,
+    "source": "osm",
+    "tone": "teal"
+  },
+  {
+    "id": "osm-5416481321",
+    "osm_id": "node/5416481321",
+    "slug": "asya-laundry",
+    "name": "Asya Laundry",
+    "category_slug": "laundry",
+    "category_name": "Laundry",
+    "description": "Laundry kiloan di sekitar Cengkareng. Cek harga per kilo, estimasi selesai, dan layanan antar-jemput.",
+    "address": "Sekitar Duri Kosambi, Cengkareng, Jakarta Barat",
+    "latitude": -6.146138,
+    "longitude": 106.732649,
+    "distance_km": 2.55,
+    "price_min": 6000,
+    "price_max": 12000,
+    "price_level": 1,
+    "facilities": [
+      "Kiloan",
+      "Express"
+    ],
+    "open_hours": {
+      "note": "Jam buka belum diverifikasi"
+    },
+    "rating_avg": 4.6,
+    "review_count": 11,
+    "source": "osm",
+    "tone": "teal"
+  },
+  {
+    "id": "osm-526112189",
+    "osm_id": "way/526112189",
+    "slug": "rumah-makan-kampung-kecil-duri-kosambi",
+    "name": "Rumah Makan Kampung Kecil Duri Kosambi",
+    "category_slug": "makan",
+    "category_name": "Makan",
+    "description": "Warung, restoran, atau tempat makan cepat di sekitar kampus. Cocok untuk makan sebelum atau sesudah kelas.",
+    "address": "Sekitar Duri Kosambi, Cengkareng, Jakarta Barat",
+    "latitude": -6.167338,
+    "longitude": 106.724169,
+    "distance_km": 0.26,
+    "price_min": 10000,
+    "price_max": 30000,
+    "price_level": 1,
+    "facilities": [
+      "Makan di tempat",
+      "Parkir"
+    ],
+    "open_hours": {
+      "note": "Jam buka belum diverifikasi"
+    },
+    "rating_avg": 4.5,
+    "review_count": 27,
+    "source": "osm",
+    "tone": "red"
+  },
+  {
+    "id": "osm-9726368535",
+    "osm_id": "node/9726368535",
+    "slug": "kfc",
+    "name": "KFC",
+    "category_slug": "makan",
+    "category_name": "Makan",
+    "description": "Warung, restoran, atau tempat makan cepat di sekitar kampus. Cocok untuk makan sebelum atau sesudah kelas. Jenis masakan: chicken.",
+    "address": "Sekitar Duri Kosambi, Cengkareng, Jakarta Barat",
+    "latitude": -6.164277,
+    "longitude": 106.725066,
+    "distance_km": 0.46,
+    "price_min": 10000,
+    "price_max": 30000,
+    "price_level": 1,
+    "facilities": [
+      "Makan di tempat",
+      "Parkir"
+    ],
+    "open_hours": {
+      "note": "Jam buka belum diverifikasi"
+    },
+    "rating_avg": 4.3,
+    "review_count": 31,
+    "source": "osm",
+    "tone": "red"
+  },
+  {
+    "id": "osm-5315749035",
+    "osm_id": "node/5315749035",
+    "slug": "donnie-seafood",
+    "name": "Donnie Seafood",
+    "category_slug": "makan",
+    "category_name": "Makan",
+    "description": "Warung, restoran, atau tempat makan cepat di sekitar kampus. Cocok untuk makan sebelum atau sesudah kelas.",
+    "address": "Jalan Taman Semanan Indah",
+    "latitude": -6.163422,
+    "longitude": 106.724095,
+    "distance_km": 0.59,
+    "price_min": 10000,
+    "price_max": 30000,
+    "price_level": 1,
+    "facilities": [
+      "Makan di tempat",
+      "Parkir"
+    ],
+    "open_hours": {
+      "note": "Jam buka belum diverifikasi"
+    },
+    "rating_avg": 4.7,
+    "review_count": 11,
+    "source": "osm",
+    "tone": "red"
+  },
+  {
+    "id": "osm-9755068451",
+    "osm_id": "node/9755068451",
+    "slug": "ayam-keprabon-express-semanan",
+    "name": "Ayam Keprabon Express - Semanan",
+    "category_slug": "makan",
+    "category_name": "Makan",
+    "description": "Warung, restoran, atau tempat makan cepat di sekitar kampus. Cocok untuk makan sebelum atau sesudah kelas.",
+    "address": "Sekitar Duri Kosambi, Cengkareng, Jakarta Barat",
+    "latitude": -6.163368,
+    "longitude": 106.723947,
+    "distance_km": 0.6,
+    "price_min": 10000,
+    "price_max": 30000,
+    "price_level": 1,
+    "facilities": [
+      "Makan di tempat",
+      "Parkir"
+    ],
+    "open_hours": {
+      "note": "Jam buka belum diverifikasi"
+    },
+    "rating_avg": 4.8,
+    "review_count": 14,
+    "source": "osm",
+    "tone": "red"
+  },
+  {
+    "id": "osm-12271486110",
+    "osm_id": "node/12271486110",
+    "slug": "mie-ayam-pak-tarsum",
+    "name": "Mie Ayam Pak Tarsum",
+    "category_slug": "makan",
+    "category_name": "Makan",
+    "description": "Warung, restoran, atau tempat makan cepat di sekitar kampus. Cocok untuk makan sebelum atau sesudah kelas. Jenis masakan: indonesian.",
+    "address": "Jalan Rawa Buaya, RT 02 RW 001",
+    "latitude": -6.157121,
+    "longitude": 106.730831,
+    "distance_km": 1.33,
+    "price_min": 10000,
+    "price_max": 30000,
+    "price_level": 1,
+    "facilities": [
+      "Makan di tempat",
+      "Parkir"
+    ],
+    "open_hours": {
+      "note": "Jam buka belum diverifikasi"
+    },
+    "rating_avg": 4.7,
+    "review_count": 16,
+    "source": "osm",
+    "tone": "red"
+  },
+  {
+    "id": "osm-11444156471",
+    "osm_id": "node/11444156471",
+    "slug": "warteg-bumiayu",
+    "name": "Warteg Bumiayu",
+    "category_slug": "makan",
+    "category_name": "Makan",
+    "description": "Warung, restoran, atau tempat makan cepat di sekitar kampus. Cocok untuk makan sebelum atau sesudah kelas. Jenis masakan: indonesian.",
+    "address": "Jalan Darma Wanita IV",
+    "latitude": -6.156188,
+    "longitude": 106.733904,
+    "distance_km": 1.58,
+    "price_min": 10000,
+    "price_max": 30000,
+    "price_level": 1,
+    "facilities": [
+      "Makan di tempat",
+      "Parkir"
+    ],
+    "open_hours": {
+      "note": "Jam buka belum diverifikasi"
+    },
+    "rating_avg": 4.6,
+    "review_count": 12,
+    "source": "osm",
+    "tone": "red"
+  },
+  {
+    "id": "osm-12271173801",
+    "osm_id": "node/12271173801",
+    "slug": "tenanan-fried-chicken",
+    "name": "Tenanan Fried Chicken",
+    "category_slug": "makan",
+    "category_name": "Makan",
+    "description": "Warung, restoran, atau tempat makan cepat di sekitar kampus. Cocok untuk makan sebelum atau sesudah kelas. Jenis masakan: indonesian.",
+    "address": "Jalan Darma Wanita IV",
+    "latitude": -6.156183,
+    "longitude": 106.734385,
+    "distance_km": 1.61,
+    "price_min": 10000,
+    "price_max": 30000,
+    "price_level": 1,
+    "facilities": [
+      "Makan di tempat",
+      "Parkir"
+    ],
+    "open_hours": {
+      "note": "Jam buka belum diverifikasi"
+    },
+    "rating_avg": 4.4,
+    "review_count": 8,
+    "source": "osm",
+    "tone": "red"
+  },
+  {
+    "id": "osm-10588199686",
+    "osm_id": "node/10588199686",
+    "slug": "warung-sate-solo-pak-man",
+    "name": "Warung Sate Solo pak Man",
+    "category_slug": "makan",
+    "category_name": "Makan",
+    "description": "Warung, restoran, atau tempat makan cepat di sekitar kampus. Cocok untuk makan sebelum atau sesudah kelas. Jenis masakan: steak_house.",
+    "address": "Jalan Masjid Nurul Huda",
+    "latitude": -6.151888,
+    "longitude": 106.730701,
+    "distance_km": 1.88,
+    "price_min": 10000,
+    "price_max": 30000,
+    "price_level": 1,
+    "facilities": [
+      "Makan di tempat",
+      "Parkir"
+    ],
+    "open_hours": {
+      "note": "Jam buka belum diverifikasi"
+    },
+    "rating_avg": 4.5,
+    "review_count": 21,
+    "source": "osm",
+    "tone": "red"
+  },
+  {
+    "id": "osm-5350850523",
+    "osm_id": "node/5350850523",
+    "slug": "bubur-ayam-cengkareng",
+    "name": "Bubur Ayam Cengkareng",
+    "category_slug": "makan",
+    "category_name": "Makan",
+    "description": "Warung, restoran, atau tempat makan cepat di sekitar kampus. Cocok untuk makan sebelum atau sesudah kelas. Jenis masakan: chicken porridge.",
+    "address": "Jalan Nusa Indah I",
+    "latitude": -6.151317,
+    "longitude": 106.731043,
+    "distance_km": 1.95,
+    "price_min": 10000,
+    "price_max": 30000,
+    "price_level": 1,
+    "facilities": [
+      "Makan di tempat",
+      "Parkir"
+    ],
+    "open_hours": {
+      "note": "Jam buka belum diverifikasi"
+    },
+    "rating_avg": 4.4,
+    "review_count": 9,
+    "source": "osm",
+    "tone": "red"
+  },
+  {
+    "id": "osm-5315749024",
+    "osm_id": "node/5315749024",
+    "slug": "bakso-cah-solo",
+    "name": "Bakso Cah Solo",
+    "category_slug": "makan",
+    "category_name": "Makan",
+    "description": "Warung, restoran, atau tempat makan cepat di sekitar kampus. Cocok untuk makan sebelum atau sesudah kelas.",
+    "address": "Jalan Bangun Nusa III",
+    "latitude": -6.15096,
+    "longitude": 106.730799,
+    "distance_km": 1.98,
+    "price_min": 10000,
+    "price_max": 30000,
+    "price_level": 1,
+    "facilities": [
+      "Makan di tempat",
+      "Parkir"
+    ],
+    "open_hours": {
+      "note": "Jam buka belum diverifikasi"
+    },
+    "rating_avg": 4.6,
+    "review_count": 18,
+    "source": "osm",
+    "tone": "red"
+  },
+  {
+    "id": "osm-5315753121",
+    "osm_id": "node/5315753121",
+    "slug": "pecel-lele-lamongan",
+    "name": "Pecel Lele Lamongan",
+    "category_slug": "makan",
+    "category_name": "Makan",
+    "description": "Warung, restoran, atau tempat makan cepat di sekitar kampus. Cocok untuk makan sebelum atau sesudah kelas.",
+    "address": "Jalan Bangun Nusa Raya",
+    "latitude": -6.151142,
+    "longitude": 106.731211,
+    "distance_km": 1.98,
+    "price_min": 10000,
+    "price_max": 30000,
+    "price_level": 1,
+    "facilities": [
+      "Makan di tempat",
+      "Parkir"
+    ],
+    "open_hours": {
+      "note": "Mo-Su 18:00-23:00"
+    },
+    "rating_avg": 4.5,
+    "review_count": 24,
+    "source": "osm",
+    "tone": "red"
+  },
+  {
+    "id": "osm-874470698",
+    "osm_id": "way/874470698",
+    "slug": "talaga-sampireun-puri",
+    "name": "Talaga Sampireun Puri",
+    "category_slug": "nongkrong",
+    "category_name": "Nongkrong",
+    "description": "Tempat makan atau kafe yang bisa dipakai untuk obrolan santai dan kerja kelompok. Jenis masakan: indonesian.",
+    "address": "Jalan Tol Lingkar Luar Jakarta",
+    "latitude": -6.168759,
+    "longitude": 106.728495,
+    "distance_km": 0.24,
+    "price_min": 15000,
+    "price_max": 50000,
+    "price_level": 2,
+    "facilities": [
+      "WiFi",
+      "Colokan",
+      "Parkir"
+    ],
+    "open_hours": {
+      "note": "Jam buka belum diverifikasi"
+    },
+    "rating_avg": 4.7,
+    "review_count": 22,
+    "source": "osm",
+    "tone": "yellow"
+  },
+  {
+    "id": "osm-6691351785",
+    "osm_id": "node/6691351785",
+    "slug": "kong-utjok",
+    "name": "Kong Utjok",
+    "category_slug": "nongkrong",
+    "category_name": "Nongkrong",
+    "description": "Tempat makan atau kafe yang bisa dipakai untuk obrolan santai dan kerja kelompok.",
+    "address": "Jalan Masjid Nurul Huda",
+    "latitude": -6.15439,
+    "longitude": 106.731008,
+    "distance_km": 1.62,
+    "price_min": 15000,
+    "price_max": 50000,
+    "price_level": 2,
+    "facilities": [
+      "WiFi",
+      "Colokan",
+      "Parkir"
+    ],
+    "open_hours": {
+      "note": "Jam buka belum diverifikasi"
+    },
+    "rating_avg": 4.6,
+    "review_count": 13,
+    "source": "osm",
+    "tone": "yellow"
+  },
+  {
+    "id": "osm-521719381",
+    "osm_id": "way/521719381",
+    "slug": "ropang-stop",
+    "name": "Ropang Stop",
+    "category_slug": "nongkrong",
+    "category_name": "Nongkrong",
+    "description": "Tempat makan atau kafe yang bisa dipakai untuk obrolan santai dan kerja kelompok. Jenis masakan: coffee_shop;ice_cream;snack.",
+    "address": "Jalan Kedelai Raya, 19",
+    "latitude": -6.16254,
+    "longitude": 106.742151,
+    "distance_km": 1.86,
+    "price_min": 15000,
+    "price_max": 50000,
+    "price_level": 2,
+    "facilities": [
+      "WiFi",
+      "Colokan",
+      "Parkir"
+    ],
+    "open_hours": {
+      "note": "Mo-Su 16:00-22:00"
+    },
+    "rating_avg": 4.4,
+    "review_count": 19,
+    "source": "osm",
+    "tone": "yellow"
+  },
+  {
+    "id": "osm-1047068616",
+    "osm_id": "way/1047068616",
+    "slug": "mcdonald-s",
+    "name": "McDonald's",
+    "category_slug": "nugas",
+    "category_name": "Nugas",
+    "description": "Kafe atau restoran yang bisa dipakai untuk mengerjakan tugas. Cek ketersediaan WiFi dan colokan sebelum datang. Jenis masakan: burger.",
+    "address": "Jalan Lingkar Luar Barat",
+    "latitude": -6.174092,
+    "longitude": 106.729036,
+    "distance_km": 0.71,
+    "price_min": 20000,
+    "price_max": 60000,
+    "price_level": 2,
+    "facilities": [
+      "WiFi",
+      "Colokan",
+      "AC",
+      "Parkir"
+    ],
+    "open_hours": {
+      "note": "24/7"
+    },
+    "rating_avg": 4.3,
+    "review_count": 25,
+    "source": "osm",
+    "tone": "blue"
+  },
+  {
+    "id": "osm-9729403367",
+    "osm_id": "node/9729403367",
+    "slug": "harris-cafe-harris-suites-puri-mansion",
+    "name": "Harris Cafe - Harris Suites Puri Mansion",
+    "category_slug": "nugas",
+    "category_name": "Nugas",
+    "description": "Kafe atau restoran yang bisa dipakai untuk mengerjakan tugas. Cek ketersediaan WiFi dan colokan sebelum datang.",
+    "address": "Sekitar Duri Kosambi, Cengkareng, Jakarta Barat",
+    "latitude": -6.180028,
+    "longitude": 106.724535,
+    "distance_km": 1.33,
+    "price_min": 20000,
+    "price_max": 60000,
+    "price_level": 2,
+    "facilities": [
+      "WiFi",
+      "Colokan",
+      "AC",
+      "Parkir"
+    ],
+    "open_hours": {
+      "note": "Jam buka belum diverifikasi"
+    },
+    "rating_avg": 4.5,
+    "review_count": 10,
+    "source": "osm",
+    "tone": "blue"
+  },
+  {
+    "id": "osm-514735120",
+    "osm_id": "way/514735120",
+    "slug": "super-indo",
+    "name": "Super Indo",
+    "category_slug": "sembako",
+    "category_name": "Sembako",
+    "description": "Minimarket atau toko kebutuhan harian di sekitar kampus. Berguna untuk belanja cepat.",
+    "address": "Jalan Raya Duri Kosambi",
+    "latitude": -6.167063,
+    "longitude": 106.724654,
+    "distance_km": 0.23,
+    "price_min": 5000,
+    "price_max": 100000,
+    "price_level": 2,
+    "facilities": [
+      "Parkir",
+      "Buka hingga malam"
+    ],
+    "open_hours": {
+      "note": "Jam buka belum diverifikasi"
+    },
+    "rating_avg": 4.4,
+    "review_count": 12,
+    "source": "osm",
+    "tone": "green"
+  },
+  {
+    "id": "osm-12271466901",
+    "osm_id": "node/12271466901",
+    "slug": "alfamart",
+    "name": "Alfamart",
+    "category_slug": "sembako",
+    "category_name": "Sembako",
+    "description": "Minimarket atau toko kebutuhan harian di sekitar kampus. Berguna untuk belanja cepat.",
+    "address": "Jalan Rawa Buaya",
+    "latitude": -6.155882,
+    "longitude": 106.731027,
+    "distance_km": 1.47,
+    "price_min": 5000,
+    "price_max": 100000,
+    "price_level": 2,
+    "facilities": [
+      "Parkir",
+      "Buka hingga malam"
+    ],
+    "open_hours": {
+      "note": "Mo-Su 07:00-22:00"
+    },
+    "rating_avg": 4.5,
+    "review_count": 15,
+    "source": "osm",
+    "tone": "green"
+  },
+  {
+    "id": "osm-5055940543",
+    "osm_id": "node/5055940543",
+    "slug": "spar",
+    "name": "Spar",
+    "category_slug": "sembako",
+    "category_name": "Sembako",
+    "description": "Minimarket atau toko kebutuhan harian di sekitar kampus. Berguna untuk belanja cepat.",
+    "address": "Jalan Lingkar Barat",
+    "latitude": -6.152886,
+    "longitude": 106.728358,
+    "distance_km": 1.72,
+    "price_min": 5000,
+    "price_max": 100000,
+    "price_level": 2,
+    "facilities": [
+      "Parkir",
+      "Buka hingga malam"
+    ],
+    "open_hours": {
+      "note": "Jam buka belum diverifikasi"
+    },
+    "rating_avg": 4.6,
+    "review_count": 7,
+    "source": "osm",
+    "tone": "green"
+  }
+]
