@@ -9,11 +9,11 @@ import {
   Users,
 } from "lucide-react";
 import { PlaceMap } from "@/components/map/place-map";
+import { AppTopBar } from "@/components/app-shell/app-top-bar";
 import { LandingFeed } from "@/components/feed/landing-feed";
 import { PlaceCarousel } from "@/components/places/place-carousel";
 import { Reveal } from "@/components/reveal";
 import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
 import { Badge } from "@/components/ui/badge";
 import { buttonClass } from "@/components/ui/button";
 import { StarRating } from "@/components/ui/star-rating";
@@ -55,7 +55,11 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-dvh bg-paper">
-      <SiteHeader profile={current.profile} isDemo={current.isDemo} />
+      <AppTopBar
+        profile={current.profile}
+        campus={campus}
+        isDemo={current.isDemo}
+      />
 
       <main id="main">
         <section className="container-page grid gap-10 py-10 lg:grid-cols-[1.02fr_0.98fr] lg:items-center lg:py-16">
@@ -72,7 +76,7 @@ export default async function HomePage() {
             </div>
 
             <h1 className="mt-5 max-w-[15ch] font-display text-[clamp(3.2rem,7.4vw,6.4rem)] font-bold leading-[0.9] tracking-[-0.055em] text-ink">
-              Ubah Tempat Sebelum Berangkat
+              Tahu Tempat Sebelum Berangkat
             </h1>
 
             <p className="mt-6 max-w-[54ch] text-lg leading-relaxed text-ink-soft">
@@ -140,59 +144,74 @@ export default async function HomePage() {
           </div>
 
           <div className="reveal reveal-delay-2">
-            <div className="overflow-hidden rounded-md border border-line bg-surface shadow-lift">
-              <div className="flex items-center justify-between border-b border-line px-4 py-3">
-                <span className="font-mono text-[11px] text-ink-soft">Peta sekitar ITPLN</span>
-                <Badge variant="signal">Radius 5 km</Badge>
-              </div>
-
-              <div className="relative">
-                <PlaceMap
-                  places={places.slice(0, 8)}
-                  interactive={false}
-                  fitToPlaces
-                  height="h-[360px] lg:h-[510px]"
-                  ariaLabel="Pratinjau peta tempat di sekitar Institut Teknologi PLN"
-                />
-
-                {featured ? (
-                  <Link
-                    href={`/tempat/${featured.slug}`}
-                    className="absolute bottom-4 left-4 right-4 z-[500] rounded-md border border-line bg-surface/95 p-3 shadow-lift backdrop-blur sm:right-auto sm:w-[300px]"
-                  >
-                    <div className="flex items-center gap-2">
-                      <span className="h-1.5 w-1.5 rounded-full bg-signal" aria-hidden="true" />
-                      <span className="font-mono text-[10px] text-muted">
-                        {featured.category.name}
+            <div className="relative">
+              <div
+                className="pointer-events-none absolute -inset-3 rounded-[26px] bg-signal/10 blur-2xl animate-pulse motion-reduce:animate-none"
+                aria-hidden="true"
+              />
+              <div className="relative rounded-xl border border-line-strong/70 bg-surface/70 p-2 shadow-lift transition-transform duration-500 ease-out hover:-translate-y-1">
+                <div className="overflow-hidden rounded-lg border border-line bg-surface">
+                  <div className="flex items-center justify-between border-b border-line px-4 py-3">
+                    <span className="inline-flex items-center gap-2 font-mono text-[11px] text-ink-soft">
+                      <span className="relative flex h-1.5 w-1.5">
+                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-live opacity-50 motion-reduce:animate-none" />
+                        <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-live" />
                       </span>
-                      <span className="ml-auto font-mono text-[10px] text-muted">
-                        {featured.distance_km?.toFixed(1)} km
-                      </span>
-                    </div>
-                    <p className="mt-1 font-display text-lg font-semibold leading-tight">
-                      {featured.name}
-                    </p>
-                    <div className="mt-1 flex flex-wrap items-center gap-2">
-                      <StarRating rating={featured.rating_avg} count={featured.review_count} />
-                      <span className="text-[11px] text-muted">
-                        {formatPriceRange(featured.price_min, featured.price_max)}
-                      </span>
-                    </div>
-                    <span className="mt-2 inline-flex items-center gap-1 text-xs font-semibold">
-                      Lihat tempat
-                      <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                      Peta sekitar ITPLN
                     </span>
-                  </Link>
-                ) : null}
-              </div>
+                    <Badge variant="signal">Radius 5 km</Badge>
+                  </div>
 
-              <div className="flex flex-wrap items-center justify-between gap-2 border-t border-line px-4 py-2">
-                <span className="font-mono text-[10px] text-muted">
-                  {SITE.osmAttribution}
-                </span>
-                <span className="text-[10px] text-muted">
-                  Pin bisa dipakai untuk melihat detail.
-                </span>
+                  <div className="relative">
+                    <PlaceMap
+                      places={places.slice(0, 8)}
+                      interactive={false}
+                      fitToPlaces
+                      height="h-[320px] sm:h-[360px] lg:h-[clamp(300px,42vh,440px)]"
+                      className="rounded-none border-0"
+                      ariaLabel="Pratinjau peta tempat di sekitar Institut Teknologi PLN"
+                    />
+
+                    {featured ? (
+                      <Link
+                        href={`/tempat/${featured.slug}`}
+                        className="absolute bottom-4 left-4 right-4 z-[500] rounded-md border border-line bg-surface/95 p-3 shadow-lift backdrop-blur sm:right-auto sm:w-[300px]"
+                      >
+                        <div className="flex items-center gap-2">
+                          <span className="h-1.5 w-1.5 rounded-full bg-signal" aria-hidden="true" />
+                          <span className="font-mono text-[10px] text-muted">
+                            {featured.category.name}
+                          </span>
+                          <span className="ml-auto font-mono text-[10px] text-muted">
+                            {featured.distance_km?.toFixed(1)} km
+                          </span>
+                        </div>
+                        <p className="mt-1 font-display text-lg font-semibold leading-tight">
+                          {featured.name}
+                        </p>
+                        <div className="mt-1 flex flex-wrap items-center gap-2">
+                          <StarRating rating={featured.rating_avg} count={featured.review_count} />
+                          <span className="text-[11px] text-muted">
+                            {formatPriceRange(featured.price_min, featured.price_max)}
+                          </span>
+                        </div>
+                        <span className="mt-2 inline-flex items-center gap-1 text-xs font-semibold">
+                          Lihat tempat
+                          <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                        </span>
+                      </Link>
+                    ) : null}
+                  </div>
+
+                  <div className="flex flex-wrap items-center justify-between gap-2 border-t border-line px-4 py-2">
+                    <span className="font-mono text-[10px] text-muted">
+                      {SITE.osmAttribution}
+                    </span>
+                    <span className="text-[10px] text-muted">
+                      Pin bisa dipakai untuk melihat detail.
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

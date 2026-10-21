@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Bookmark, Map, Newspaper, ShieldCheck, User } from "lucide-react";
+import { Bookmark, House, Map, Newspaper, ShieldCheck, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const baseItems = [
+  { href: "/", label: "Home", icon: House },
   { href: "/jelajah", label: "Jelajah", icon: Map },
   { href: "/linimasa", label: "Linimasa", icon: Newspaper },
   { href: "/simpan", label: "Simpan", icon: Bookmark },

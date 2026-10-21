@@ -35,7 +35,7 @@ function createIcon(place: Place, active: boolean) {
     : "";
   return L.divIcon({
     className: "",
-    html: `<div class="kp-pin${active ? " kp-pin--active" : ""}" style="--pin:${categoryColor(place.category.slug)}">${label}</div>`,
+    html: `<div class="kp-pin pin-drop${active ? " kp-pin--active" : ""}" style="--pin:${categoryColor(place.category.slug)}">${label}</div>`,
     iconSize: [30, 38],
     iconAnchor: [15, 38],
     popupAnchor: [0, -34],

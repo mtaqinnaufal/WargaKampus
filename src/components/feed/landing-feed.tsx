@@ -1,6 +1,16 @@
-import Image from "next/image";
+"use client";
+
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Heart, MessageCircle } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { MouseEvent as ReactMouseEvent, PointerEvent as ReactPointerEvent } from "react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
+  Heart,
+  MessageCircle,
+} from "lucide-react";
 import { Reveal } from "@/components/reveal";
 import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -15,6 +25,77 @@ export function LandingFeed({
   posts: Post[];
   contributors: number;
 }) {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const dragRef = useRef({ active: false, startX: 0, scrollLeft: 0, moved: false });
+  const [dragging, setDragging] = useState(false);
+  const [edges, setEdges] = useState({ start: true, end: false });
+
+  const updateEdges = useCallback(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    setEdges({
+      start: track.scrollLeft <= 4,
+      end: track.scrollLeft + track.clientWidth >= track.scrollWidth - 4,
+    });
+  }, []);
+
+  useEffect(() => {
+    updateEdges();
+    const onResize = () => updateEdges();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [posts.length, updateEdges]);
+
+  function scrollByCards(direction: number) {
+    const track = trackRef.current;
+    if (!track) return;
+    const card = track.querySelector<HTMLElement>("[data-feed-card]");
+    const width = card ? card.offsetWidth + 16 : 416;
+    const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ? "auto"
+      : "smooth";
+    track.scrollBy({ left: direction * width, behavior });
+  }
+
+  function handlePointerDown(event: ReactPointerEvent<HTMLDivElement>) {
+    if (event.pointerType === "touch") return;
+    const track = trackRef.current;
+    if (!track) return;
+    dragRef.current = {
+      active: true,
+      startX: event.clientX,
+      scrollLeft: track.scrollLeft,
+      moved: false,
+    };
+    setDragging(true);
+    track.setPointerCapture(event.pointerId);
+  }
+
+  function handlePointerMove(event: ReactPointerEvent<HTMLDivElement>) {
+    const track = trackRef.current;
+    if (!track || !dragRef.current.active) return;
+    const delta = event.clientX - dragRef.current.startX;
+    if (Math.abs(delta) > 5) dragRef.current.moved = true;
+    track.scrollLeft = dragRef.current.scrollLeft - delta;
+  }
+
+  function endDrag(event: ReactPointerEvent<HTMLDivElement>) {
+    const track = trackRef.current;
+    if (!track || !dragRef.current.active) return;
+    dragRef.current.active = false;
+    setDragging(false);
+    if (track.hasPointerCapture(event.pointerId)) {
+      track.releasePointerCapture(event.pointerId);
+    }
+  }
+
+  function handleClickCapture(event: ReactMouseEvent<HTMLDivElement>) {
+    if (!dragRef.current.moved) return;
+    event.preventDefault();
+    event.stopPropagation();
+    dragRef.current.moved = false;
+  }
+
   return (
     <section className="relative overflow-hidden border-y border-line bg-[linear-gradient(180deg,var(--color-surface)_0%,var(--color-paper)_100%)]">
       <div
@@ -26,7 +107,7 @@ export function LandingFeed({
         aria-hidden="true"
       />
 
-      <div className="container-page relative grid gap-8 py-12 lg:grid-cols-[0.72fr_1.28fr] lg:gap-14 lg:py-16">
+      <div className="container-page relative grid gap-8 py-12 lg:grid-cols-[0.72fr_1.28fr] lg:items-center lg:gap-14 lg:py-16">
         <Reveal>
           <div>
             <span className="inline-flex items-center gap-2 rounded-full border border-live/20 bg-live/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-live">
@@ -73,58 +154,81 @@ export function LandingFeed({
           </div>
         </Reveal>
 
-        <div className="space-y-4">
-          {posts.length > 0 ? (
-            posts.slice(0, 3).map((post, index) => (
-              <Reveal key={post.id} delay={index * 90}>
-                <LandingPostCard post={post} lead={index === 0} />
-              </Reveal>
-            ))
-          ) : (
-            <div className="rounded-lg border border-dashed border-line-strong bg-surface/65 px-6 py-10 text-center text-sm text-muted">
-              Belum ada cerita. Jadi yang pertama menulis di linimasa.
-            </div>
-          )}
-        </div>
+        <Reveal delay={100} className="min-w-0">
+          <div>
+            {posts.length > 0 ? (
+              <>
+                <div className="flex items-center justify-between gap-3">
+                  <p className="font-mono text-[10px] text-muted">
+                    {posts.length} cerita · geser untuk lihat lainnya
+                  </p>
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={() => scrollByCards(-1)}
+                      disabled={edges.start}
+                      aria-label="Geser cerita ke kiri"
+                      className="grid h-9 w-9 place-items-center rounded-sm border border-line bg-surface text-ink transition-colors hover:border-ink disabled:cursor-not-allowed disabled:opacity-35"
+                    >
+                      <ChevronLeft className="h-4 w-4" aria-hidden="true" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => scrollByCards(1)}
+                      disabled={edges.end}
+                      aria-label="Geser cerita ke kanan"
+                      className="grid h-9 w-9 place-items-center rounded-sm border border-line bg-surface text-ink transition-colors hover:border-ink disabled:cursor-not-allowed disabled:opacity-35"
+                    >
+                      <ChevronRight className="h-4 w-4" aria-hidden="true" />
+                    </button>
+                  </div>
+                </div>
+
+                <div
+                  ref={trackRef}
+                  role="group"
+                  tabIndex={0}
+                  aria-label="Daftar cerita, dapat digeser ke kiri dan kanan"
+                  onScroll={updateEdges}
+                  onPointerDown={handlePointerDown}
+                  onPointerMove={handlePointerMove}
+                  onPointerUp={endDrag}
+                  onPointerCancel={endDrag}
+                  onClickCapture={handleClickCapture}
+                  style={{ scrollSnapType: dragging ? "none" : undefined }}
+                  className={cn(
+                    "no-scrollbar mt-3 flex snap-x snap-mandatory gap-4 overflow-x-auto px-1 pb-4 pt-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal/70",
+                    dragging ? "cursor-grabbing select-none" : "cursor-grab",
+                  )}
+                >
+                  {posts.map((post, index) => (
+                    <LandingPostCard key={post.id} post={post} lead={index === 0} />
+                  ))}
+                </div>
+              </>
+            ) : (
+              <div className="rounded-lg border border-dashed border-line-strong bg-surface/65 px-6 py-10 text-center text-sm text-muted">
+                Belum ada cerita. Jadi yang pertama menulis di linimasa.
+              </div>
+            )}
+          </div>
+        </Reveal>
       </div>
     </section>
   );
 }
 
 function LandingPostCard({ post, lead }: { post: Post; lead: boolean }) {
-  const photo = lead ? post.photos[0] : null;
-
   return (
     <article
       aria-label={`Cerita ${post.author.name}`}
       className={cn(
-        "group relative overflow-hidden rounded-lg border border-line bg-surface shadow-[0_1px_2px_rgba(11,26,40,0.04)] transition-all duration-300 hover:-translate-y-1 hover:border-ink/35 hover:shadow-lift",
+        "group relative flex w-[286px] shrink-0 snap-start flex-col overflow-hidden rounded-lg border border-line bg-surface shadow-[0_1px_2px_rgba(11,26,40,0.04)] transition-all duration-300 hover:-translate-y-1 hover:border-ink/35 hover:shadow-lift sm:w-[360px] lg:w-[380px]",
         lead &&
           "before:absolute before:inset-x-0 before:top-0 before:z-10 before:h-1 before:bg-signal",
-        lead && photo && "sm:grid sm:grid-cols-[0.92fr_1.08fr]",
       )}
     >
-      {photo ? (
-        <div className="relative aspect-[16/10] overflow-hidden border-b border-line bg-paper-deep sm:aspect-auto sm:min-h-[260px] sm:border-b-0 sm:border-r">
-          <Image
-            src={photo}
-            alt={`Foto unggahan ${post.author.name}`}
-            fill
-            sizes="(max-width: 1024px) 100vw, 620px"
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-          />
-          <div
-            className="absolute inset-0 bg-gradient-to-t from-ink/35 via-transparent to-transparent"
-            aria-hidden="true"
-          />
-          <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full border border-line bg-surface/90 px-2.5 py-1 font-mono text-[10px] text-ink-soft backdrop-blur">
-            <span className="h-1.5 w-1.5 rounded-full bg-signal" aria-hidden="true" />
-            Foto komunitas
-          </span>
-        </div>
-      ) : null}
-
-      <div className="p-4 sm:p-5">
+      <div className="flex flex-1 flex-col p-4 sm:p-5">
         <div className="flex items-start gap-3">
           <Avatar
             name={post.author.name}
@@ -149,7 +253,7 @@ function LandingPostCard({ post, lead }: { post: Post; lead: boolean }) {
         <p
           className={cn(
             "prose-kp mt-3 leading-relaxed text-ink-soft",
-            lead ? "line-clamp-5 text-[15px]" : "line-clamp-3 text-sm",
+            lead ? "line-clamp-4 text-[15px]" : "line-clamp-4 text-sm",
           )}
         >
           {post.body}
@@ -173,7 +277,7 @@ function LandingPostCard({ post, lead }: { post: Post; lead: boolean }) {
           </Link>
         ) : null}
 
-        <div className="mt-4 flex items-center justify-between gap-3 border-t border-line pt-3">
+        <div className="mt-auto flex items-center justify-between gap-3 border-t border-line pt-3">
           <div className="flex items-center gap-3 text-[10px] text-muted">
             <span className="inline-flex items-center gap-1">
               <Heart className="h-3.5 w-3.5" aria-hidden="true" />

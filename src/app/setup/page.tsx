@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CheckCircle2, Database, KeyRound, Terminal } from "lucide-react";
 import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
+import { AppTopBar } from "@/components/app-shell/app-top-bar";
 import { Badge } from "@/components/ui/badge";
 import { buttonClass } from "@/components/ui/button";
 import { getCurrentUser } from "@/lib/auth";
+import { getDefaultCampus } from "@/lib/data/campuses";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 
 export const metadata: Metadata = {
@@ -27,11 +28,15 @@ set role = 'admin'
 where email = 'admin@kampus.ac.id';`;
 
 export default async function SetupPage() {
-  const current = await getCurrentUser();
+  const [current, campus] = await Promise.all([getCurrentUser(), getDefaultCampus()]);
 
   return (
     <div className="min-h-dvh bg-paper">
-      <SiteHeader profile={current.profile} isDemo={current.isDemo} />
+      <AppTopBar
+        profile={current.profile}
+        campus={campus}
+        isDemo={current.isDemo}
+      />
 
       <main id="main" className="container-page py-10 lg:py-14">
         <div className="max-w-[760px]">

@@ -3,15 +3,18 @@ import { ChevronDown, Plus } from "lucide-react";
 import { BrandMark } from "@/components/brand-mark";
 import { NavLinks } from "@/components/app-shell/nav-links";
 import { Avatar } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { buttonClass } from "@/components/ui/button";
 import type { Campus, Profile } from "@/lib/types";
 
 export function AppTopBar({
   profile,
   campus,
+  isDemo = false,
 }: {
   profile: Profile | null;
   campus: Campus;
+  isDemo?: boolean;
 }) {
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-paper/95 backdrop-blur">
@@ -30,12 +33,17 @@ export function AppTopBar({
         </nav>
 
         <div className="flex items-center gap-2">
+          {isDemo ? (
+            <Badge variant="signal" className="hidden sm:inline-flex">
+              Mode demo
+            </Badge>
+          ) : null}
           <Link
             href="/tempat/baru"
             className={buttonClass({
               variant: "primary",
               size: "sm",
-              className: "hidden sm:inline-flex",
+              className: "hidden xl:inline-flex",
             })}
           >
             <Plus className="h-4 w-4" aria-hidden="true" />
@@ -44,7 +52,7 @@ export function AppTopBar({
           <Link
             href="/tempat/baru"
             aria-label="Tambah tempat"
-            className="grid h-10 w-10 place-items-center rounded-sm border border-ink bg-signal text-ink sm:hidden"
+            className="grid h-10 w-10 place-items-center rounded-sm border border-ink bg-signal text-ink xl:hidden"
           >
             <Plus className="h-5 w-5" aria-hidden="true" />
           </Link>
