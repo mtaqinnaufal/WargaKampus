@@ -13,12 +13,12 @@ export async function getProfile(id: string): Promise<Profile | null> {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("profiles")
-    .select("id,name,role,campus_id,avatar_url,bio,reputation_points,is_active,created_at")
+    .select("id,name,role,campus_id,avatar_url,bio,reputation_points,created_at")
     .eq("id", id)
     .maybeSingle();
 
   if (error) throw new Error(error.message);
-  return (data as Profile | null) ?? null;
+  return data ? { ...(data as Profile), is_active: true } : null;
 }
 
 export async function getContributions(userId: string): Promise<{

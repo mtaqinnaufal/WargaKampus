@@ -81,6 +81,11 @@ export function PostCard({
   }, [commentState, router]);
 
   function handleLike() {
+    if (!currentUserId) {
+      router.push("/masuk?next=/linimasa");
+      return;
+    }
+
     const next = !liked;
     setLiked(next);
     setLikeCount((count) => Math.max(0, count + (next ? 1 : -1)));
@@ -97,6 +102,11 @@ export function PostCard({
   }
 
   function handleSave() {
+    if (!currentUserId) {
+      router.push("/masuk?next=/linimasa");
+      return;
+    }
+
     const next = !saved;
     setSaved(next);
     setMessage(null);
@@ -146,9 +156,6 @@ export function PostCard({
               </div>
               <div className="mt-2 flex flex-wrap items-center gap-2">
                 <Badge variant="outline">{POST_CATEGORIES[post.category]}</Badge>
-                <Badge variant="neutral">
-                  {post.visibility === "campus" ? "Kampus" : "Publik"}
-                </Badge>
                 {isDemo ? <Badge variant="signal">Data demo</Badge> : null}
               </div>
             </div>

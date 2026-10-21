@@ -577,15 +577,7 @@ create policy "place_updates_admin" on public.place_updates for update using (pu
 
 -- Posts
 drop policy if exists "posts_read" on public.posts;
-create policy "posts_read" on public.posts for select using (
-  status = 'published'
-  and (
-    visibility = 'public'
-    or campus_id = public.current_campus_id()
-    or user_id = auth.uid()
-    or public.is_admin()
-  )
-);
+create policy "posts_read" on public.posts for select using (status = 'published');
 drop policy if exists "posts_insert_own" on public.posts;
 create policy "posts_insert_own" on public.posts for insert to authenticated with check (auth.uid() = user_id and status = 'published');
 drop policy if exists "posts_update_own" on public.posts;
@@ -600,7 +592,6 @@ create policy "post_photos_read" on public.post_photos for select using (
     select 1 from public.posts p
     where p.id = post_id
       and p.status = 'published'
-      and (p.visibility = 'public' or p.campus_id = public.current_campus_id() or p.user_id = auth.uid() or public.is_admin())
   )
 );
 drop policy if exists "post_photos_insert_own" on public.post_photos;
@@ -632,7 +623,6 @@ create policy "comments_read" on public.comments for select using (
     select 1 from public.posts p
     where p.id = post_id
       and p.status = 'published'
-      and (p.visibility = 'public' or p.campus_id = public.current_campus_id() or p.user_id = auth.uid() or public.is_admin())
   )
 );
 drop policy if exists "comments_insert_own" on public.comments;
@@ -706,7 +696,7 @@ grant execute on function public.current_campus_id() to anon, authenticated;
 
 -- Profiles expose public fields only. Email stays in auth.users.
 revoke select on public.profiles from anon, authenticated;
-grant select (id, name, avatar_url, role, campus_id, bio, reputation_points, created_at)
+grant select (id, name, avatar_url, role, campus_id, bio, reputation_points, is_active, created_at, updated_at)
   on public.profiles to anon, authenticated;
 
 -- ---------------------------------------------------------------------------

@@ -220,7 +220,7 @@ const postSeed: Array<{
     category: "tips",
     body: "Tempat nugas favorit saya minggu ini: McDonald's di Lingkar Luar Barat. WiFi kencang, colokan banyak, dan buka sampai malam. Kopi refill Rp8 ribu. Datang sebelum jam 4 sore kalau mau dapat meja dekat colokan.",
     photos: [
-      "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=80",
     ],
     minutes: 95,
     liked: 24,
@@ -315,7 +315,7 @@ export const MOCK_POSTS: Post[] = postSeed.map((post) => {
     campus_id: MOCK_CAMPUS.id,
     category: post.category,
     body: post.body,
-    visibility: "campus",
+    visibility: "public",
     status: "published",
     like_count: post.liked,
     comment_count: comments.length,

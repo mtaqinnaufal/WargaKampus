@@ -19,7 +19,7 @@ export async function createPostAction(
     body: safeString(formData.get("body")),
     category: safeString(formData.get("category")),
     place_id: safeString(formData.get("place_id")) || undefined,
-    visibility: safeString(formData.get("visibility")) || "campus",
+    visibility: "public",
     photo_url: safeString(formData.get("photo_url")),
   });
 

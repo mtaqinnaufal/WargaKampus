@@ -110,18 +110,21 @@ Script ini membuat empat akun demo, enam postingan, komentar, like, dan dua bela
 npm run seed:demo
 ```
 
-Script memakai `SUPABASE_SERVICE_ROLE_KEY` dari `.env.local`. Kalau tabel belum ada atau `seed.sql` belum dijalankan, script akan berhenti dengan pesan yang jelas.
+Script memakai `SUPABASE_SECRET_KEY` atau `SUPABASE_SERVICE_ROLE_KEY` dari `.env.local`. Kalau tabel belum ada atau `seed.sql` belum dijalankan, script akan berhenti dengan pesan yang jelas.
 
 Akun demo:
 
 | Email | Nama | Peran |
 |---|---|---|
+| `admin@wargakampus.demo` | Admin WargaKampus | Admin |
 | `rania@wargakampus.demo` | Rania Putri | Mahasiswa |
 | `dimas@wargakampus.demo` | Dimas Arya | Mahasiswa |
 | `sari@wargakampus.demo` | Sari Lestari | Mahasiswa |
 | `tini@wargakampus.demo` | Bu Tini | Pemilik usaha |
 
 Password semua akun demo: `WargaKampus123!`
+
+Halaman `/masuk` juga punya tombol **Masuk cepat sebagai demo** untuk tiga role utama. Set `DEMO_LOGIN_ENABLED=false` di production.
 
 ## 7. Jalankan aplikasi
 
@@ -130,6 +133,16 @@ npm run dev
 ```
 
 Buka http://localhost:3000. Kalau `.env.local` terbaca, banner mode demo akan hilang dan aplikasi memakai Supabase.
+
+## Migrasi akses publik postingan
+
+Jika project Supabase sudah dibuat sebelum perubahan ini, jalankan file berikut di SQL Editor:
+
+```
+supabase/migrations/20261021_public_posts.sql
+```
+
+Migrasi ini membuat semua postingan berstatus `published` bisa dibaca tanpa login. Like, komentar, simpan, lapor, dan membuat postingan tetap memerlukan login.
 
 ## Catatan keamanan
 
@@ -155,7 +168,7 @@ Pastikan trigger `place_reviews_sync_rating` ada. Jalankan ulang bagian trigger 
 
 **Postingan tidak muncul di linimasa**
 
-Cek `status = 'published'` dan `visibility`. Postingan `campus` hanya terlihat oleh pengguna dengan kampus yang sama. Postingan `public` terlihat oleh semua.
+Cek `status = 'published'`. Setelah migrasi `20261021_public_posts.sql`, semua postingan published bisa dibaca publik. Kalau masih tidak muncul, cek policy `posts_read` dan jalankan `notify pgrst, 'reload schema';`.
 
 **Upload foto belum jalan**
 

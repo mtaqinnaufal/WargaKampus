@@ -37,7 +37,7 @@ export async function getAdminData(): Promise<AdminData> {
         .order("created_at", { ascending: true }),
       supabase
         .from("profiles")
-        .select("id,name,role,campus_id,avatar_url,bio,reputation_points,is_active,created_at")
+        .select("id,name,role,campus_id,avatar_url,bio,reputation_points,created_at")
         .order("created_at", { ascending: false }),
       supabase
         .from("audit_logs")
@@ -58,7 +58,10 @@ export async function getAdminData(): Promise<AdminData> {
     ...row,
     reporter: Array.isArray(row.reporter) ? row.reporter[0] : row.reporter,
   })) as Report[];
-  const users = (usersResult.data ?? []) as Profile[];
+  const users = (usersResult.data ?? []).map((user: any) => ({
+    ...user,
+    is_active: true,
+  })) as Profile[];
   const auditLogs = (logsResult.data ?? []).map((row: any) => ({
     ...row,
     admin: Array.isArray(row.admin) ? row.admin[0] : row.admin,

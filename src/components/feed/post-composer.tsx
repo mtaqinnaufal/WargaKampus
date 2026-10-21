@@ -66,7 +66,7 @@ export function PostComposer({
             <FieldHint>Jangan bagikan nomor pribadi atau alamat kos yang detail.</FieldHint>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2">
             <div>
               <FieldLabel htmlFor="post-category">Kategori</FieldLabel>
               <Select id="post-category" name="category" defaultValue="tips">
@@ -88,14 +88,11 @@ export function PostComposer({
                 ))}
               </Select>
             </div>
-            <div>
-              <FieldLabel htmlFor="post-visibility">Siapa yang bisa lihat</FieldLabel>
-              <Select id="post-visibility" name="visibility" defaultValue="campus">
-                <option value="campus">Kampus</option>
-                <option value="public">Publik</option>
-              </Select>
-            </div>
           </div>
+
+          <p className="text-xs leading-relaxed text-muted">
+            Semua postingan dapat dibaca publik. Like, komentar, dan simpan memerlukan login.
+          </p>
 
           <div>
             <FieldLabel htmlFor="post-photo">URL foto</FieldLabel>

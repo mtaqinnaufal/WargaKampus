@@ -82,14 +82,9 @@ export async function getPosts(options: { campusId: string; userId?: string | nu
     (saves ?? []).forEach((save: any) => save.post_id && savedIds.add(save.post_id));
   }
 
-  const visible = (data ?? []).filter(
-    (post: any) =>
-      post.visibility === "public" ||
-      post.campus_id === options.campusId ||
-      post.user_id === options.userId,
+  return (data ?? []).map((row: any) =>
+    normalizePost(row, options.userId, savedIds),
   );
-
-  return visible.map((row: any) => normalizePost(row, options.userId, savedIds));
 }
 
 export async function getSavedPosts(userId: string) {

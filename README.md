@@ -11,6 +11,7 @@ WargaKampus adalah peta komunitas warga kampus untuk mahasiswa **Institut Teknol
 - **Mode demo** berjalan tanpa Supabase memakai 26 tempat dari OpenStreetMap dan konten contoh.
 - **Mode Supabase** mengaktifkan autentikasi, ulasan, postingan, komentar, like, simpanan, laporan, dan panel admin.
 - Cakupan saat ini: MVP Wajib Demo dari rancangan, ditambah simpanan dan laporan.
+- **Baca publik, tulis dengan login.** Semua postingan berstatus `published` bisa dibaca tanpa login; like, komentar, simpan, dan membuat postingan memerlukan akun.
 
 ## Stack
 
@@ -31,6 +32,18 @@ npm run dev
 Buka http://localhost:3000. Tanpa `.env.local`, aplikasi otomatis masuk mode demo.
 
 Untuk menyambungkan database, ikuti [SUPABASE_SETUP.md](./SUPABASE_SETUP.md).
+
+## Akun demo
+
+Jalankan `npm run seed:demo` sekali. Akun yang dibuat:
+
+| Role | Email | Password |
+|---|---|---|
+| Mahasiswa | `rania@wargakampus.demo` | `WargaKampus123!` |
+| Pemilik usaha | `tini@wargakampus.demo` | `WargaKampus123!` |
+| Admin | `admin@wargakampus.demo` | `WargaKampus123!` |
+
+Seed juga membuat `dimas@wargakampus.demo` dan `sari@wargakampus.demo` sebagai kontributor tambahan. Halaman `/masuk` menampilkan tombol **Masuk cepat sebagai demo** untuk tiga role utama. Set `DEMO_LOGIN_ENABLED=false` di production.
 
 ## Script
 
@@ -89,11 +102,24 @@ Tempat berasal dari **OpenStreetMap contributors** (ODbL). Harga, fasilitas, rat
 - `frontend-design` resmi Anthropic dipakai sebagai panduan desain lokal (tidak di-commit).
 - `ux-ui-agent-skills` (plugin87, MIT) dipakai sebagai referensi desain lokal. Folder `tokens/`, `taste/`, `design-systems/`, dan sejenisnya sengaja tidak di-commit agar repo tetap ringan; yang di-commit adalah hasil penerapannya di `src/`.
 
+## Deploy ke Vercel
+
+Environment variables yang perlu diisi di Vercel:
+
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` atau `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `NEXT_PUBLIC_SITE_URL=https://domain-vercel-anda`
+- `DEMO_LOGIN_ENABLED=true` untuk mengaktifkan quick login demo
+
+Jangan menaruh `SUPABASE_SECRET_KEY` di Vercel; key itu hanya untuk `npm run seed:demo` di lokal. Setelah mengubah environment variables, lakukan **Redeploy** karena variabel `NEXT_PUBLIC_*` dibaca saat build.
+
+Quick login ada di `/masuk`, di bawah form login. Kalau tidak terlihat, pastikan deployment memakai commit terbaru dan `DEMO_LOGIN_ENABLED` bukan `false`.
+
 ## Batasan
 
 - Unggah foto langsung ke Supabase Storage belum diimplementasikan; form memakai URL foto.
 - Notifikasi, badge, klaim usaha, follow, PWA, pesan langsung, dan multi-kota belum masuk UI. Tabelnya sudah ada di schema untuk tahap berikutnya.
-- Belum ada deployment. Jalankan lokal dulu, lalu deploy ke Vercel setelah Supabase siap.
+- Deployment Vercel tersedia; pastikan environment variables dan commit terbaru sudah di-deploy.
 - Data OpenStreetMap tidak lengkap untuk semua kategori. Beberapa tempat mungkin belum punya harga atau jam buka terverifikasi.
 
 ## Langkah berikutnya

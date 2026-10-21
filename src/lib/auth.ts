@@ -25,7 +25,7 @@ export const getCurrentUser = cache(async (): Promise<CurrentUser> => {
 
   const { data, error } = await supabase
     .from("profiles")
-    .select("id,name,role,campus_id,avatar_url,bio,reputation_points,is_active,created_at")
+    .select("id,name,role,campus_id,avatar_url,bio,reputation_points,created_at")
     .eq("id", user.id)
     .single();
 
@@ -33,7 +33,11 @@ export const getCurrentUser = cache(async (): Promise<CurrentUser> => {
     return { profile: null, user, isDemo: false };
   }
 
-  return { profile: data as Profile, user, isDemo: false };
+  return {
+    profile: { ...(data as Profile), is_active: true },
+    user,
+    isDemo: false,
+  };
 });
 
 export async function requireUser() {

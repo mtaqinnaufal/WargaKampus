@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { DemoLoginButtons } from "@/components/auth/demo-login-buttons";
 import { SignInForm } from "@/components/auth/sign-in-form";
 import { getCurrentUser } from "@/lib/auth";
+import { isSupabaseConfigured } from "@/lib/supabase/config";
 
 export const metadata: Metadata = {
   title: "Masuk",
@@ -12,6 +14,9 @@ export const metadata: Metadata = {
 export default async function SignInPage() {
   const current = await getCurrentUser();
   if (current.profile && !current.isDemo) redirect("/jelajah");
+
+  const demoLoginEnabled =
+    isSupabaseConfigured && process.env.DEMO_LOGIN_ENABLED !== "false";
 
   return (
     <div>
@@ -24,6 +29,12 @@ export default async function SignInPage() {
       <div className="mt-7">
         <SignInForm isDemo={current.isDemo} />
       </div>
+
+      {demoLoginEnabled ? (
+        <div className="mt-8 border-t border-line pt-6">
+          <DemoLoginButtons />
+        </div>
+      ) : null}
 
       <p className="mt-6 text-xs leading-relaxed text-muted">
         Dengan masuk, kamu setuju untuk tidak membagikan data pribadi orang lain dan tidak

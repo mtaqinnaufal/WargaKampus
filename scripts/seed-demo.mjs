@@ -20,6 +20,13 @@ const DEMO_PASSWORD = "WargaKampus123!";
 
 const demoUsers = [
   {
+    email: "admin@wargakampus.demo",
+    name: "Admin WargaKampus",
+    role: "admin",
+    bio: "Admin komunitas WargaKampus.",
+    reputation_points: 100,
+  },
+  {
     email: "rania@wargakampus.demo",
     name: "Rania Putri",
     role: "mahasiswa",
@@ -57,7 +64,7 @@ const postSeeds = [
     category: "tips",
     body: "Tempat nugas favorit saya minggu ini: McDonald's di Lingkar Luar Barat. WiFi kencang, colokan banyak, dan buka sampai malam. Kopi refill Rp8 ribu. Datang sebelum jam 4 sore kalau mau dapat meja dekat colokan.",
     photos: [
-      "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=80",
     ],
     comments: [
       { author: "dimas@wargakampus.demo", body: "Setuju. Parkirnya juga cukup luas kalau bawa motor." },
@@ -235,7 +242,8 @@ async function main() {
         campus_id: campus.id,
         category: seed.category,
         body: seed.body,
-        visibility: "campus",
+        // Public so the feed is visible before login. Real user posts default to campus.
+        visibility: "public",
         status: "published",
       })
       .select("id")
@@ -295,10 +303,40 @@ async function main() {
     if (error) fail(`menambahkan ulasan ${seed.placeSlug}: ${error.message}`);
   }
 
+  // A few saved items for the mahasiswa demo account so the Simpan page is not empty.
+  const rania = usersByEmail.get("rania@wargakampus.demo");
+  if (rania) {
+    for (const key of ["promo-superindo", "info-rajawali"]) {
+      const postId = postsByKey.get(key);
+      if (!postId) continue;
+      const { error } = await supabase.from("saves").insert({
+        user_id: rania.id,
+        post_id: postId,
+      });
+      if (error && error.code !== "23505") {
+        fail(`menambahkan simpanan postingan ${key}: ${error.message}`);
+      }
+    }
+
+    for (const slug of ["super-indo", "mcdonald-s", "aura-laundry"]) {
+      const place = placeBySlug.get(slug);
+      if (!place) continue;
+      const { error } = await supabase.from("saves").insert({
+        user_id: rania.id,
+        place_id: place.id,
+      });
+      if (error && error.code !== "23505") {
+        fail(`menambahkan simpanan tempat ${slug}: ${error.message}`);
+      }
+    }
+
+    console.log("  saves Rania");
+  }
+
   console.log("\nSelesai.");
   console.log(`Akun demo (password: ${DEMO_PASSWORD}):`);
   for (const definition of demoUsers) {
-    console.log(`  ${definition.email}  ${definition.name}`);
+    console.log(`  ${definition.email}  ${definition.name} (${definition.role})`);
   }
   console.log("\nBuka http://localhost:3000 dan masuk dengan salah satu akun di atas.");
 }

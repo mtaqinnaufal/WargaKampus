@@ -105,7 +105,41 @@ export function FeedClient({
         <span className="font-mono text-[10px] text-muted">{campusName}</span>
       </div>
 
-      <PostComposer places={places} isDemo={isDemo} />
+      {!currentUserId ? (
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line bg-surface px-4 py-3 text-sm">
+          <p className="max-w-[56ch] leading-relaxed text-muted">
+            Semua cerita bisa dibaca tanpa login. Masuk untuk like, komentar, dan menyimpan.
+          </p>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/masuk?next=/linimasa"
+              className="font-semibold text-ink underline decoration-signal decoration-2 underline-offset-4"
+            >
+              Masuk
+            </Link>
+            <Link href="/daftar" className="text-muted hover:text-ink">
+              Daftar
+            </Link>
+          </div>
+        </div>
+      ) : null}
+
+      {currentUserId ? (
+        <PostComposer places={places} isDemo={isDemo} />
+      ) : (
+        <section className="border-b border-line py-6">
+          <h2 className="font-display text-xl font-semibold">Bagi pengalaman</h2>
+          <p className="mt-1 text-sm leading-relaxed text-muted">
+            Masuk untuk membuat postingan, berkomentar, dan menyimpan cerita.
+          </p>
+          <Link
+            href="/masuk?next=/linimasa"
+            className="mt-3 inline-flex text-sm font-semibold text-ink underline decoration-signal decoration-2 underline-offset-4"
+          >
+            Masuk untuk menulis
+          </Link>
+        </section>
+      )}
 
       {filtered.length > 0 ? (
         <div>
