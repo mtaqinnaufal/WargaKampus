@@ -6,7 +6,7 @@ import { getCurrentUser } from "@/lib/auth";
 
 export const metadata: Metadata = {
   title: "Masuk",
-  description: "Masuk ke KosPintar untuk menyimpan tempat dan berbagi pengalaman.",
+  description: "Masuk ke WargaKampus untuk menyimpan tempat dan berbagi pengalaman.",
 };
 
 export default async function SignInPage() {
@@ -16,7 +16,7 @@ export default async function SignInPage() {
   return (
     <div>
       <p className="font-mono text-[11px] text-muted">Selamat datang kembali</p>
-      <h1 className="mt-2 font-display text-4xl font-bold leading-tight">Masuk ke KosPintar.</h1>
+      <h1 className="mt-2 font-display text-4xl font-bold leading-tight">Masuk ke WargaKampus.</h1>
       <p className="mt-3 text-sm leading-relaxed text-muted">
         Simpan tempat, tulis ulasan, dan ikut menjaga info tetap akurat.
       </p>

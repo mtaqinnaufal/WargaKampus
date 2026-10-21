@@ -1,4 +1,4 @@
--- KosPintar database schema for Supabase.
+-- WargaKampus database schema for Supabase.
 -- Run this once in a new Supabase project, then run supabase/seed.sql.
 -- The app uses Supabase Auth, Postgres, RLS, and Storage.
 
@@ -720,13 +720,13 @@ values
   ('avatars', 'avatars', true)
 on conflict (id) do nothing;
 
-drop policy if exists "kospintar_public_images_read" on storage.objects;
-create policy "kospintar_public_images_read"
+drop policy if exists "wargakampus_public_images_read" on storage.objects;
+create policy "wargakampus_public_images_read"
   on storage.objects for select
   using (bucket_id in ('place-photos', 'post-photos', 'avatars'));
 
-drop policy if exists "kospintar_authenticated_upload" on storage.objects;
-create policy "kospintar_authenticated_upload"
+drop policy if exists "wargakampus_authenticated_upload" on storage.objects;
+create policy "wargakampus_authenticated_upload"
   on storage.objects for insert to authenticated
   with check (
     bucket_id in ('place-photos', 'post-photos', 'avatars')

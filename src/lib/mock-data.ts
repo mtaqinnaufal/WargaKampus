@@ -65,7 +65,7 @@ export const MOCK_PROFILES: Profile[] = [
   {
     id: "22222222-2222-4222-8222-222222222222",
     name: "Rania Putri",
-    email: "rania@kospintar.local",
+    email: "rania@wargakampus.local",
     role: "mahasiswa",
     campus_id: MOCK_CAMPUS.id,
     avatar_url: null,
@@ -77,7 +77,7 @@ export const MOCK_PROFILES: Profile[] = [
   {
     id: "33333333-3333-4333-8333-333333333333",
     name: "Dimas Arya",
-    email: "dimas@kospintar.local",
+    email: "dimas@wargakampus.local",
     role: "mahasiswa",
     campus_id: MOCK_CAMPUS.id,
     avatar_url: null,
@@ -89,7 +89,7 @@ export const MOCK_PROFILES: Profile[] = [
   {
     id: "44444444-4444-4444-8444-444444444444",
     name: "Sari Lestari",
-    email: "sari@kospintar.local",
+    email: "sari@wargakampus.local",
     role: "mahasiswa",
     campus_id: MOCK_CAMPUS.id,
     avatar_url: null,
@@ -101,7 +101,7 @@ export const MOCK_PROFILES: Profile[] = [
   {
     id: "55555555-5555-4555-8555-555555555555",
     name: "Bu Tini",
-    email: "tini@kospintar.local",
+    email: "tini@wargakampus.local",
     role: "pemilik",
     campus_id: MOCK_CAMPUS.id,
     avatar_url: null,

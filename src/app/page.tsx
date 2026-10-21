@@ -24,9 +24,9 @@ import { SITE } from "@/lib/constants";
 import { formatPriceRange } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "KosPintar | Tempat masuk akal di sekitar ITPLN",
+  title: "WargaKampus | Tempat masuk akal di sekitar ITPLN",
   description:
-    "Peta komunitas untuk menemukan makan, nugas, nongkrong, laundry, dan kebutuhan harian di sekitar Institut Teknologi PLN, Jakarta Barat.",
+    "Peta komunitas warga kampus untuk menemukan makan, nugas, nongkrong, laundry, dan kebutuhan harian di sekitar Institut Teknologi PLN, Jakarta Barat.",
 };
 
 export default async function HomePage() {
@@ -196,7 +196,7 @@ export default async function HomePage() {
                 Tiga langkah, tanpa ribet.
               </h2>
               <p className="mt-3 max-w-[38ch] text-sm leading-relaxed text-muted">
-                KosPintar dibuat untuk keputusan kecil yang terjadi terus-menerus: mau makan di
+                WargaKampus dibuat untuk keputusan kecil yang terjadi terus-menerus: mau makan di
                 mana, nugas di mana, dan laundry di mana.
               </p>
             </div>

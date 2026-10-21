@@ -26,7 +26,7 @@ import { relativeTime } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Admin",
-  description: "Antrean verifikasi, laporan, dan moderasi komunitas KosPintar.",
+  description: "Antrean verifikasi, laporan, dan moderasi komunitas WargaKampus.",
 };
 
 const reportTargetLabels: Record<string, string> = {
@@ -51,7 +51,7 @@ export default async function AdminPage() {
             {current.isDemo ? <Badge variant="signal">Mode demo</Badge> : null}
           </div>
           <h1 className="mt-2 font-display text-3xl font-bold leading-tight sm:text-4xl">
-            Admin KosPintar.
+            Admin WargaKampus.
           </h1>
           <p className="mt-2 max-w-[60ch] text-sm leading-relaxed text-muted">
             Tinjau tempat baru, tangani laporan, dan jaga peran pengguna. Setiap tindakan

@@ -15,7 +15,7 @@ import { relativeTime } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Profil",
-  description: "Profil, kontribusi, dan pengaturan akun KosPintar.",
+  description: "Profil, kontribusi, dan pengaturan akun WargaKampus.",
 };
 
 export default async function ProfilePage() {

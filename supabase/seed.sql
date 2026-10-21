@@ -1,4 +1,4 @@
--- Seed data for KosPintar.
+-- Seed data for WargaKampus.
 -- Places are derived from OpenStreetMap contributors (ODbL).
 -- Prices, facilities, ratings, and review counts are demo estimates, not verified facts.
 

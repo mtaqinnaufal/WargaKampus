@@ -13,36 +13,52 @@ export function BrandMark({
   return (
     <Link
       href="/"
-      aria-label="KosPintar, kembali ke beranda"
+      aria-label="WargaKampus, kembali ke beranda"
       className={cn(
         "inline-flex items-center gap-2.5",
         tone === "light" ? "text-surface" : "text-ink",
         className,
       )}
     >
-      <span className="grid h-9 w-9 shrink-0 place-items-center rounded-sm border-2 border-ink bg-signal text-ink">
-        <svg
-          viewBox="0 0 24 24"
-          className="h-5 w-5"
+      <svg
+        viewBox="0 0 64 64"
+        className="h-9 w-9 shrink-0"
+        aria-hidden="true"
+      >
+        <rect
+          x="2"
+          y="2"
+          width="60"
+          height="60"
+          rx="10"
+          fill="#F2C200"
+          stroke="#0B1A28"
+          strokeWidth="4"
+        />
+        <path
+          d="M32 12c-8.8 0-16 6.7-16 15 0 11.3 16 26 16 26s16-14.7 16-26c0-8.3-7.2-15-16-15Z"
           fill="none"
-          stroke="currentColor"
-          strokeWidth="1.9"
+          stroke="#0B1A28"
+          strokeWidth="3.6"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M23 24.5l4 11 5-8 5 8 4-11"
+          fill="none"
+          stroke="#0B1A28"
+          strokeWidth="3.6"
           strokeLinecap="round"
           strokeLinejoin="round"
-          aria-hidden="true"
-        >
-          <path d="M12 21s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12Z" />
-          <path d="M12.7 7 9.2 13h2.9l-.8 4.1L15 11h-2.9l.6-4Z" fill="currentColor" stroke="none" />
-        </svg>
-      </span>
+        />
+      </svg>
       {!compact ? (
         <span
           className={cn(
-            "font-display text-[22px] font-bold leading-none tracking-[-0.04em]",
+            "font-display text-[20px] font-bold leading-none tracking-[-0.045em]",
             tone === "light" ? "text-surface" : "text-ink",
           )}
         >
-          KosPintar
+          WargaKampus
         </span>
       ) : null}
     </Link>

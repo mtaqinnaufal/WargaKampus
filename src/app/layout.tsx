@@ -26,15 +26,15 @@ const mono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
   title: {
-    default: "KosPintar | Tempat masuk akal di sekitar ITPLN",
-    template: "%s | KosPintar",
+    default: "WargaKampus | Tempat masuk akal di sekitar ITPLN",
+    template: "%s | WargaKampus",
   },
   description:
-    "Peta komunitas untuk menemukan tempat makan, nongkrong, nugas, laundry, dan kebutuhan harian di sekitar Institut Teknologi PLN, Jakarta Barat.",
+    "Peta komunitas warga kampus untuk menemukan tempat makan, nongkrong, nugas, laundry, dan kebutuhan harian di sekitar Institut Teknologi PLN, Jakarta Barat.",
   openGraph: {
-    title: "KosPintar",
+    title: "WargaKampus",
     description:
-      "Temukan tempat yang masuk akal di sekitar ITPLN. Dibuat oleh mahasiswa, dirawat oleh mahasiswa.",
+      "Temukan tempat yang masuk akal di sekitar ITPLN. Dibuat oleh mahasiswa, dirawat oleh warga kampus.",
     type: "website",
     locale: "id_ID",
   },

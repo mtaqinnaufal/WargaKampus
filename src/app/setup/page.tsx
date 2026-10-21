@@ -10,7 +10,7 @@ import { isSupabaseConfigured } from "@/lib/supabase/config";
 
 export const metadata: Metadata = {
   title: "Panduan Supabase",
-  description: "Langkah menyambungkan KosPintar ke Supabase.",
+  description: "Langkah menyambungkan WargaKampus ke Supabase.",
 };
 
 const envExample = `NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
@@ -69,7 +69,7 @@ export default async function SetupPage() {
                 </a>{" "}
                 dan buat project baru.
               </li>
-              <li>Nama project: <span className="font-mono text-xs">kospintar</span>.</li>
+              <li>Nama project: <span className="font-mono text-xs">wargakampus</span>.</li>
               <li>Region terdekat: Singapore.</li>
               <li>Simpan database password di tempat aman.</li>
             </ol>

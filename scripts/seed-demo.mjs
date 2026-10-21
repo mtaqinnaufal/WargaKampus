@@ -16,32 +16,32 @@ const supabase = createClient(supabaseUrl, serviceRoleKey, {
   auth: { autoRefreshToken: false, persistSession: false },
 });
 
-const DEMO_PASSWORD = "KosPintar123!";
+const DEMO_PASSWORD = "WargaKampus123!";
 
 const demoUsers = [
   {
-    email: "rania@kospintar.demo",
+    email: "rania@wargakampus.demo",
     name: "Rania Putri",
     role: "mahasiswa",
     bio: "Mahasiswa Ilkom. Suka mencari tempat nugas yang tenang.",
     reputation_points: 84,
   },
   {
-    email: "dimas@kospintar.demo",
+    email: "dimas@wargakampus.demo",
     name: "Dimas Arya",
     role: "mahasiswa",
     bio: "Teknik Elektro. Pengguna setia laundry kiloan.",
     reputation_points: 61,
   },
   {
-    email: "sari@kospintar.demo",
+    email: "sari@wargakampus.demo",
     name: "Sari Lestari",
     role: "mahasiswa",
     bio: "Bisnis Energi. Suka berbagi promo dan info kampus.",
     reputation_points: 47,
   },
   {
-    email: "tini@kospintar.demo",
+    email: "tini@wargakampus.demo",
     name: "Bu Tini",
     role: "pemilik",
     bio: "Pemilik warung di sekitar Duri Kosambi.",
@@ -52,7 +52,7 @@ const demoUsers = [
 const postSeeds = [
   {
     key: "nugas-mcd",
-    author: "rania@kospintar.demo",
+    author: "rania@wargakampus.demo",
     placeSlug: "mcdonald-s",
     category: "tips",
     body: "Tempat nugas favorit saya minggu ini: McDonald's di Lingkar Luar Barat. WiFi kencang, colokan banyak, dan buka sampai malam. Kopi refill Rp8 ribu. Datang sebelum jam 4 sore kalau mau dapat meja dekat colokan.",
@@ -60,26 +60,26 @@ const postSeeds = [
       "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80",
     ],
     comments: [
-      { author: "dimas@kospintar.demo", body: "Setuju. Parkirnya juga cukup luas kalau bawa motor." },
+      { author: "dimas@wargakampus.demo", body: "Setuju. Parkirnya juga cukup luas kalau bawa motor." },
     ],
-    likes: ["dimas@kospintar.demo", "sari@kospintar.demo"],
+    likes: ["dimas@wargakampus.demo", "sari@wargakampus.demo"],
   },
   {
     key: "laundry-aura",
-    author: "dimas@kospintar.demo",
+    author: "dimas@wargakampus.demo",
     placeSlug: "aura-laundry",
     category: "review",
     body: "Aura Laundry: Rp7.000 per kilo, selesai satu hari. Bisa antar-jemput. Sudah dua bulan langganan dan belum pernah telat. Catat nomor WhatsApp-nya di papan kos.",
     photos: [],
     comments: [
-      { author: "rania@kospintar.demo", body: "Antar-jemputnya bayar tambahan atau sudah termasuk?" },
-      { author: "dimas@kospintar.demo", body: "Tambahan Rp3.000 kalau jauh. Dekat kampus gratis." },
+      { author: "rania@wargakampus.demo", body: "Antar-jemputnya bayar tambahan atau sudah termasuk?" },
+      { author: "dimas@wargakampus.demo", body: "Tambahan Rp3.000 kalau jauh. Dekat kampus gratis." },
     ],
-    likes: ["rania@kospintar.demo"],
+    likes: ["rania@wargakampus.demo"],
   },
   {
     key: "promo-superindo",
-    author: "sari@kospintar.demo",
+    author: "sari@wargakampus.demo",
     placeSlug: "super-indo",
     category: "promo",
     body: "Super Indo dekat kampus lagi ada promo telur. Cocok buat patungan anak kos. Saya beli satu tray, dibagi empat, jadi lebih murah daripada beli satuan di minimarket.",
@@ -87,57 +87,57 @@ const postSeeds = [
       "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=80",
     ],
     comments: [],
-    likes: ["rania@kospintar.demo", "dimas@kospintar.demo", "tini@kospintar.demo"],
+    likes: ["rania@wargakampus.demo", "dimas@wargakampus.demo", "tini@wargakampus.demo"],
   },
   {
     key: "cari-teman-harris",
-    author: "rania@kospintar.demo",
+    author: "rania@wargakampus.demo",
     placeSlug: "harris-cafe-harris-suites-puri-mansion",
     category: "cari-teman",
     body: "Cari teman nugas sore ini di Harris Cafe. Saya bawa laptop dan colokan ekstensi. Rencananya dari jam 4 sampai jam 7. Boleh join, yang penting tidak berisik.",
     photos: [],
     comments: [
-      { author: "sari@kospintar.demo", body: "Saya ikut sekitar jam 5, habis kelas." },
+      { author: "sari@wargakampus.demo", body: "Saya ikut sekitar jam 5, habis kelas." },
     ],
-    likes: ["sari@kospintar.demo"],
+    likes: ["sari@wargakampus.demo"],
   },
   {
     key: "review-kampung-kecil",
-    author: "dimas@kospintar.demo",
+    author: "dimas@wargakampus.demo",
     placeSlug: "rumah-makan-kampung-kecil-duri-kosambi",
     category: "review",
     body: "Rumah Makan Kampung Kecil: ayam bakar Rp22 ribu, porsi besar, sambal ijo-nya pedas. Ramai jam 12, jadi datang jam 11 atau setelah jam 1. Tempat parkir motor cukup.",
     photos: [],
     comments: [],
-    likes: ["rania@kospintar.demo", "sari@kospintar.demo"],
+    likes: ["rania@wargakampus.demo", "sari@wargakampus.demo"],
   },
   {
     key: "info-rajawali",
-    author: "sari@kospintar.demo",
+    author: "sari@wargakampus.demo",
     placeSlug: "rajawali-foto",
     category: "info-kampus",
     body: "Info: Rajawali Foto buka sampai jam 9 malam dan bisa jilid skripsi. Harga jilid mulai Rp15 ribu. Kalau mau cetak banyak, kirim file lewat WhatsApp dulu supaya tidak menunggu lama.",
     photos: [],
     comments: [
-      { author: "rania@kospintar.demo", body: "Bisa cetak warna juga? Untuk poster tugas." },
+      { author: "rania@wargakampus.demo", body: "Bisa cetak warna juga? Untuk poster tugas." },
     ],
-    likes: ["rania@kospintar.demo", "dimas@kospintar.demo"],
+    likes: ["rania@wargakampus.demo", "dimas@wargakampus.demo"],
   },
 ];
 
 const reviewSeeds = [
-  { email: "rania@kospintar.demo", placeSlug: "rumah-makan-kampung-kecil-duri-kosambi", rating: 5, body: "Ayam bakarnya besar, sambalnya enak. Ramai kalau jam makan siang, jadi datang agak awal." },
-  { email: "dimas@kospintar.demo", placeSlug: "rumah-makan-kampung-kecil-duri-kosambi", rating: 4, body: "Porsinya pas untuk mahasiswa. Harga masih masuk akal untuk makan siang." },
-  { email: "sari@kospintar.demo", placeSlug: "kfc", rating: 4, body: "Dekat dari kampus, cocok kalau butuh makan cepat. Tempat duduknya cukup banyak." },
-  { email: "rania@kospintar.demo", placeSlug: "talaga-sampireun-puri", rating: 5, body: "Tempatnya luas dan nyaman untuk makan bareng keluarga atau teman. Harga lebih tinggi, tapi suasananya bagus." },
-  { email: "rania@kospintar.demo", placeSlug: "mcdonald-s", rating: 4, body: "WiFi kencang dan colokan banyak. Cocok buat nugas sore, tapi agak ramai di jam makan." },
-  { email: "dimas@kospintar.demo", placeSlug: "mcdonald-s", rating: 4, body: "Buka sampai malam. Pesan kopi, kerja tugas, lalu pulang. Cukup nyaman." },
-  { email: "sari@kospintar.demo", placeSlug: "harris-cafe-harris-suites-puri-mansion", rating: 4, body: "Tenang dan adem. Cocok untuk kerja kelompok, tapi harga menu lebih premium." },
-  { email: "dimas@kospintar.demo", placeSlug: "aura-laundry", rating: 5, body: "Rp7.000 per kilo, selesai sehari. Bisa antar-jemput, jadi tidak perlu keluar kos." },
-  { email: "rania@kospintar.demo", placeSlug: "sanggar-laundry", rating: 4, body: "Hasil cuciannya bersih dan wangi. Lokasinya agak jauh dari kampus, tapi worth it." },
-  { email: "sari@kospintar.demo", placeSlug: "super-indo", rating: 4, body: "Lengkap untuk belanja kebutuhan kos. Sering ada promo telur dan minyak." },
-  { email: "rania@kospintar.demo", placeSlug: "rajawali-foto", rating: 5, body: "Cetak dan jilid cepat. Buka sampai malam, jadi bisa ambil setelah kelas." },
-  { email: "dimas@kospintar.demo", placeSlug: "spar", rating: 4, body: "Pilihan buah dan sayur lebih banyak daripada minimarket. Harga cukup bersaing." },
+  { email: "rania@wargakampus.demo", placeSlug: "rumah-makan-kampung-kecil-duri-kosambi", rating: 5, body: "Ayam bakarnya besar, sambalnya enak. Ramai kalau jam makan siang, jadi datang agak awal." },
+  { email: "dimas@wargakampus.demo", placeSlug: "rumah-makan-kampung-kecil-duri-kosambi", rating: 4, body: "Porsinya pas untuk mahasiswa. Harga masih masuk akal untuk makan siang." },
+  { email: "sari@wargakampus.demo", placeSlug: "kfc", rating: 4, body: "Dekat dari kampus, cocok kalau butuh makan cepat. Tempat duduknya cukup banyak." },
+  { email: "rania@wargakampus.demo", placeSlug: "talaga-sampireun-puri", rating: 5, body: "Tempatnya luas dan nyaman untuk makan bareng keluarga atau teman. Harga lebih tinggi, tapi suasananya bagus." },
+  { email: "rania@wargakampus.demo", placeSlug: "mcdonald-s", rating: 4, body: "WiFi kencang dan colokan banyak. Cocok buat nugas sore, tapi agak ramai di jam makan." },
+  { email: "dimas@wargakampus.demo", placeSlug: "mcdonald-s", rating: 4, body: "Buka sampai malam. Pesan kopi, kerja tugas, lalu pulang. Cukup nyaman." },
+  { email: "sari@wargakampus.demo", placeSlug: "harris-cafe-harris-suites-puri-mansion", rating: 4, body: "Tenang dan adem. Cocok untuk kerja kelompok, tapi harga menu lebih premium." },
+  { email: "dimas@wargakampus.demo", placeSlug: "aura-laundry", rating: 5, body: "Rp7.000 per kilo, selesai sehari. Bisa antar-jemput, jadi tidak perlu keluar kos." },
+  { email: "rania@wargakampus.demo", placeSlug: "sanggar-laundry", rating: 4, body: "Hasil cuciannya bersih dan wangi. Lokasinya agak jauh dari kampus, tapi worth it." },
+  { email: "sari@wargakampus.demo", placeSlug: "super-indo", rating: 4, body: "Lengkap untuk belanja kebutuhan kos. Sering ada promo telur dan minyak." },
+  { email: "rania@wargakampus.demo", placeSlug: "rajawali-foto", rating: 5, body: "Cetak dan jilid cepat. Buka sampai malam, jadi bisa ambil setelah kelas." },
+  { email: "dimas@wargakampus.demo", placeSlug: "spar", rating: 4, body: "Pilihan buah dan sayur lebih banyak daripada minimarket. Harga cukup bersaing." },
 ];
 
 function fail(message) {
@@ -171,7 +171,7 @@ async function getOrCreateUser(definition, campusId) {
 }
 
 async function main() {
-  console.log("KosPintar demo seed");
+  console.log("WargaKampus demo seed");
   console.log("Menyiapkan data demo...\n");
 
   const { data: campus, error: campusError } = await supabase

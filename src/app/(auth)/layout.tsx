@@ -6,7 +6,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
   return (
     <div className="grid min-h-dvh bg-paper lg:grid-cols-[1.05fr_0.95fr]">
       <aside
-        aria-label="Tentang KosPintar"
+        aria-label="Tentang WargaKampus"
         className="relative hidden overflow-hidden bg-ink p-10 text-surface lg:flex lg:flex-col lg:justify-between"
       >
         <div className="grid-paper absolute inset-0 opacity-[0.1]" aria-hidden="true" />
@@ -17,7 +17,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
             Tempat yang masuk akal, dari mahasiswa.
           </h1>
           <p className="mt-6 max-w-[44ch] text-sm leading-relaxed text-surface/70">
-            KosPintar mengumpulkan info makan, nugas, nongkrong, laundry, dan kebutuhan harian
+            WargaKampus mengumpulkan info makan, nugas, nongkrong, laundry, dan kebutuhan harian
             di sekitar kampus. Bukan iklan, bukan daftar tempat yang tidak pernah dicek.
           </p>
         </div>

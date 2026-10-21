@@ -1,4 +1,4 @@
-# KosPintar + Supabase setup
+# WargaKampus + Supabase setup
 
 Panduan ini menyambungkan aplikasi Next.js ke Supabase. Setelah selesai, autentikasi, ulasan, postingan, simpanan, dan moderasi admin akan tersimpan sungguhan. Tanpa Supabase, aplikasi tetap bisa dibuka dalam mode demo memakai data OpenStreetMap.
 
@@ -6,7 +6,7 @@ Panduan ini menyambungkan aplikasi Next.js ke Supabase. Setelah selesai, autenti
 
 1. Buka https://supabase.com/dashboard.
 2. Klik **New project**.
-3. Nama: `kospintar`.
+3. Nama: `wargakampus`.
 4. Region: **Southeast Asia (Singapore)** untuk latensi terbaik dari Indonesia.
 5. Simpan database password di tempat aman.
 6. Tunggu sampai project selesai provisioning.
@@ -27,7 +27,7 @@ Supabase sekarang punya dua sistem key:
 
 Kalau project Anda masih hanya menampilkan key lama, Anda tetap bisa memakainya. Kalau ada tombol **Create new API keys**, Anda boleh membuat key baru; key lama tetap berjalan.
 
-Buat file `.env.local` di folder `kospintar/`. Pilih salah satu format berikut.
+Buat file `.env.local` di folder project. Pilih salah satu format berikut.
 
 **Format baru (disarankan):**
 
@@ -116,12 +116,12 @@ Akun demo:
 
 | Email | Nama | Peran |
 |---|---|---|
-| `rania@kospintar.demo` | Rania Putri | Mahasiswa |
-| `dimas@kospintar.demo` | Dimas Arya | Mahasiswa |
-| `sari@kospintar.demo` | Sari Lestari | Mahasiswa |
-| `tini@kospintar.demo` | Bu Tini | Pemilik usaha |
+| `rania@wargakampus.demo` | Rania Putri | Mahasiswa |
+| `dimas@wargakampus.demo` | Dimas Arya | Mahasiswa |
+| `sari@wargakampus.demo` | Sari Lestari | Mahasiswa |
+| `tini@wargakampus.demo` | Bu Tini | Pemilik usaha |
 
-Password semua akun demo: `KosPintar123!`
+Password semua akun demo: `WargaKampus123!`
 
 ## 7. Jalankan aplikasi
 

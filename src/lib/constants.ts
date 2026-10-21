@@ -1,13 +1,13 @@
 import type { Category, PostCategory, Profile, Role } from "./types";
 
 export const SITE = {
-  name: "KosPintar",
-  shortName: "KosPintar",
+  name: "WargaKampus",
+  shortName: "WargaKampus",
   campusName: "Institut Teknologi PLN",
   campusShort: "ITPLN",
   city: "Jakarta Barat",
   description:
-    "Peta komunitas untuk menemukan tempat makan, nongkrong, nugas, laundry, dan kebutuhan harian di sekitar ITPLN.",
+    "Peta komunitas warga kampus untuk menemukan tempat makan, nongkrong, nugas, laundry, dan kebutuhan harian di sekitar ITPLN.",
   campusSlug: "itpln",
   osmAttribution: "© OpenStreetMap contributors, ODbL",
   osmUrl: "https://www.openstreetmap.org/copyright",
@@ -79,8 +79,8 @@ export const APP_NAV = [
 
 export const DEMO_PROFILE: Profile = {
   id: "11111111-1111-4111-8111-111111111111",
-  name: "Admin KosPintar",
-  email: "demo@kospintar.local",
+  name: "Admin WargaKampus",
+  email: "demo@wargakampus.local",
   role: "admin",
   campus_id: "campus-itpln",
   avatar_url: null,

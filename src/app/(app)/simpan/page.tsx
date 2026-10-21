@@ -10,7 +10,7 @@ import { getSavedPosts } from "@/lib/data/posts";
 
 export const metadata: Metadata = {
   title: "Simpanan",
-  description: "Tempat dan postingan yang kamu simpan di KosPintar.",
+  description: "Tempat dan postingan yang kamu simpan di WargaKampus.",
 };
 
 export default async function SavedPage() {

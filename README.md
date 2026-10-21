@@ -1,6 +1,10 @@
-# KosPintar
+<p align="center">
+  <img src="public/wargakampus-mark.svg" alt="Logo WargaKampus" width="80" height="80" />
+</p>
 
-Peta komunitas untuk mahasiswa **Institut Teknologi PLN, Jakarta Barat**. Temukan tempat makan, nongkrong, nugas, laundry, fotokopi, dan kebutuhan harian. Data awal dari OpenStreetMap, dirawat oleh mahasiswa, dengan pin peta dan linimasa seperti media sosial.
+# WargaKampus
+
+WargaKampus adalah peta komunitas warga kampus untuk mahasiswa **Institut Teknologi PLN, Jakarta Barat**. Temukan tempat makan, nongkrong, nugas, laundry, fotokopi, dan kebutuhan harian. Data awal dari OpenStreetMap, dirawat oleh mahasiswa, dengan pin peta dan linimasa seperti media sosial.
 
 ## Status
 
@@ -19,7 +23,7 @@ Peta komunitas untuk mahasiswa **Institut Teknologi PLN, Jakarta Barat**. Temuka
 ## Menjalankan
 
 ```bash
-cd kospintar
+cd wargakampus   # atau folder tempat project ini disimpan
 npm install
 npm run dev
 ```
