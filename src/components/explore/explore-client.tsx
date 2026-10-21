@@ -139,7 +139,7 @@ export function ExploreClient({
           )}
           aria-label="Filter dan daftar tempat"
         >
-          <div className="min-w-0 border-b border-line bg-paper/95 px-4 py-4 backdrop-blur lg:sticky lg:top-0 lg:z-10">
+          <div className="min-w-0 border-b border-line bg-paper/95 px-4 py-4 backdrop-blur lg:sticky lg:top-16 lg:z-10">
             <label htmlFor="place-search" className="sr-only">
               Cari tempat
             </label>
@@ -325,7 +325,7 @@ export function ExploreClient({
           )}
           aria-label="Peta tempat"
         >
-          <div className="lg:sticky lg:top-0 lg:h-[calc(100dvh-0px)]">
+          <div className="lg:sticky lg:top-16 lg:h-[calc(100dvh-4rem)]">
             <PlaceMap
               places={filtered}
               selectedId={selectedId}

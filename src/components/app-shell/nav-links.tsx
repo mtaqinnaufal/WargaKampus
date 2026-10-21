@@ -16,7 +16,7 @@ export function NavLinks({
   variant = "top",
   isAdmin = false,
 }: {
-  variant?: "top" | "sidebar";
+  variant?: "top" | "sidebar" | "mobile";
   isAdmin?: boolean;
 }) {
   const pathname = usePathname();
@@ -25,18 +25,33 @@ export function NavLinks({
     : baseItems;
 
   return (
-    <ul className={variant === "sidebar" ? "space-y-1" : "flex items-center gap-1"}>
+    <ul
+      className={
+        variant === "sidebar"
+          ? "space-y-1"
+          : variant === "mobile"
+            ? "flex items-stretch gap-1"
+            : "flex items-center gap-1"
+      }
+    >
       {items.map((item) => {
         const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
         const Icon = item.icon;
         return (
-          <li key={item.href}>
+          <li
+            key={item.href}
+            className={variant === "mobile" ? "min-w-0 flex-1" : undefined}
+          >
             <Link
               href={item.href}
               aria-current={active ? "page" : undefined}
               className={cn(
                 "flex items-center gap-2.5 rounded-sm text-sm transition-colors",
-                variant === "sidebar" ? "px-3 py-2.5" : "px-3 py-2",
+                variant === "sidebar"
+                  ? "px-3 py-2.5"
+                  : variant === "mobile"
+                    ? "w-full flex-col justify-center gap-1 px-1 py-2 text-[11px]"
+                    : "px-3 py-2",
                 active
                   ? variant === "sidebar"
                     ? "bg-ink text-surface"

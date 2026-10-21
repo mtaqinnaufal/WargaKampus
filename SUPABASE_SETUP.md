@@ -100,7 +100,7 @@ set role = 'admin'
 where email = 'admin@kampus.ac.id';
 ```
 
-Ganti email sesuai akun admin. Setelah itu masuk ke aplikasi, menu **Admin** akan muncul di sidebar.
+Ganti email sesuai akun admin. Setelah itu masuk ke aplikasi, menu **Admin** akan muncul di navigasi atas.
 
 ## 6. Seed konten demo
 

@@ -1,7 +1,5 @@
+import { AppTopBar } from "@/components/app-shell/app-top-bar";
 import { DemoBanner } from "@/components/app-shell/demo-banner";
-import { AppSidebar } from "@/components/app-shell/app-sidebar";
-import { MobileNav } from "@/components/app-shell/mobile-nav";
-import { MobileTopBar } from "@/components/app-shell/mobile-top-bar";
 import { getCurrentUser } from "@/lib/auth";
 import { getDefaultCampus } from "@/lib/data/campuses";
 
@@ -21,23 +19,12 @@ export default async function AppLayout({
         Lewati ke konten
       </a>
 
-      <AppSidebar
-        profile={current.profile}
-        campus={campus}
-        isDemo={current.isDemo}
-      />
-      <MobileTopBar
-        profile={current.profile}
-        campus={campus}
-        isDemo={current.isDemo}
-      />
+      <AppTopBar profile={current.profile} campus={campus} />
+      <DemoBanner isDemo={current.isDemo} />
 
-      <main id="main" className="min-h-dvh lg:pl-[248px]">
-        <DemoBanner isDemo={current.isDemo} />
-        <div className="pb-24 lg:pb-0">{children}</div>
+      <main id="main" className="min-h-dvh">
+        {children}
       </main>
-
-      <MobileNav />
     </div>
   );
 }

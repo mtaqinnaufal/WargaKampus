@@ -106,6 +106,8 @@ export default function MapInner({
             key={place.id}
             position={[place.latitude, place.longitude]}
             icon={createIcon(place, active)}
+            interactive={interactive}
+            title={place.name}
             eventHandlers={
               interactive && onSelect
                 ? {

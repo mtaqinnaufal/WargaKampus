@@ -10,7 +10,8 @@ import {
 } from "lucide-react";
 import { PlaceMap } from "@/components/map/place-map";
 import { PostPreview } from "@/components/feed/post-preview";
-import { PlaceTile } from "@/components/places/place-tile";
+import { PlaceCarousel } from "@/components/places/place-carousel";
+import { Reveal } from "@/components/reveal";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { Badge } from "@/components/ui/badge";
@@ -41,6 +42,14 @@ export default async function HomePage() {
     .sort((a, b) => b.rating_avg - a.rating_avg || b.review_count - a.review_count)
     .slice(0, 8);
 
+  const carouselPlaces = [...allPlaces]
+    .sort((a, b) => b.rating_avg - a.rating_avg || b.review_count - a.review_count)
+    .filter(
+      (place, index, list) =>
+        list.findIndex((item) => item.category.slug === place.category.slug) === index,
+    )
+    .slice(0, 6);
+
   const featured = places[0];
   const contributors = new Set(posts.map((post) => post.author.id)).size;
 
@@ -62,8 +71,8 @@ export default async function HomePage() {
               <span>Data komunitas</span>
             </div>
 
-            <h1 className="mt-5 max-w-[12ch] font-display text-[clamp(3.2rem,7.4vw,6.4rem)] font-bold leading-[0.9] tracking-[-0.055em] text-ink">
-              Jakarta Barat, versi mahasiswa.
+            <h1 className="mt-5 max-w-[15ch] font-display text-[clamp(3.2rem,7.4vw,6.4rem)] font-bold leading-[0.9] tracking-[-0.055em] text-ink">
+              Tahu Tempatnya Sebelum Berangkat
             </h1>
 
             <p className="mt-6 max-w-[54ch] text-lg leading-relaxed text-ink-soft">
@@ -190,7 +199,7 @@ export default async function HomePage() {
         </section>
 
         <section className="border-y border-line bg-surface/45">
-          <div className="container-page grid gap-8 py-12 lg:grid-cols-[0.8fr_1.2fr] lg:py-16">
+          <Reveal className="container-page grid gap-8 py-12 lg:grid-cols-[0.8fr_1.2fr] lg:py-16">
             <div>
               <h2 className="max-w-[15ch] font-display text-3xl font-bold leading-tight sm:text-4xl">
                 Tiga langkah, tanpa ribet.
@@ -235,11 +244,11 @@ export default async function HomePage() {
                 );
               })}
             </ol>
-          </div>
+          </Reveal>
         </section>
 
         <section className="container-page py-12 lg:py-16">
-          <div className="grid gap-8 lg:grid-cols-[0.75fr_1.25fr]">
+          <Reveal className="grid gap-8 lg:grid-cols-[0.75fr_1.25fr]">
             <div>
               <h2 className="max-w-[12ch] font-display text-3xl font-bold leading-tight sm:text-4xl">
                 Lagi rame di sekitar kampus.
@@ -271,11 +280,11 @@ export default async function HomePage() {
                 </div>
               )}
             </div>
-          </div>
+          </Reveal>
         </section>
 
         <section className="border-t border-line">
-          <div className="container-page py-12 lg:py-16">
+          <Reveal className="container-page py-12 lg:py-16">
             <div className="flex flex-wrap items-end justify-between gap-4">
               <div>
                 <h2 className="font-display text-3xl font-bold leading-tight sm:text-4xl">
@@ -295,23 +304,19 @@ export default async function HomePage() {
               </Link>
             </div>
 
-            <div className="mt-8 grid gap-x-8 md:grid-cols-2">
-              {places.slice(0, 4).map((place, index) => (
-                <PlaceTile
-                  key={place.id}
-                  place={place}
-                  featured={index === 0}
-                  className={index === 0 ? "md:col-span-2" : undefined}
-                />
-              ))}
+            <div className="mt-8">
+              <PlaceCarousel places={carouselPlaces} />
+              <p className="mt-3 font-mono text-[10px] leading-relaxed text-muted">
+                Foto kategori adalah ilustrasi, bukan foto tempat.
+              </p>
             </div>
-          </div>
+          </Reveal>
         </section>
 
         <section className="bg-ink text-surface">
           <div className="container-page relative overflow-hidden py-12 lg:py-16">
             <div className="grid-paper absolute inset-0 opacity-[0.08]" aria-hidden="true" />
-            <div className="relative grid gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
+            <Reveal className="relative grid gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
               <div>
                 <h2 className="max-w-[16ch] font-display text-3xl font-bold leading-tight sm:text-4xl">
                   Punya tempat yang belum ada di peta?
@@ -340,7 +345,7 @@ export default async function HomePage() {
                   Buka peta
                 </Link>
               </div>
-            </div>
+            </Reveal>
             <div className="relative mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-surface/80">
               <span className="flex items-center gap-1.5">
                 <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" />

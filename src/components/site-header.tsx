@@ -32,9 +32,6 @@ export function SiteHeader({
           <Link href="/linimasa" className="rounded-sm px-3 py-2 text-sm text-ink-soft hover:bg-paper-deep">
             Linimasa
           </Link>
-          <Link href="/setup" className="rounded-sm px-3 py-2 text-sm text-ink-soft hover:bg-paper-deep">
-            Panduan
-          </Link>
         </nav>
 
         <div className="flex items-center gap-2">
