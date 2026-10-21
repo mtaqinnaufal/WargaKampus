@@ -130,6 +130,21 @@ const postSeeds = [
     ],
     likes: ["rania@wargakampus.demo", "dimas@wargakampus.demo"],
   },
+  {
+    key: "promo-warung-tini",
+    author: "tini@wargakampus.demo",
+    placeSlug: "warung-bu-tini",
+    category: "promo",
+    body: "Warung Bu Tini buka sampai jam 9 malam. Hari ini ada paket ayam bakar + sayur + es teh Rp20 ribu. Dekat dari kampus, parkir motor di depan warung. Tunjukkan halaman WargaKampus untuk dapat harga paket.",
+    photos: [
+      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80",
+    ],
+    comments: [
+      { author: "rania@wargakampus.demo", body: "Mantap, besok saya mampir setelah kelas." },
+      { author: "dimas@wargakampus.demo", body: "Paketnya cocok untuk makan siang. Bisa bungkus?" },
+    ],
+    likes: ["rania@wargakampus.demo", "sari@wargakampus.demo"],
+  },
 ];
 
 const reviewSeeds = [
@@ -145,6 +160,131 @@ const reviewSeeds = [
   { email: "sari@wargakampus.demo", placeSlug: "super-indo", rating: 4, body: "Lengkap untuk belanja kebutuhan kos. Sering ada promo telur dan minyak." },
   { email: "rania@wargakampus.demo", placeSlug: "rajawali-foto", rating: 5, body: "Cetak dan jilid cepat. Buka sampai malam, jadi bisa ambil setelah kelas." },
   { email: "dimas@wargakampus.demo", placeSlug: "spar", rating: 4, body: "Pilihan buah dan sayur lebih banyak daripada minimarket. Harga cukup bersaing." },
+  { email: "tini@wargakampus.demo", placeSlug: "super-indo", rating: 5, body: "Belanja bahan warung di sini. Harga telur dan minyak cukup bersaing, tapi datang pagi supaya stoknya lengkap." },
+];
+
+const demoPlaces = [
+  {
+    slug: "warung-bu-tini",
+    name: "Warung Bu Tini",
+    categorySlug: "makan",
+    description:
+      "Warung nasi rumahan dengan ayam bakar, sayur, dan sambal khas. Porsi cukup untuk makan siang mahasiswa.",
+    address: "Jl. Duri Kosambi Raya, Cengkareng, Jakarta Barat",
+    latitude: -6.16762,
+    longitude: 106.72591,
+    price_min: 10000,
+    price_max: 25000,
+    price_level: 1,
+    open_hours: { "Senin-Sabtu": "10.00-21.00" },
+    facilities: ["Makan di tempat", "Halal", "Parkir"],
+    status: "verified",
+    creator: "tini@wargakampus.demo",
+    owner: "tini@wargakampus.demo",
+    isClaimed: true,
+    daysAgo: 12,
+  },
+  {
+    slug: "katering-bu-tini",
+    name: "Katering Bu Tini",
+    categorySlug: "makan",
+    description:
+      "Katering harian untuk anak kos dan acara kecil. Pesan minimal lima porsi, bisa antar ke sekitar kampus.",
+    address: "Jl. Duri Kosambi, Cengkareng, Jakarta Barat",
+    latitude: -6.16911,
+    longitude: 106.72822,
+    price_min: 12000,
+    price_max: 30000,
+    price_level: 1,
+    open_hours: { "Senin-Jumat": "07.00-17.00" },
+    facilities: ["Halal", "Antar-jemput", "Pesan dulu"],
+    status: "verified",
+    creator: "tini@wargakampus.demo",
+    owner: "tini@wargakampus.demo",
+    isClaimed: true,
+    daysAgo: 10,
+  },
+  {
+    slug: "kedai-kopi-rania",
+    name: "Kedai Kopi Rania",
+    categorySlug: "nongkrong",
+    description:
+      "Kedai kopi kecil dengan meja kerja, WiFi, dan colokan. Cocok untuk nugas sore. Menunggu verifikasi admin.",
+    address: "Jl. Lingkar Luar Barat, Duri Kosambi, Jakarta Barat",
+    latitude: -6.1669,
+    longitude: 106.7274,
+    price_min: 15000,
+    price_max: 35000,
+    price_level: 2,
+    open_hours: { "Setiap hari": "09.00-22.00" },
+    facilities: ["WiFi", "Colokan", "AC"],
+    status: "pending",
+    creator: "rania@wargakampus.demo",
+    owner: null,
+    isClaimed: false,
+    daysAgo: 2,
+  },
+  {
+    slug: "laundry-kilat-dimas",
+    name: "Laundry Kilat Dimas",
+    categorySlug: "laundry",
+    description:
+      "Laundry kiloan dengan layanan express enam jam dan antar-jemput. Menunggu verifikasi admin.",
+    address: "Jl. Duri Kosambi Raya, Cengkareng, Jakarta Barat",
+    latitude: -6.1703,
+    longitude: 106.7248,
+    price_min: 6000,
+    price_max: 12000,
+    price_level: 1,
+    open_hours: { "Setiap hari": "07.00-21.00" },
+    facilities: ["Kiloan", "Express", "Antar-jemput"],
+    status: "pending",
+    creator: "dimas@wargakampus.demo",
+    owner: null,
+    isClaimed: false,
+    daysAgo: 1,
+  },
+];
+
+const reportSeeds = [
+  {
+    reporter: "dimas@wargakampus.demo",
+    targetType: "post",
+    targetKey: "promo-superindo",
+    reason: "Promo telur ini sudah tidak berlaku saat saya datang. Harga di rak berbeda dari postingan.",
+    hoursAgo: 2,
+  },
+  {
+    reporter: "rania@wargakampus.demo",
+    targetType: "place",
+    targetKey: "warung-bu-tini",
+    reason: "Pin Warung Bu Tini di peta bergeser sedikit ke arah jalan utama. Mohon dicek alamatnya.",
+    hoursAgo: 5,
+  },
+];
+
+const auditSeeds = [
+  {
+    action: "place.verify",
+    targetType: "place",
+    targetKey: "warung-bu-tini",
+    note: "Data Warung Bu Tini diverifikasi.",
+    hoursAgo: 8,
+  },
+  {
+    action: "report.review",
+    targetType: "report",
+    targetKey: "first-report",
+    note: "Laporan promo ditinjau, menunggu konfirmasi.",
+    hoursAgo: 3,
+  },
+  {
+    action: "profile.role_update",
+    targetType: "user",
+    targetKey: "tini@wargakampus.demo",
+    note: "Peran Bu Tini diubah menjadi pemilik usaha.",
+    hoursAgo: 12,
+  },
 ];
 
 function fail(message) {
@@ -190,15 +330,6 @@ async function main() {
   if (campusError) fail(campusError.message);
   if (!campus) fail("Kampus ITPLN tidak ditemukan. Jalankan supabase/seed.sql terlebih dahulu.");
 
-  const { data: places, error: placesError } = await supabase
-    .from("places")
-    .select("id, slug, name")
-    .eq("campus_id", campus.id);
-
-  if (placesError) fail(placesError.message);
-  if (!places?.length) fail("Tempat belum ada. Jalankan supabase/seed.sql terlebih dahulu.");
-
-  const placeBySlug = new Map(places.map((place) => [place.slug, place]));
   const usersByEmail = new Map();
 
   for (const definition of demoUsers) {
@@ -222,6 +353,65 @@ async function main() {
   }
 
   const userIds = [...usersByEmail.values()].map((user) => user.id);
+
+  const { data: categories, error: categoriesError } = await supabase
+    .from("place_categories")
+    .select("id, slug");
+  if (categoriesError) fail(categoriesError.message);
+
+  const categoryBySlug = new Map(
+    (categories ?? []).map((category) => [category.slug, category]),
+  );
+
+  const placeRows = demoPlaces.map((seed) => {
+    const category = categoryBySlug.get(seed.categorySlug);
+    const creator = usersByEmail.get(seed.creator);
+    const owner = seed.owner ? usersByEmail.get(seed.owner) : null;
+
+    if (!category) {
+      fail(`kategori ${seed.categorySlug} tidak ditemukan. Jalankan supabase/seed.sql.`);
+    }
+    if (!creator) fail(`pembuat tempat ${seed.creator} tidak ditemukan.`);
+
+    return {
+      campus_id: campus.id,
+      category_id: category.id,
+      name: seed.name,
+      slug: seed.slug,
+      description: seed.description,
+      address: seed.address,
+      latitude: seed.latitude,
+      longitude: seed.longitude,
+      price_min: seed.price_min,
+      price_max: seed.price_max,
+      price_level: seed.price_level,
+      open_hours: seed.open_hours,
+      facilities: seed.facilities,
+      status: seed.status,
+      is_claimed: seed.isClaimed ?? false,
+      created_by: creator.id,
+      owner_id: owner?.id ?? null,
+      osm_id: null,
+      source: "user",
+      created_at: new Date(Date.now() - seed.daysAgo * 24 * 60 * 60 * 1000).toISOString(),
+    };
+  });
+
+  const { error: placeSeedError } = await supabase
+    .from("places")
+    .upsert(placeRows, { onConflict: "slug" });
+  if (placeSeedError) fail(`menyiapkan tempat demo: ${placeSeedError.message}`);
+  console.log(`  place ${demoPlaces.length} demo (pemilik + antrean admin)`);
+
+  const { data: places, error: placesError } = await supabase
+    .from("places")
+    .select("id, slug, name")
+    .eq("campus_id", campus.id);
+
+  if (placesError) fail(placesError.message);
+  if (!places?.length) fail("Tempat belum ada. Jalankan supabase/seed.sql terlebih dahulu.");
+
+  const placeBySlug = new Map(places.map((place) => [place.slug, place]));
 
   await supabase.from("posts").delete().in("user_id", userIds);
   await supabase.from("place_reviews").delete().in("user_id", userIds);
@@ -301,6 +491,76 @@ async function main() {
     );
 
     if (error) fail(`menambahkan ulasan ${seed.placeSlug}: ${error.message}`);
+  }
+
+  await supabase.from("reports").delete().in("reporter_id", userIds);
+
+  const reportIds = [];
+  for (const seed of reportSeeds) {
+    const reporter = usersByEmail.get(seed.reporter);
+    const targetId =
+      seed.targetType === "post"
+        ? postsByKey.get(seed.targetKey)
+        : placeBySlug.get(seed.targetKey)?.id;
+
+    if (!reporter || !targetId) continue;
+
+    const { data: report, error } = await supabase
+      .from("reports")
+      .insert({
+        reporter_id: reporter.id,
+        target_type: seed.targetType,
+        target_id: targetId,
+        reason: seed.reason,
+        status: "open",
+        created_at: new Date(
+          Date.now() - seed.hoursAgo * 60 * 60 * 1000,
+        ).toISOString(),
+      })
+      .select("id")
+      .single();
+
+    if (error) fail(`membuat laporan demo: ${error.message}`);
+    reportIds.push(report.id);
+  }
+  console.log(`  report ${reportIds.length} demo`);
+
+  const admin = usersByEmail.get("admin@wargakampus.demo");
+  if (admin) {
+    await supabase.from("audit_logs").delete().eq("admin_id", admin.id);
+
+    const auditRows = auditSeeds
+      .map((seed) => {
+        let targetId = null;
+
+        if (seed.targetType === "report") {
+          targetId = reportIds[0] ?? null;
+        } else if (seed.targetType === "user") {
+          targetId = usersByEmail.get(seed.targetKey)?.id ?? null;
+        } else {
+          targetId = placeBySlug.get(seed.targetKey)?.id ?? null;
+        }
+
+        if (!targetId) return null;
+
+        return {
+          admin_id: admin.id,
+          action: seed.action,
+          target_type: seed.targetType,
+          target_id: targetId,
+          note: seed.note,
+          created_at: new Date(
+            Date.now() - seed.hoursAgo * 60 * 60 * 1000,
+          ).toISOString(),
+        };
+      })
+      .filter(Boolean);
+
+    if (auditRows.length > 0) {
+      const { error } = await supabase.from("audit_logs").insert(auditRows);
+      if (error) fail(`membuat audit log demo: ${error.message}`);
+    }
+    console.log(`  audit ${auditRows.length} demo`);
   }
 
   // A few saved items for the mahasiswa demo account so the Simpan page is not empty.

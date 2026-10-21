@@ -62,7 +62,7 @@ export default async function HomePage() {
       />
 
       <main id="main">
-        <section className="container-page grid gap-10 py-10 lg:grid-cols-[1.02fr_0.98fr] lg:items-center lg:py-16">
+        <section className="container-page grid gap-10 py-10 lg:grid-cols-[1.02fr_0.98fr] lg:items-start lg:py-16">
           <div className="reveal">
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] text-muted">
               <span className="flex items-center gap-1.5">
@@ -167,7 +167,7 @@ export default async function HomePage() {
                       places={places.slice(0, 8)}
                       interactive={false}
                       fitToPlaces
-                      height="h-[320px] sm:h-[360px] lg:h-[clamp(300px,42vh,440px)]"
+                      height="h-[320px] sm:h-[360px] lg:h-[clamp(340px,46vh,460px)]"
                       className="rounded-none border-0"
                       ariaLabel="Pratinjau peta tempat di sekitar Institut Teknologi PLN"
                     />

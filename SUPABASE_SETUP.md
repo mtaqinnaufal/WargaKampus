@@ -104,7 +104,7 @@ Ganti email sesuai akun admin. Setelah itu masuk ke aplikasi, menu **Admin** aka
 
 ## 6. Seed konten demo
 
-Script ini membuat empat akun demo, enam postingan, komentar, like, dan dua belas ulasan:
+Script ini membuat lima akun demo, tujuh postingan, komentar, like, tiga belas ulasan, empat tempat demo, dua laporan, dan tiga audit log. Dua tempat menjadi milik akun pemilik usaha; dua lainnya masuk antrean verifikasi admin.
 
 ```bash
 npm run seed:demo

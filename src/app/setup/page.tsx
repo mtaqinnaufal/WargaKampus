@@ -134,7 +134,7 @@ export default async function SetupPage() {
               {adminSql}
             </pre>
             <p className="mt-2 text-xs leading-relaxed text-muted">
-              Setelah role admin, masuk ke aplikasi dan buka menu Admin di sidebar.
+              Setelah role admin, masuk ke aplikasi dan buka menu Admin di navigasi atas.
             </p>
           </div>
 
