@@ -150,6 +150,12 @@
   }
 }
 
+/* Native demo-account dialog. */
+.demo-dialog::backdrop {
+  background: rgba(11, 26, 40, 0.55);
+  backdrop-filter: blur(2px);
+}
+
 /* Leaflet: keep the map in the same material language as the rest of the app. */
 .leaflet-container {
   font-family: var(--font-sans);

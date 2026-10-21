@@ -43,7 +43,7 @@ Jalankan `npm run seed:demo` sekali. Akun yang dibuat:
 | Pemilik usaha | `tini@wargakampus.demo` | `WargaKampus123!` |
 | Admin | `admin@wargakampus.demo` | `WargaKampus123!` |
 
-Seed juga membuat `dimas@wargakampus.demo` dan `sari@wargakampus.demo` sebagai kontributor tambahan. Halaman `/masuk` menampilkan tombol **Masuk cepat sebagai demo** untuk tiga role utama. Set `DEMO_LOGIN_ENABLED=false` di production.
+Seed juga membuat `dimas@wargakampus.demo` dan `sari@wargakampus.demo` sebagai kontributor tambahan. Halaman `/masuk` menampilkan tombol **Login Cepat Akun Demo** yang membuka popup berisi tiga akun utama. Set `DEMO_LOGIN_ENABLED=false` di production.
 
 ## Script
 
@@ -109,11 +109,11 @@ Environment variables yang perlu diisi di Vercel:
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` atau `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `NEXT_PUBLIC_SITE_URL=https://domain-vercel-anda`
-- `DEMO_LOGIN_ENABLED=true` untuk mengaktifkan quick login demo
+- `DEMO_LOGIN_ENABLED=true` untuk mengaktifkan tombol **Login Cepat Akun Demo**
 
 Jangan menaruh `SUPABASE_SECRET_KEY` di Vercel; key itu hanya untuk `npm run seed:demo` di lokal. Setelah mengubah environment variables, lakukan **Redeploy** karena variabel `NEXT_PUBLIC_*` dibaca saat build.
 
-Quick login ada di `/masuk`, di bawah form login. Kalau tidak terlihat, pastikan deployment memakai commit terbaru dan `DEMO_LOGIN_ENABLED` bukan `false`.
+Tombol **Login Cepat Akun Demo** ada di `/masuk`, di bawah form login, dan membuka popup berisi tiga akun. Kalau tidak terlihat, pastikan deployment memakai commit terbaru dan `DEMO_LOGIN_ENABLED` bukan `false`.
 
 ## Batasan
 

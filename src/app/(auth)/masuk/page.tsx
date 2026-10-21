@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { DemoLoginButtons } from "@/components/auth/demo-login-buttons";
+import { DemoLoginDialog } from "@/components/auth/demo-login-dialog";
 import { SignInForm } from "@/components/auth/sign-in-form";
 import { getCurrentUser } from "@/lib/auth";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
@@ -32,7 +32,7 @@ export default async function SignInPage() {
 
       {demoLoginEnabled ? (
         <div className="mt-8 border-t border-line pt-6">
-          <DemoLoginButtons />
+          <DemoLoginDialog />
         </div>
       ) : null}
 

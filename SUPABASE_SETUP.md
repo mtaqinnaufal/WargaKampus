@@ -124,7 +124,7 @@ Akun demo:
 
 Password semua akun demo: `WargaKampus123!`
 
-Halaman `/masuk` juga punya tombol **Masuk cepat sebagai demo** untuk tiga role utama. Set `DEMO_LOGIN_ENABLED=false` di production.
+Halaman `/masuk` punya tombol **Login Cepat Akun Demo** yang membuka popup berisi tiga akun utama. Set `DEMO_LOGIN_ENABLED=false` di production.
 
 ## 7. Jalankan aplikasi
 
