@@ -55,6 +55,21 @@ function MapFocus({ place }: { place: Place | null }) {
   return null;
 }
 
+function KeepMapSized() {
+  const map = useMap();
+
+  useEffect(() => {
+    const container = map.getContainer();
+    const observer = new ResizeObserver(() => {
+      map.invalidateSize();
+    });
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, [map]);
+
+  return null;
+}
+
 function FitBounds({ places }: { places: Place[] }) {
   const map = useMap();
   const ids = places.map((place) => place.id).join("|");
@@ -145,6 +160,7 @@ export default function MapInner({
 
       {fitToPlaces ? <FitBounds places={places} /> : null}
       {interactive && selected ? <MapFocus place={selected} /> : null}
+      <KeepMapSized />
     </MapContainer>
   );
 }

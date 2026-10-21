@@ -85,7 +85,7 @@ export function ExploreClient({
 
   return (
     <div className="container-page py-6 lg:py-8">
-      <div className="flex flex-col gap-3 border-b border-line pb-5 lg:flex-row lg:items-end lg:justify-between">
+      <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <div className="flex flex-wrap items-center gap-2">
             <span className="h-2 w-2 rounded-full bg-signal" aria-hidden="true" />
@@ -131,211 +131,235 @@ export function ExploreClient({
         </div>
       </div>
 
-      <div className="mt-0 grid min-w-0 grid-cols-1 gap-0 lg:grid-cols-[380px_1fr] lg:border-x lg:border-line">
-        <section
-          className={cn(
-            "min-w-0 border-b border-line bg-paper lg:border-b-0 lg:border-r",
-            mobileView === "map" && "hidden lg:block",
-          )}
-          aria-label="Filter dan daftar tempat"
-        >
-          <div className="min-w-0 border-b border-line bg-paper/95 px-4 py-4 backdrop-blur lg:sticky lg:top-16 lg:z-10">
-            <label htmlFor="place-search" className="sr-only">
-              Cari tempat
-            </label>
-            <div className="relative">
-              <Search
-                className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted"
-                aria-hidden="true"
-              />
-              <Input
-                id="place-search"
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder="Cari nama, kategori, fasilitas"
-                type="search"
-                className="pl-9"
-              />
-            </div>
+      <div className="mt-5 rounded-md border border-line bg-surface p-4 shadow-[0_1px_2px_rgba(11,26,40,0.04)] sm:p-5">
+        <label htmlFor="place-search" className="sr-only">
+          Cari tempat
+        </label>
+        <div className="relative">
+          <Search
+            className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted"
+            aria-hidden="true"
+          />
+          <Input
+            id="place-search"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Cari nama, kategori, fasilitas"
+            type="search"
+            className="h-11 pl-9"
+          />
+        </div>
 
-            <div className="no-scrollbar mt-3 flex gap-2 overflow-x-auto pb-1">
-              <button
-                type="button"
-                onClick={() => setCategory(ALL)}
-                aria-pressed={category === ALL}
-                className={cn(
-                  "shrink-0 rounded-xs border px-2.5 py-1.5 text-xs font-medium",
-                  category === ALL
-                    ? "border-ink bg-signal text-ink"
-                    : "border-line bg-surface text-muted",
-                )}
-              >
-                Semua
-              </button>
-              {categories.map((item) => (
+        <div
+          className="no-scrollbar mt-3 flex gap-2 overflow-x-auto pb-1"
+          role="group"
+          aria-label="Filter kategori"
+        >
+          <button
+            type="button"
+            onClick={() => setCategory(ALL)}
+            aria-pressed={category === ALL}
+            className={cn(
+              "shrink-0 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors",
+              category === ALL
+                ? "border-ink bg-signal text-ink"
+                : "border-line bg-surface text-muted hover:border-ink/40 hover:text-ink",
+            )}
+          >
+            Semua
+          </button>
+          {categories.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => setCategory(item.slug)}
+              aria-pressed={category === item.slug}
+              className={cn(
+                "shrink-0 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors",
+                category === item.slug
+                  ? "border-ink bg-signal text-ink"
+                  : "border-line bg-surface text-muted hover:border-ink/40 hover:text-ink",
+              )}
+            >
+              {item.name}
+            </button>
+          ))}
+        </div>
+
+        <details className="mt-3 border-t border-line pt-3">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-xs font-medium text-ink">
+            <span className="inline-flex items-center gap-2">
+              <SlidersHorizontal className="h-3.5 w-3.5" aria-hidden="true" />
+              Filter lain
+              {activeFilters > 0 ? (
+                <span className="rounded-full bg-ink px-1.5 py-0.5 font-mono text-[10px] text-surface">
+                  {activeFilters}
+                </span>
+              ) : null}
+            </span>
+            <span className="font-mono text-[10px] text-muted">{filtered.length} hasil</span>
+          </summary>
+
+          <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <fieldset>
+              <legend className="text-xs font-medium text-ink">Harga</legend>
+              <div className="mt-2 flex flex-wrap gap-2">
                 <button
-                  key={item.id}
                   type="button"
-                  onClick={() => setCategory(item.slug)}
-                  aria-pressed={category === item.slug}
+                  onClick={() => setPriceLevel(null)}
+                  aria-pressed={priceLevel === null}
                   className={cn(
-                    "shrink-0 rounded-xs border px-2.5 py-1.5 text-xs font-medium",
-                    category === item.slug
-                      ? "border-ink bg-signal text-ink"
-                      : "border-line bg-surface text-muted",
+                    "rounded-full border px-2.5 py-1.5 text-xs transition-colors",
+                    priceLevel === null
+                      ? "border-ink bg-paper-deep text-ink"
+                      : "border-line text-muted hover:border-ink/40 hover:text-ink",
                   )}
                 >
-                  {item.name}
+                  Semua
                 </button>
-              ))}
+                {PRICE_LEVELS.slice(0, 3).map((level) => (
+                  <button
+                    key={level.value}
+                    type="button"
+                    onClick={() => setPriceLevel(level.value)}
+                    aria-pressed={priceLevel === level.value}
+                    className={cn(
+                      "rounded-full border px-2.5 py-1.5 text-xs transition-colors",
+                      priceLevel === level.value
+                        ? "border-ink bg-paper-deep text-ink"
+                        : "border-line text-muted hover:border-ink/40 hover:text-ink",
+                    )}
+                  >
+                    {level.label}
+                  </button>
+                ))}
+              </div>
+            </fieldset>
+
+            <div>
+              <label htmlFor="distance-filter" className="text-xs font-medium text-ink">
+                Jarak maksimum
+              </label>
+              <select
+                id="distance-filter"
+                value={maxDistance ?? ""}
+                onChange={(event) =>
+                  setMaxDistance(event.target.value ? Number(event.target.value) : null)
+                }
+                className="mt-2 h-10 w-full rounded-sm border border-line bg-surface px-3 text-sm text-ink"
+              >
+                <option value="">Semua jarak</option>
+                <option value="1">1 km</option>
+                <option value="2">2 km</option>
+                <option value="3">3 km</option>
+                <option value="5">5 km</option>
+              </select>
             </div>
 
-            <details className="mt-3 border-t border-line pt-3">
-              <summary className="flex cursor-pointer list-none items-center justify-between text-xs font-medium text-ink">
-                <span className="inline-flex items-center gap-2">
-                  <SlidersHorizontal className="h-3.5 w-3.5" aria-hidden="true" />
-                  Filter lain
-                  {activeFilters > 0 ? (
-                    <span className="rounded-xs bg-ink px-1.5 py-0.5 font-mono text-[10px] text-surface">
-                      {activeFilters}
-                    </span>
-                  ) : null}
-                </span>
-                <span className="text-muted">{filtered.length} hasil</span>
-              </summary>
+            <div>
+              <label htmlFor="facility-filter" className="text-xs font-medium text-ink">
+                Fasilitas
+              </label>
+              <select
+                id="facility-filter"
+                value={facility ?? ""}
+                onChange={(event) => setFacility(event.target.value || null)}
+                className="mt-2 h-10 w-full rounded-sm border border-line bg-surface px-3 text-sm text-ink"
+              >
+                <option value="">Semua fasilitas</option>
+                {facilityOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-              <div className="mt-4 space-y-4">
-                <fieldset>
-                  <legend className="text-xs font-medium text-ink">Harga</legend>
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setPriceLevel(null)}
-                      aria-pressed={priceLevel === null}
-                      className={cn(
-                        "rounded-xs border px-2.5 py-1.5 text-xs",
-                        priceLevel === null
-                          ? "border-ink bg-paper-deep text-ink"
-                          : "border-line text-muted",
-                      )}
-                    >
-                      Semua
-                    </button>
-                    {PRICE_LEVELS.slice(0, 3).map((level) => (
-                      <button
-                        key={level.value}
-                        type="button"
-                        onClick={() => setPriceLevel(level.value)}
-                        aria-pressed={priceLevel === level.value}
-                        className={cn(
-                          "rounded-xs border px-2.5 py-1.5 text-xs",
-                          priceLevel === level.value
-                            ? "border-ink bg-paper-deep text-ink"
-                            : "border-line text-muted",
-                        )}
-                      >
-                        {level.label}
-                      </button>
-                    ))}
-                  </div>
-                </fieldset>
-
-                <div>
-                  <label htmlFor="distance-filter" className="text-xs font-medium text-ink">
-                    Jarak maksimum
-                  </label>
-                  <select
-                    id="distance-filter"
-                    value={maxDistance ?? ""}
-                    onChange={(event) =>
-                      setMaxDistance(event.target.value ? Number(event.target.value) : null)
-                    }
-                    className="mt-2 h-10 w-full rounded-sm border border-line bg-surface px-3 text-sm text-ink"
-                  >
-                    <option value="">Semua jarak</option>
-                    <option value="1">1 km</option>
-                    <option value="2">2 km</option>
-                    <option value="3">3 km</option>
-                    <option value="5">5 km</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label htmlFor="facility-filter" className="text-xs font-medium text-ink">
-                    Fasilitas
-                  </label>
-                  <select
-                    id="facility-filter"
-                    value={facility ?? ""}
-                    onChange={(event) => setFacility(event.target.value || null)}
-                    className="mt-2 h-10 w-full rounded-sm border border-line bg-surface px-3 text-sm text-ink"
-                  >
-                    <option value="">Semua fasilitas</option>
-                    {facilityOptions.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <Button type="button" variant="outline" size="sm" onClick={resetFilters}>
-                  <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
-                  Reset filter
-                </Button>
-              </div>
-            </details>
+            <div className="flex items-end">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={resetFilters}
+                className="w-full"
+              >
+                <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
+                Reset filter
+              </Button>
+            </div>
           </div>
+        </details>
+      </div>
 
-          <div>
-            <h2 className="sr-only">Daftar tempat</h2>
-            <p className="border-b border-line px-4 py-2 font-mono text-[10px] text-muted" role="status">
-              {filtered.length} tempat · urut dari yang terdekat
-            </p>
-
-            {filtered.length > 0 ? (
-              filtered.map((place) => (
-                <PlaceRow
-                  key={place.id}
-                  place={place}
-                  active={selectedId === place.id}
-                  onHover={setSelectedId}
-                />
-              ))
-            ) : (
-              <div className="p-4">
-                <EmptyState
-                  title="Belum ada yang cocok"
-                  description="Coba hapus satu filter atau cari kata yang lebih umum, misalnya nama kategori."
-                  action={
-                    <Button type="button" variant="outline" size="sm" onClick={resetFilters}>
-                      Hapus semua filter
-                    </Button>
-                  }
-                />
-              </div>
-            )}
-          </div>
-        </section>
-
+      <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_360px]">
         <section
-          className={cn(
-            "relative min-h-[420px] lg:min-h-0",
-            mobileView === "list" && "hidden lg:block",
-          )}
+          className={cn("min-w-0", mobileView === "list" && "hidden lg:block")}
           aria-label="Peta tempat"
         >
-          <div className="lg:sticky lg:top-16 lg:h-[calc(100dvh-4rem)]">
+          <div className="relative h-[380px] overflow-hidden rounded-md border border-line bg-surface shadow-[0_1px_2px_rgba(11,26,40,0.04)] sm:h-[440px] lg:h-[560px]">
             <PlaceMap
               places={filtered}
               selectedId={selectedId}
               onSelect={setSelectedId}
-              height="h-[420px] lg:h-full"
-              className="rounded-none border-0 lg:rounded-none"
+              height="h-full"
+              className="h-full rounded-none border-0"
               ariaLabel="Peta tempat terverifikasi di sekitar kampus"
             />
+            <div
+              className="pointer-events-none absolute right-3 top-3 z-[500] flex items-center gap-2 rounded-full border border-line bg-surface/95 px-2.5 py-1 font-mono text-[10px] text-muted shadow-sm backdrop-blur"
+              aria-hidden="true"
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-signal" aria-hidden="true" />
+              {filtered.length} tempat
+            </div>
             <div className="pointer-events-none absolute bottom-3 left-3 z-[500] rounded-sm border border-line bg-surface/95 px-2 py-1 font-mono text-[10px] text-muted">
               {SITE.osmAttribution}
+            </div>
+          </div>
+        </section>
+
+        <section
+          className={cn("min-w-0", mobileView === "map" && "hidden lg:block")}
+          aria-label="Daftar tempat"
+        >
+          <div className="flex flex-col overflow-hidden rounded-md border border-line bg-surface shadow-[0_1px_2px_rgba(11,26,40,0.04)] lg:h-[560px]">
+            <div className="flex items-center justify-between gap-3 border-b border-line px-4 py-3">
+              <div>
+                <h2 className="font-display text-lg font-semibold leading-tight">
+                  Daftar tempat
+                </h2>
+                <p className="mt-0.5 font-mono text-[10px] text-muted" role="status">
+                  {filtered.length} tempat · urut dari yang terdekat
+                </p>
+              </div>
+              <Badge variant="outline" className="shrink-0">
+                Terdekat
+              </Badge>
+            </div>
+
+            <div className="min-h-0 flex-1 overflow-y-auto">
+              {filtered.length > 0 ? (
+                filtered.map((place) => (
+                  <PlaceRow
+                    key={place.id}
+                    place={place}
+                    active={selectedId === place.id}
+                    onHover={setSelectedId}
+                  />
+                ))
+              ) : (
+                <div className="p-4">
+                  <EmptyState
+                    title="Belum ada yang cocok"
+                    description="Coba hapus satu filter atau cari kata yang lebih umum, misalnya nama kategori."
+                    action={
+                      <Button type="button" variant="outline" size="sm" onClick={resetFilters}>
+                        Hapus semua filter
+                      </Button>
+                    }
+                  />
+                </div>
+              )}
             </div>
           </div>
         </section>

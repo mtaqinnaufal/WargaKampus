@@ -32,6 +32,12 @@ export function SiteHeader({
           <Link href="/linimasa" className="rounded-sm px-3 py-2 text-sm text-ink-soft hover:bg-paper-deep">
             Linimasa
           </Link>
+          <Link href="/simpan" className="rounded-sm px-3 py-2 text-sm text-ink-soft hover:bg-paper-deep">
+            Simpan
+          </Link>
+          <Link href="/profil" className="rounded-sm px-3 py-2 text-sm text-ink-soft hover:bg-paper-deep">
+            Profil
+          </Link>
         </nav>
 
         <div className="flex items-center gap-2">
@@ -71,6 +77,28 @@ export function SiteHeader({
           )}
         </div>
       </div>
+
+      <nav
+        className="border-t border-line px-4 py-2 md:hidden"
+        aria-label="Navigasi utama seluler"
+      >
+        <div className="flex items-center gap-1">
+          {[
+            { href: "/jelajah", label: "Jelajah" },
+            { href: "/linimasa", label: "Linimasa" },
+            { href: "/simpan", label: "Simpan" },
+            { href: "/profil", label: "Profil" },
+          ].map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="flex-1 rounded-sm px-2 py-2 text-center text-xs text-ink-soft transition-colors hover:bg-paper-deep hover:text-ink"
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
+      </nav>
     </header>
   );
 }

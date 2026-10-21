@@ -9,7 +9,7 @@ import {
   Users,
 } from "lucide-react";
 import { PlaceMap } from "@/components/map/place-map";
-import { PostPreview } from "@/components/feed/post-preview";
+import { LandingFeed } from "@/components/feed/landing-feed";
 import { PlaceCarousel } from "@/components/places/place-carousel";
 import { Reveal } from "@/components/reveal";
 import { SiteFooter } from "@/components/site-footer";
@@ -72,7 +72,7 @@ export default async function HomePage() {
             </div>
 
             <h1 className="mt-5 max-w-[15ch] font-display text-[clamp(3.2rem,7.4vw,6.4rem)] font-bold leading-[0.9] tracking-[-0.055em] text-ink">
-              Tahu Tempatnya Sebelum Berangkat
+              Ubah Tempat Sebelum Berangkat
             </h1>
 
             <p className="mt-6 max-w-[54ch] text-lg leading-relaxed text-ink-soft">
@@ -247,41 +247,7 @@ export default async function HomePage() {
           </Reveal>
         </section>
 
-        <section className="container-page py-12 lg:py-16">
-          <Reveal className="grid gap-8 lg:grid-cols-[0.75fr_1.25fr]">
-            <div>
-              <h2 className="max-w-[12ch] font-display text-3xl font-bold leading-tight sm:text-4xl">
-                Lagi rame di sekitar kampus.
-              </h2>
-              <p className="mt-3 max-w-[36ch] text-sm leading-relaxed text-muted">
-                Info dari mahasiswa yang baru saja datang. Bukan ulasan bintang lima yang dibuat
-                untuk algoritma.
-              </p>
-              <Link
-                href="/linimasa"
-                className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-ink underline decoration-signal decoration-2 underline-offset-4"
-              >
-                Buka linimasa
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-            </div>
-
-            <div>
-              {posts.length > 0 ? (
-                <>
-                  <PostPreview post={posts[0]} lead />
-                  {posts.slice(1, 3).map((post) => (
-                    <PostPreview key={post.id} post={post} />
-                  ))}
-                </>
-              ) : (
-                <div className="border-t border-line pt-6 text-sm text-muted">
-                  Belum ada cerita. Jadi yang pertama menulis di linimasa.
-                </div>
-              )}
-            </div>
-          </Reveal>
-        </section>
+        <LandingFeed posts={posts} contributors={contributors} />
 
         <section className="border-t border-line">
           <Reveal className="container-page py-12 lg:py-16">
