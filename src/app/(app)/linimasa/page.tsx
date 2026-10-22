@@ -3,6 +3,7 @@ import Link from "next/link";
 import { FeedClient } from "@/components/feed/feed-client";
 import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { buttonClass } from "@/components/ui/button";
 import { getCurrentUser } from "@/lib/auth";
 import { getDefaultCampus } from "@/lib/data/campuses";
 import { getPlaces } from "@/lib/data/places";
@@ -40,31 +41,53 @@ export default async function LinimasaPage() {
 
   return (
     <div className="container-page py-6 lg:py-8">
-      <header className="flex flex-col gap-3 border-b border-line pb-5 lg:flex-row lg:items-end lg:justify-between">
-        <div>
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-signal" aria-hidden="true" />
-            <span className="font-mono text-[11px] text-muted">{campus.name}</span>
-            {current.isDemo ? <Badge variant="signal">Data demo</Badge> : null}
+      <header className="relative overflow-hidden rounded-xl border border-line bg-surface p-5 shadow-[0_1px_2px_rgba(11,26,40,0.04)] sm:p-6 lg:p-8">
+        <div
+          className="grid-paper pointer-events-none absolute inset-0 opacity-20"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-signal/10 blur-3xl"
+          aria-hidden="true"
+        />
+        <div className="relative flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-signal" aria-hidden="true" />
+              <span className="font-mono text-[11px] text-muted">{campus.name}</span>
+              {current.isDemo ? <Badge variant="signal">Data demo</Badge> : null}
+            </div>
+            <h1 className="mt-2 font-display text-3xl font-bold leading-tight sm:text-4xl">
+              Linimasa kampus.
+            </h1>
+            <p className="mt-2 max-w-[58ch] text-sm leading-relaxed text-muted">
+              Info dari mahasiswa, untuk mahasiswa. Sebut tempatnya, jelaskan yang berguna, dan
+              jangan bagikan data pribadi orang lain.
+            </p>
+            <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted">
+              <span>
+                <strong className="font-mono text-sm text-ink">{posts.length}</strong> cerita
+              </span>
+              <span className="h-1 w-1 rounded-full bg-line-strong" aria-hidden="true" />
+              <span>
+                <strong className="font-mono text-sm text-ink">{contributors.length}</strong>{" "}
+                kontributor
+              </span>
+              <span className="h-1 w-1 rounded-full bg-line-strong" aria-hidden="true" />
+              <span>Diperbarui dari komunitas</span>
+            </div>
           </div>
-          <h1 className="mt-2 font-display text-3xl font-bold leading-tight sm:text-4xl">
-            Linimasa kampus.
-          </h1>
-          <p className="mt-2 max-w-[58ch] text-sm leading-relaxed text-muted">
-            Info dari mahasiswa, untuk mahasiswa. Sebut tempatnya, jelaskan yang berguna, dan
-            jangan bagikan data pribadi orang lain.
-          </p>
-        </div>
 
-        <Link
-          href="/jelajah"
-          className="text-sm font-semibold text-ink underline decoration-signal decoration-2 underline-offset-4"
-        >
-          Cari tempat di peta
-        </Link>
+          <Link
+            href="/jelajah"
+            className={buttonClass({ variant: "outline", size: "md" })}
+          >
+            Cari tempat di peta
+          </Link>
+        </div>
       </header>
 
-      <div className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_300px]">
+      <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]"> 
         <div className="min-w-0 max-w-[760px]">
           <FeedClient
             posts={posts}
@@ -75,8 +98,8 @@ export default async function LinimasaPage() {
           />
         </div>
 
-        <aside aria-label="Panduan dan kontributor" className="space-y-8">
-          <section className="border-t border-line pt-4">
+        <aside aria-label="Panduan dan kontributor" className="space-y-4 lg:sticky lg:top-24">
+          <section className="rounded-xl border border-line bg-surface p-5 shadow-[0_1px_2px_rgba(11,26,40,0.04)]">
             <h2 className="font-display text-xl font-semibold">Aturan singkat</h2>
             <ul className="mt-3 space-y-3 text-sm leading-relaxed text-muted">
               <li>
@@ -94,7 +117,7 @@ export default async function LinimasaPage() {
             </ul>
           </section>
 
-          <section className="border-t border-line pt-4">
+          <section className="rounded-xl border border-line bg-surface p-5 shadow-[0_1px_2px_rgba(11,26,40,0.04)]">
             <div className="flex items-end justify-between gap-3">
               <h2 className="font-display text-xl font-semibold">Kontributor</h2>
               <span className="font-mono text-[10px] text-muted">Minggu ini</span>
@@ -127,7 +150,7 @@ export default async function LinimasaPage() {
             ) : null}
           </section>
 
-          <section className="border-t border-line pt-4">
+          <section className="rounded-xl border border-line bg-surface p-5 shadow-[0_1px_2px_rgba(11,26,40,0.04)]">
             <h2 className="font-display text-xl font-semibold">Cari yang belum ada?</h2>
             <p className="mt-2 text-sm leading-relaxed text-muted">
               Tambahkan tempat baru. Setelah diverifikasi admin, tempat itu bisa dibahas di

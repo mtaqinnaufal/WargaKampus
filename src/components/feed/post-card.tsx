@@ -25,20 +25,20 @@ function PostPhoto({ src, alt }: { src: string; alt: string }) {
 
   if (failed) {
     return (
-      <div className="grid aspect-[16/9] place-items-center rounded-sm border border-line bg-paper-deep text-sm text-muted">
+      <div className="grid aspect-[16/9] place-items-center rounded-lg border border-line bg-paper-deep text-sm text-muted">
         Foto tidak dapat dimuat
       </div>
     );
   }
 
   return (
-    <div className="relative aspect-[16/9] overflow-hidden rounded-sm border border-line bg-paper-deep">
+    <div className="relative aspect-[16/9] overflow-hidden rounded-lg border border-line bg-paper-deep">
       <Image
         src={src}
         alt={alt}
         fill
         sizes="(max-width: 768px) 100vw, 680px"
-        className="object-cover"
+        className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
         onError={() => setFailed(true)}
       />
     </div>
@@ -133,7 +133,10 @@ export function PostCard({
   const commentsToShow = showComments ? post.comments : post.comments.slice(-2);
 
   return (
-    <article id={`post-${post.id}`} className="border-b border-line py-6 sm:py-8">
+    <article
+      id={`post-${post.id}`}
+      className="group rounded-xl border border-line bg-surface p-4 shadow-[0_1px_2px_rgba(11,26,40,0.04)] transition-all duration-300 hover:border-ink/25 hover:shadow-lift sm:p-5"
+    >
       <div className="flex gap-4">
         <div className="hidden w-10 shrink-0 flex-col items-center sm:flex">
           <Avatar name={post.author.name} src={post.author.avatar_url} size="md" decorative />
@@ -202,8 +205,10 @@ export function PostCard({
               aria-pressed={liked}
               aria-label={liked ? "Batalkan suka" : "Suka postingan"}
               className={cn(
-                "inline-flex min-h-9 items-center gap-1.5 rounded-sm px-2.5 text-xs transition-colors hover:bg-paper-deep",
-                liked ? "text-live" : "text-muted",
+                "inline-flex min-h-9 items-center gap-1.5 rounded-full border px-3 text-xs transition-colors",
+                liked
+                  ? "border-live/30 bg-live/10 text-live"
+                  : "border-line text-muted hover:border-ink/30 hover:bg-paper-deep",
               )}
             >
               <Heart className={cn("h-4 w-4", liked && "fill-current")} aria-hidden="true" />
@@ -214,7 +219,8 @@ export function PostCard({
               type="button"
               onClick={() => setShowComments((value) => !value)}
               aria-expanded={showComments}
-              className="inline-flex min-h-9 items-center gap-1.5 rounded-sm px-2.5 text-xs text-muted transition-colors hover:bg-paper-deep"
+              aria-label={`${post.comment_count} komentar`}
+              className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-line px-3 text-xs text-muted transition-colors hover:border-ink/30 hover:bg-paper-deep"
             >
               <MessageCircle className="h-4 w-4" aria-hidden="true" />
               {post.comment_count}
@@ -226,8 +232,10 @@ export function PostCard({
               aria-pressed={saved}
               aria-label={saved ? "Batalkan simpan" : "Simpan postingan"}
               className={cn(
-                "inline-flex min-h-9 items-center gap-1.5 rounded-sm px-2.5 text-xs transition-colors hover:bg-paper-deep",
-                saved ? "text-ink" : "text-muted",
+                "inline-flex min-h-9 items-center gap-1.5 rounded-full border px-3 text-xs transition-colors",
+                saved
+                  ? "border-ink bg-ink text-surface"
+                  : "border-line text-muted hover:border-ink/30 hover:bg-paper-deep",
               )}
             >
               <Bookmark className={cn("h-4 w-4", saved && "fill-current")} aria-hidden="true" />
@@ -237,7 +245,7 @@ export function PostCard({
             <button
               type="button"
               onClick={handleShare}
-              className="inline-flex min-h-9 items-center gap-1.5 rounded-sm px-2.5 text-xs text-muted transition-colors hover:bg-paper-deep"
+              className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-line px-3 text-xs text-muted transition-colors hover:border-ink/30 hover:bg-paper-deep"
             >
               <Link2 className="h-4 w-4" aria-hidden="true" />
               {copied ? "Tautan disalin" : "Bagikan"}
@@ -253,7 +261,7 @@ export function PostCard({
           {message ? <FormMessage message={message} className="mt-3" /> : null}
 
           {post.comments.length > 0 ? (
-            <div className="mt-4 border-t border-line pt-3">
+            <div className="mt-4 rounded-lg border border-line bg-paper/60 p-3">
               {!showComments && post.comments.length > 2 ? (
                 <button
                   type="button"

@@ -1,7 +1,6 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth";
 import { getDefaultCampus } from "@/lib/data/campuses";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
@@ -81,7 +80,7 @@ export async function createPlaceAction(
       source: "user",
       created_by: profile.id,
     })
-    .select("slug")
+    .select("id,slug")
     .single();
 
   if (error) {
@@ -90,7 +89,12 @@ export async function createPlaceAction(
 
   revalidatePath("/jelajah");
   revalidatePath("/admin");
-  redirect(`/tempat/${data.slug}?status=pending`);
+  return {
+    ok: true,
+    message: "Tempat berhasil dikirim untuk verifikasi.",
+    placeId: data.id,
+    slug: data.slug,
+  };
 }
 
 export async function reviewAction(

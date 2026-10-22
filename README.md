@@ -43,7 +43,7 @@ Jalankan `npm run seed:demo` sekali. Akun yang dibuat:
 | Pemilik usaha | `tini@wargakampus.demo` | `WargaKampus123!` |
 | Admin | `admin@wargakampus.demo` | `WargaKampus123!` |
 
-Seed juga membuat `dimas@wargakampus.demo` dan `sari@wargakampus.demo` sebagai kontributor tambahan. Seed mengisi dua tempat milik **Bu Tini** (pemilik usaha), dua tempat yang menunggu verifikasi untuk antrean admin, dua laporan, dan tiga audit log. Halaman `/masuk` menampilkan tombol **Login Cepat Akun Demo** yang membuka popup berisi tiga akun utama. Set `DEMO_LOGIN_ENABLED=false` di production.
+Seed juga membuat `dimas@wargakampus.demo` dan `sari@wargakampus.demo` sebagai kontributor tambahan. Seed mengisi dua tempat milik **Bu Tini** (pemilik usaha), dua tempat yang menunggu verifikasi untuk antrean admin, dua laporan, tiga audit log, serta **delapan media contoh** berupa banner, pricelist, dan foto tempat. Halaman `/masuk` menampilkan tombol **Login Cepat Akun Demo** yang membuka popup berisi tiga akun utama. Set `DEMO_LOGIN_ENABLED=false` di production.
 
 ## Script
 
@@ -86,8 +86,9 @@ scripts/
 - Login dan profil dengan peran mahasiswa, pemilik usaha, dan admin.
 - Peta Leaflet dengan pin, filter kategori, harga, jarak, dan fasilitas.
 - Detail tempat: rating, ulasan, fasilitas, jam buka, jarak, tombol arah, simpan, laporan.
+- Media usaha: banner, pricelist, dan galeri foto; bisa diunggah dari form tempat atau halaman detail oleh pemilik usaha/admin.
 - Tambah tempat dengan pin drop dan status menunggu verifikasi.
-- Linimasa: postingan, tag tempat, foto, like, komentar, simpan.
+- Linimasa: kartu postingan, tag tempat, foto, like, komentar, simpan.
 - Pencarian dan filter di peta.
 - Panel admin: antrean verifikasi, laporan, pengguna, audit log.
 - Profil: kontribusi, ulasan, edit profil.

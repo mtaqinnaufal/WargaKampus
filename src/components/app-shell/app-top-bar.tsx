@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ChevronDown, Plus } from "lucide-react";
 import { BrandMark } from "@/components/brand-mark";
 import { NavLinks } from "@/components/app-shell/nav-links";
+import { MobileMenu } from "@/components/app-shell/mobile-menu";
 import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { buttonClass } from "@/components/ui/button";
@@ -107,15 +108,10 @@ export function AppTopBar({
               Masuk
             </Link>
           )}
+
+          <MobileMenu isAdmin={profile?.role === "admin"} />
         </div>
       </div>
-
-      <nav
-        className="border-t border-line px-4 py-2 lg:hidden"
-        aria-label="Navigasi utama seluler"
-      >
-        <NavLinks variant="mobile" isAdmin={profile?.role === "admin"} />
-      </nav>
     </header>
   );
 }

@@ -176,7 +176,7 @@ const demoPlaces = [
     price_min: 10000,
     price_max: 25000,
     price_level: 1,
-    open_hours: { "Senin-Sabtu": "10.00-21.00" },
+    open_hours: { note: "Senin-Sabtu 10.00-21.00" },
     facilities: ["Makan di tempat", "Halal", "Parkir"],
     status: "verified",
     creator: "tini@wargakampus.demo",
@@ -196,7 +196,7 @@ const demoPlaces = [
     price_min: 12000,
     price_max: 30000,
     price_level: 1,
-    open_hours: { "Senin-Jumat": "07.00-17.00" },
+    open_hours: { note: "Senin-Jumat 07.00-17.00" },
     facilities: ["Halal", "Antar-jemput", "Pesan dulu"],
     status: "verified",
     creator: "tini@wargakampus.demo",
@@ -216,7 +216,7 @@ const demoPlaces = [
     price_min: 15000,
     price_max: 35000,
     price_level: 2,
-    open_hours: { "Setiap hari": "09.00-22.00" },
+    open_hours: { note: "Setiap hari 09.00-22.00" },
     facilities: ["WiFi", "Colokan", "AC"],
     status: "pending",
     creator: "rania@wargakampus.demo",
@@ -236,13 +236,64 @@ const demoPlaces = [
     price_min: 6000,
     price_max: 12000,
     price_level: 1,
-    open_hours: { "Setiap hari": "07.00-21.00" },
+    open_hours: { note: "Setiap hari 07.00-21.00" },
     facilities: ["Kiloan", "Express", "Antar-jemput"],
     status: "pending",
     creator: "dimas@wargakampus.demo",
     owner: null,
     isClaimed: false,
     daysAgo: 1,
+  },
+];
+
+const placePhotoSeeds = [
+  {
+    slug: "warung-bu-tini",
+    owner: "tini@wargakampus.demo",
+    caption: "banner",
+    url: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1400&q=80",
+  },
+  {
+    slug: "warung-bu-tini",
+    owner: "tini@wargakampus.demo",
+    caption: "pricelist",
+    url: "/demo/pricelist-warung-bu-tini.png",
+  },
+  {
+    slug: "warung-bu-tini",
+    owner: "tini@wargakampus.demo",
+    caption: "foto",
+    url: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    slug: "warung-bu-tini",
+    owner: "tini@wargakampus.demo",
+    caption: "foto",
+    url: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    slug: "katering-bu-tini",
+    owner: "tini@wargakampus.demo",
+    caption: "banner",
+    url: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1400&q=80",
+  },
+  {
+    slug: "katering-bu-tini",
+    owner: "tini@wargakampus.demo",
+    caption: "pricelist",
+    url: "/demo/pricelist-katering-bu-tini.png",
+  },
+  {
+    slug: "katering-bu-tini",
+    owner: "tini@wargakampus.demo",
+    caption: "foto",
+    url: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    slug: "katering-bu-tini",
+    owner: "tini@wargakampus.demo",
+    caption: "foto",
+    url: "https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=1000&q=80",
   },
 ];
 
@@ -412,6 +463,35 @@ async function main() {
   if (!places?.length) fail("Tempat belum ada. Jalankan supabase/seed.sql terlebih dahulu.");
 
   const placeBySlug = new Map(places.map((place) => [place.slug, place]));
+
+  const demoPlaceIds = demoPlaces
+    .map((seed) => placeBySlug.get(seed.slug)?.id)
+    .filter(Boolean);
+
+  if (demoPlaceIds.length > 0) {
+    const { error } = await supabase
+      .from("place_photos")
+      .delete()
+      .in("place_id", demoPlaceIds);
+    if (error) fail(`membersihkan media demo: ${error.message}`);
+  }
+
+  let seededMedia = 0;
+  for (const seed of placePhotoSeeds) {
+    const place = placeBySlug.get(seed.slug);
+    const owner = usersByEmail.get(seed.owner);
+    if (!place) continue;
+
+    const { error } = await supabase.from("place_photos").insert({
+      place_id: place.id,
+      user_id: owner?.id ?? null,
+      image_url: seed.url,
+      caption: seed.caption,
+    });
+    if (error) fail(`menambahkan media ${seed.slug}: ${error.message}`);
+    seededMedia += 1;
+  }
+  console.log(`  media ${seededMedia} demo`);
 
   await supabase.from("posts").delete().in("user_id", userIds);
   await supabase.from("place_reviews").delete().in("user_id", userIds);

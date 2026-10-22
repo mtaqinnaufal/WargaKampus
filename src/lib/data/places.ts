@@ -7,7 +7,7 @@ import {
 import { CAMPUS_CENTER } from "@/lib/constants";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { createClient } from "@/lib/supabase/server";
-import type { Category, Place, Review } from "@/lib/types";
+import type { Category, Place, PlacePhoto, Review } from "@/lib/types";
 import { distanceKm } from "@/lib/utils";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -118,6 +118,20 @@ export async function getPlaceBySlug(slug: string) {
 
   if (error) throw new Error(error.message);
   return data ? normalizePlace(data) : null;
+}
+
+export async function getPlacePhotos(placeId: string): Promise<PlacePhoto[]> {
+  if (!isSupabaseConfigured) return [];
+
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("place_photos")
+    .select("id,place_id,user_id,image_url,caption,created_at")
+    .eq("place_id", placeId)
+    .order("created_at", { ascending: false });
+
+  if (error) throw new Error(error.message);
+  return (data ?? []) as PlacePhoto[];
 }
 
 export async function getPlaceReviews(placeId: string): Promise<Review[]> {

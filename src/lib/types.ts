@@ -64,6 +64,15 @@ export interface Place {
   saved_by_me?: boolean;
 }
 
+export interface PlacePhoto {
+  id: string;
+  place_id: string;
+  user_id: string | null;
+  image_url: string;
+  caption: string | null;
+  created_at: string;
+}
+
 export interface Review {
   id: string;
   place_id: string;
@@ -151,6 +160,8 @@ export interface ActionResult {
   ok: boolean;
   message?: string;
   data?: unknown;
+  placeId?: string;
+  slug?: string;
 }
 
 export interface PlaceFilters {

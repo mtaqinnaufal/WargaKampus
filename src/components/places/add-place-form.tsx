@@ -1,9 +1,13 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useActionState, useState } from "react";
-import { CheckCircle2, Info } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useActionState, useEffect, useRef, useState } from "react";
+import type { FormEvent } from "react";
+import { CheckCircle2, ImagePlus, Info } from "lucide-react";
 import { createPlaceAction } from "@/app/actions/places";
+import { uploadPlaceMediaClient } from "@/lib/place-media-client";
+import type { PlaceMediaFiles } from "@/lib/place-media-client";
 import { FormMessage } from "@/components/ui/form-message";
 import { FieldHint, FieldLabel, Input, Select, Textarea } from "@/components/ui/input";
 import { SubmitButton } from "@/components/ui/submit-button";
@@ -32,13 +36,55 @@ export function AddPlaceForm({
   isDemo: boolean;
 }) {
   const [state, formAction] = useActionState(createPlaceAction, null);
+  const router = useRouter();
+  const [mediaPending, setMediaPending] = useState(false);
+  const mediaFilesRef = useRef<PlaceMediaFiles>({});
+  const handledRef = useRef(false);
   const [coordinates, setCoordinates] = useState({
     latitude: CAMPUS_CENTER.latitude,
     longitude: CAMPUS_CENTER.longitude,
   });
 
+  function captureMediaFiles(event: FormEvent<HTMLFormElement>) {
+    const data = new FormData(event.currentTarget);
+    const bannerValue = data.get("banner");
+    const pricelistValue = data.get("pricelist");
+    mediaFilesRef.current = {
+      banner: bannerValue instanceof File && bannerValue.size > 0 ? bannerValue : null,
+      pricelist:
+        pricelistValue instanceof File && pricelistValue.size > 0 ? pricelistValue : null,
+      photos: data
+        .getAll("photos")
+        .filter((value): value is File => value instanceof File && value.size > 0),
+    };
+  }
+
+  useEffect(() => {
+    if (!state?.ok || !state.placeId || !state.slug || handledRef.current) return;
+    handledRef.current = true;
+
+    const files = mediaFilesRef.current;
+    const hasFiles =
+      Boolean(files.banner) || Boolean(files.pricelist) || Boolean(files.photos?.length);
+
+    if (!hasFiles) {
+      router.push(`/tempat/${state.slug}?status=pending`);
+      return;
+    }
+
+    setMediaPending(true);
+    uploadPlaceMediaClient(state.placeId, files)
+      .then(() => router.push(`/tempat/${state.slug}?media=ok`))
+      .catch(() => router.push(`/tempat/${state.slug}?media=error`));
+  }, [state, router]);
+
   return (
-    <form action={formAction} className="grid gap-8 lg:grid-cols-[1fr_0.9fr]">
+    <form
+      action={formAction}
+      onSubmit={captureMediaFiles}
+      encType="multipart/form-data"
+      className="grid gap-8 lg:grid-cols-[1fr_0.9fr]"
+    >
       <input type="hidden" name="latitude" value={coordinates.latitude} />
       <input type="hidden" name="longitude" value={coordinates.longitude} />
 
@@ -141,6 +187,55 @@ export function AddPlaceForm({
               placeholder="Contoh: Setiap hari 08.00 sampai 22.00"
             />
           </div>
+
+          <div className="sm:col-span-2 rounded-md border border-line bg-surface/60 p-4">
+            <div className="flex items-start gap-3">
+              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-sm border border-line bg-paper-deep">
+                <ImagePlus className="h-4 w-4" aria-hidden="true" />
+              </span>
+              <div>
+                <h3 className="text-sm font-medium text-ink">Media usaha</h3>
+                <p className="mt-1 text-xs leading-relaxed text-muted">
+                  Banner tampil paling atas, pricelist di panel kanan, dan foto masuk galeri.
+                  JPG, PNG, atau WebP, maksimal 5 MB per gambar.
+                </p>
+              </div>
+            </div>
+            <div className="mt-4 grid gap-3 sm:grid-cols-3">
+              <label htmlFor="place-banner" className="block text-xs font-medium text-ink">
+                Banner usaha
+                <input
+                  id="place-banner"
+                  name="banner"
+                  type="file"
+                  accept="image/*"
+                  className="mt-2 block w-full cursor-pointer text-xs text-muted file:mr-3 file:rounded-sm file:border-0 file:bg-paper-deep file:px-3 file:py-2 file:text-xs file:font-medium file:text-ink"
+                />
+              </label>
+              <label htmlFor="place-pricelist" className="block text-xs font-medium text-ink">
+                Gambar pricelist
+                <input
+                  id="place-pricelist"
+                  name="pricelist"
+                  type="file"
+                  accept="image/*"
+                  className="mt-2 block w-full cursor-pointer text-xs text-muted file:mr-3 file:rounded-sm file:border-0 file:bg-paper-deep file:px-3 file:py-2 file:text-xs file:font-medium file:text-ink"
+                />
+              </label>
+              <label htmlFor="place-photos" className="block text-xs font-medium text-ink">
+                Foto usaha
+                <input
+                  id="place-photos"
+                  name="photos"
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  className="mt-2 block w-full cursor-pointer text-xs text-muted file:mr-3 file:rounded-sm file:border-0 file:bg-paper-deep file:px-3 file:py-2 file:text-xs file:font-medium file:text-ink"
+                />
+                <span className="mt-1 block text-[10px] text-muted">Bisa pilih beberapa foto.</span>
+              </label>
+            </div>
+          </div>
         </section>
 
         <fieldset className="border-t border-line pt-5">
@@ -181,6 +276,11 @@ export function AddPlaceForm({
 
           <div className="mt-4">
             <FormMessage message={state?.message} ok={state?.ok} />
+            {mediaPending ? (
+              <p className="mt-3 text-xs leading-relaxed text-muted" role="status">
+                Tempat berhasil dibuat. Media sedang diunggah...
+              </p>
+            ) : null}
           </div>
 
           <div className="mt-4 flex flex-wrap items-center gap-3">

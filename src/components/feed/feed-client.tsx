@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { PostCard } from "@/components/feed/post-card";
 import { PostComposer } from "@/components/feed/post-composer";
+import { Reveal } from "@/components/reveal";
 import { EmptyState } from "@/components/ui/empty-state";
 import { CAMPUS_CENTER } from "@/lib/constants";
 import type { Place, Post } from "@/lib/types";
@@ -83,7 +84,7 @@ export function FeedClient({
                 onClick={() => setTab(item.id)}
                 aria-pressed={tab === item.id}
                 className={cn(
-                  "inline-flex min-h-9 items-center gap-1.5 rounded-sm px-3 text-sm font-medium transition-colors",
+                  "inline-flex min-h-9 items-center gap-1.5 rounded-full px-3 text-sm font-medium transition-colors",
                   tab === item.id
                     ? "bg-ink text-surface"
                     : "text-muted hover:bg-paper-deep hover:text-ink",
@@ -106,7 +107,7 @@ export function FeedClient({
       </div>
 
       {!currentUserId ? (
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line bg-surface px-4 py-3 text-sm">
+        <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-line bg-surface px-4 py-3 text-sm shadow-[0_1px_2px_rgba(11,26,40,0.04)]">
           <p className="max-w-[56ch] leading-relaxed text-muted">
             Semua cerita bisa dibaca tanpa login. Masuk untuk like, komentar, dan menyimpan.
           </p>
@@ -125,9 +126,11 @@ export function FeedClient({
       ) : null}
 
       {currentUserId ? (
-        <PostComposer places={places} isDemo={isDemo} />
+        <div className="mt-5 rounded-xl border border-line bg-surface p-4 shadow-[0_1px_2px_rgba(11,26,40,0.04)]">
+          <PostComposer places={places} isDemo={isDemo} />
+        </div>
       ) : (
-        <section className="border-b border-line py-6">
+        <section className="mt-5 rounded-xl border border-line bg-surface p-5 shadow-[0_1px_2px_rgba(11,26,40,0.04)]">
           <h2 className="font-display text-xl font-semibold">Bagi pengalaman</h2>
           <p className="mt-1 text-sm leading-relaxed text-muted">
             Masuk untuk membuat postingan, berkomentar, dan menyimpan cerita.
@@ -142,14 +145,15 @@ export function FeedClient({
       )}
 
       {filtered.length > 0 ? (
-        <div>
-          {filtered.map((post) => (
-            <PostCard
-              key={post.id}
-              post={post}
-              currentUserId={currentUserId}
-              isDemo={isDemo}
-            />
+        <div className="mt-5 space-y-4">
+          {filtered.map((post, index) => (
+            <Reveal key={post.id} delay={Math.min(index, 6) * 50}>
+              <PostCard
+                post={post}
+                currentUserId={currentUserId}
+                isDemo={isDemo}
+              />
+            </Reveal>
           ))}
         </div>
       ) : (

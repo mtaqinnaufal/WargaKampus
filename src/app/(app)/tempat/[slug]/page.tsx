@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ExternalLink, MapPin, Navigation } from "lucide-react";
 import { CategoryArt } from "@/components/category-art";
 import { PlaceMap } from "@/components/map/place-map";
+import { PlaceMediaForm } from "@/components/places/place-media-form";
 import { ReportPlaceForm, SavePlaceButton } from "@/components/places/place-actions";
 import { ReviewForm } from "@/components/places/review-form";
 import { CategoryIcon } from "@/components/category-icon";
@@ -14,7 +16,7 @@ import { buttonClass } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { StarRating } from "@/components/ui/star-rating";
 import { getCurrentUser } from "@/lib/auth";
-import { getPlaceBySlug, getPlaceReviews, isPlaceSaved } from "@/lib/data/places";
+import { getPlaceBySlug, getPlacePhotos, getPlaceReviews, isPlaceSaved } from "@/lib/data/places";
 import { SITE } from "@/lib/constants";
 import type { Place } from "@/lib/types";
 import {
@@ -44,7 +46,9 @@ function sourceNote(place: Place) {
     return "Data awal berasal dari OpenStreetMap. Harga, fasilitas, dan jam buka adalah perkiraan yang perlu diverifikasi komunitas.";
   }
   if (place.source === "user") {
-    return "Tempat ini ditambahkan oleh komunitas. Data menunggu verifikasi admin sebelum tampil untuk semua orang.";
+    return place.status === "verified"
+      ? "Tempat ini ditambahkan oleh komunitas dan sudah diverifikasi admin. Harga dan fasilitas tetap bisa berubah."
+      : "Tempat ini ditambahkan oleh komunitas. Data menunggu verifikasi admin sebelum tampil untuk semua orang.";
   }
   return "Data contoh untuk mode demo.";
 }
@@ -54,10 +58,10 @@ export default async function PlacePage({
   searchParams,
 }: {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ status?: string }>;
+  searchParams: Promise<{ status?: string; media?: string }>;
 }) {
   const { slug } = await params;
-  await searchParams;
+  const { media } = await searchParams;
 
   const [current, place] = await Promise.all([getCurrentUser(), getPlaceBySlug(slug)]);
   if (!place) notFound();
@@ -69,10 +73,23 @@ export default async function PlacePage({
 
   if (!canSee) notFound();
 
-  const [reviews, saved] = await Promise.all([
+  const [photos, reviews, saved] = await Promise.all([
+    getPlacePhotos(place.id),
     getPlaceReviews(place.id),
     current.profile ? isPlaceSaved(current.profile.id, place.id) : Promise.resolve(false),
   ]);
+
+  const banner = photos.find((photo) => photo.caption === "banner");
+  const pricelist = photos.find((photo) => photo.caption === "pricelist");
+  const gallery = photos.filter(
+    (photo) => photo.caption !== "banner" && photo.caption !== "pricelist",
+  );
+  const canManageMedia = Boolean(
+    current.profile &&
+      (current.profile.role === "admin" ||
+        current.profile.id === place.created_by ||
+        current.profile.id === place.owner_id),
+  );
 
   const directionsUrl = `https://www.openstreetmap.org/directions?from=&to=${place.latitude}%2C${place.longitude}`;
   const isPending = place.status === "pending";
@@ -92,6 +109,25 @@ export default async function PlacePage({
       {isPending ? (
         <div className="mt-4 border border-signal bg-signal/20 px-3 py-2 text-sm text-ink" role="status">
           Tempat ini masih menunggu verifikasi admin. Hanya kamu dan admin yang bisa melihatnya.
+        </div>
+      ) : null}
+
+      {media === "ok" ? (
+        <div
+          className="mt-4 border border-verify/30 bg-verify/10 px-3 py-2 text-sm text-verify"
+          role="status"
+        >
+          Media usaha berhasil diunggah.
+        </div>
+      ) : null}
+
+      {media === "error" ? (
+        <div
+          className="mt-4 border border-live/30 bg-live/10 px-3 py-2 text-sm text-live"
+          role="alert"
+        >
+          Tempat sudah tersimpan, tetapi media gagal diunggah. Coba unggah lagi dari panel
+          media di bawah.
         </div>
       ) : null}
 
@@ -143,12 +179,25 @@ export default async function PlacePage({
 
       <div className="mt-8 grid gap-10 lg:grid-cols-[1.25fr_0.75fr]">
         <div>
-          <CategoryArt
-            slug={place.category.slug}
-            name={place.category.name}
-            className="h-48"
-            label="Foto komunitas menyusul. Data awal dari OpenStreetMap."
-          />
+          {banner ? (
+            <div className="relative aspect-[16/8] overflow-hidden rounded-xl border border-line bg-paper-deep">
+              <Image
+                src={banner.image_url}
+                alt={`Banner ${place.name}`}
+                fill
+                sizes="(max-width: 1024px) 100vw, 720px"
+                className="object-cover"
+                priority
+              />
+            </div>
+          ) : (
+            <CategoryArt
+              slug={place.category.slug}
+              name={place.category.name}
+              className="h-48"
+              label="Banner usaha belum diunggah. Data awal dari OpenStreetMap."
+            />
+          )}
 
           <section className="mt-8" aria-labelledby="about-title">
             <h2 id="about-title" className="font-display text-2xl font-semibold">
@@ -168,6 +217,41 @@ export default async function PlacePage({
               </div>
             ) : null}
           </section>
+
+          {gallery.length > 0 ? (
+            <section className="mt-8" aria-labelledby="place-gallery-title">
+              <div className="flex items-end justify-between gap-3">
+                <h2
+                  id="place-gallery-title"
+                  className="font-display text-2xl font-semibold"
+                >
+                  Foto tempat
+                </h2>
+                <span className="font-mono text-[11px] text-muted">
+                  {gallery.length} foto
+                </span>
+              </div>
+              <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
+                {gallery.map((photo, index) => (
+                  <a
+                    key={photo.id}
+                    href={photo.image_url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="group relative aspect-square overflow-hidden rounded-lg border border-line bg-paper-deep"
+                  >
+                    <Image
+                      src={photo.image_url}
+                      alt={`Foto ${place.name} ${index + 1}`}
+                      fill
+                      sizes="(max-width: 640px) 50vw, 240px"
+                      className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                    />
+                  </a>
+                ))}
+              </div>
+            </section>
+          ) : null}
 
           <section className="mt-10" aria-labelledby="reviews-title">
             <div className="flex flex-wrap items-end justify-between gap-3 border-b border-line pb-3">
@@ -246,6 +330,57 @@ export default async function PlacePage({
             height="h-56"
             ariaLabel={`Lokasi ${place.name}`}
           />
+
+          {pricelist ? (
+            <section
+              className="rounded-xl border border-line bg-surface p-4 shadow-[0_1px_2px_rgba(11,26,40,0.04)]"
+              aria-labelledby="pricelist-title"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <h2 id="pricelist-title" className="font-display text-xl font-semibold">
+                    Pricelist
+                  </h2>
+                  <p className="mt-1 text-xs leading-relaxed text-muted">
+                    Harga terbaru dari pemilik usaha.
+                  </p>
+                </div>
+                <a
+                  href={pricelist.image_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 text-xs font-semibold text-ink underline underline-offset-2"
+                >
+                  Buka
+                  <ExternalLink className="h-3 w-3" aria-hidden="true" />
+                </a>
+              </div>
+              <a
+                href={pricelist.image_url}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-3 block overflow-hidden rounded-lg border border-line bg-paper-deep"
+              >
+                <div className="relative aspect-[4/5]">
+                  <Image
+                    src={pricelist.image_url}
+                    alt={`Pricelist ${place.name}`}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 320px"
+                    className="object-cover"
+                  />
+                </div>
+              </a>
+            </section>
+          ) : null}
+
+          {canManageMedia ? (
+            <PlaceMediaForm
+              placeId={place.id}
+              slug={place.slug}
+              isDemo={current.isDemo}
+            />
+          ) : null}
 
           <section className="border-t border-line pt-4">
             <h2 className="font-display text-xl font-semibold">Info tempat</h2>
