@@ -246,56 +246,50 @@ const demoPlaces = [
   },
 ];
 
-const placePhotoSeeds = [
-  {
-    slug: "warung-bu-tini",
-    owner: "tini@wargakampus.demo",
-    caption: "banner",
-    url: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1400&q=80",
-  },
-  {
-    slug: "warung-bu-tini",
-    owner: "tini@wargakampus.demo",
-    caption: "pricelist",
-    url: "/demo/pricelist-warung-bu-tini.png",
-  },
-  {
-    slug: "warung-bu-tini",
-    owner: "tini@wargakampus.demo",
-    caption: "foto",
-    url: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1000&q=80",
-  },
-  {
-    slug: "warung-bu-tini",
-    owner: "tini@wargakampus.demo",
-    caption: "foto",
-    url: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1000&q=80",
-  },
-  {
-    slug: "katering-bu-tini",
-    owner: "tini@wargakampus.demo",
-    caption: "banner",
-    url: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1400&q=80",
-  },
-  {
-    slug: "katering-bu-tini",
-    owner: "tini@wargakampus.demo",
-    caption: "pricelist",
-    url: "/demo/pricelist-katering-bu-tini.png",
-  },
-  {
-    slug: "katering-bu-tini",
-    owner: "tini@wargakampus.demo",
-    caption: "foto",
-    url: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1000&q=80",
-  },
-  {
-    slug: "katering-bu-tini",
-    owner: "tini@wargakampus.demo",
-    caption: "foto",
-    url: "https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=1000&q=80",
-  },
-];
+const categoryMedia = {
+  makan: [
+    "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1400&q=80",
+    "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1000&q=80",
+    "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1000&q=80",
+  ],
+  nongkrong: [
+    "https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=1400&q=80",
+    "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1000&q=80",
+    "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1000&q=80",
+  ],
+  nugas: [
+    "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1400&q=80",
+    "https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=1000&q=80",
+    "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1000&q=80",
+  ],
+  laundry: [
+    "https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?auto=format&fit=crop&w=1400&q=80",
+    "https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?auto=format&fit=crop&w=1000&q=80",
+    "https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?auto=format&fit=crop&w=1000&q=80",
+  ],
+  fotokopi: [
+    "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1400&q=80",
+    "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1000&q=80",
+    "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1000&q=80",
+  ],
+  sembako: [
+    "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1400&q=80",
+    "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1000&q=80",
+    "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1000&q=80",
+  ],
+  kesehatan: [
+    "https://images.unsplash.com/photo-1584982751601-97dcc096659c?auto=format&fit=crop&w=1400&q=80",
+    "https://images.unsplash.com/photo-1584982751601-97dcc096659c?auto=format&fit=crop&w=1000&q=80",
+    "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1000&q=80",
+  ],
+  hiburan: [
+    "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1400&q=80",
+    "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1000&q=80",
+    "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1000&q=80",
+  ],
+};
+
+const defaultMedia = categoryMedia.makan;
 
 const reportSeeds = [
   {
@@ -456,7 +450,9 @@ async function main() {
 
   const { data: places, error: placesError } = await supabase
     .from("places")
-    .select("id, slug, name")
+    .select(
+      "id, slug, name, owner_id, created_by, category:place_categories(slug,name)",
+    )
     .eq("campus_id", campus.id);
 
   if (placesError) fail(placesError.message);
@@ -464,34 +460,43 @@ async function main() {
 
   const placeBySlug = new Map(places.map((place) => [place.slug, place]));
 
-  const demoPlaceIds = demoPlaces
-    .map((seed) => placeBySlug.get(seed.slug)?.id)
-    .filter(Boolean);
+  const allPlaceIds = places.map((place) => place.id);
 
-  if (demoPlaceIds.length > 0) {
+  if (allPlaceIds.length > 0) {
     const { error } = await supabase
       .from("place_photos")
       .delete()
-      .in("place_id", demoPlaceIds);
+      .in("place_id", allPlaceIds);
     if (error) fail(`membersihkan media demo: ${error.message}`);
   }
 
-  let seededMedia = 0;
-  for (const seed of placePhotoSeeds) {
-    const place = placeBySlug.get(seed.slug);
-    const owner = usersByEmail.get(seed.owner);
-    if (!place) continue;
+  const mediaRows = [];
+  for (const place of places) {
+    const category = Array.isArray(place.category) ? place.category[0] : place.category;
+    const images = categoryMedia[category?.slug] ?? defaultMedia;
+    const pricelistUrl = ["warung-bu-tini", "katering-bu-tini"].includes(place.slug)
+      ? `/demo/pricelist-${place.slug}.png`
+      : `/demo/pricelists/${place.slug}.png`;
 
-    const { error } = await supabase.from("place_photos").insert({
-      place_id: place.id,
-      user_id: owner?.id ?? null,
-      image_url: seed.url,
-      caption: seed.caption,
-    });
-    if (error) fail(`menambahkan media ${seed.slug}: ${error.message}`);
-    seededMedia += 1;
+    for (const row of [
+      { caption: "banner", image_url: images[0] },
+      { caption: "pricelist", image_url: pricelistUrl },
+      { caption: "foto", image_url: images[1] },
+      { caption: "foto", image_url: images[2] ?? images[1] },
+    ]) {
+      mediaRows.push({
+        place_id: place.id,
+        user_id: place.owner_id ?? place.created_by ?? null,
+        ...row,
+      });
+    }
   }
-  console.log(`  media ${seededMedia} demo`);
+
+  if (mediaRows.length > 0) {
+    const { error } = await supabase.from("place_photos").insert(mediaRows);
+    if (error) fail(`menambahkan media semua tempat: ${error.message}`);
+  }
+  console.log(`  media ${mediaRows.length} demo (semua tempat)`);
 
   await supabase.from("posts").delete().in("user_id", userIds);
   await supabase.from("place_reviews").delete().in("user_id", userIds);

@@ -129,20 +129,7 @@ export function FeedClient({
         <div className="mt-5 rounded-xl border border-line bg-surface p-4 shadow-[0_1px_2px_rgba(11,26,40,0.04)]">
           <PostComposer places={places} isDemo={isDemo} />
         </div>
-      ) : (
-        <section className="mt-5 rounded-xl border border-line bg-surface p-5 shadow-[0_1px_2px_rgba(11,26,40,0.04)]">
-          <h2 className="font-display text-xl font-semibold">Bagi pengalaman</h2>
-          <p className="mt-1 text-sm leading-relaxed text-muted">
-            Masuk untuk membuat postingan, berkomentar, dan menyimpan cerita.
-          </p>
-          <Link
-            href="/masuk?next=/linimasa"
-            className="mt-3 inline-flex text-sm font-semibold text-ink underline decoration-signal decoration-2 underline-offset-4"
-          >
-            Masuk untuk menulis
-          </Link>
-        </section>
-      )}
+      ) : null}
 
       {filtered.length > 0 ? (
         <div className="mt-5 space-y-4">
