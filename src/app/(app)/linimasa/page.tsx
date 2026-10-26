@@ -87,8 +87,8 @@ export default async function LinimasaPage() {
         </div>
       </header>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]"> 
-        <div className="min-w-0 max-w-[760px]">
+      <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+        <div className="min-w-0">
           <FeedClient
             posts={posts}
             places={places}
@@ -98,7 +98,10 @@ export default async function LinimasaPage() {
           />
         </div>
 
-        <aside aria-label="Panduan dan kontributor" className="space-y-4 lg:sticky lg:top-24">
+        <aside
+          aria-label="Panduan dan kontributor"
+          className="space-y-4 lg:sticky lg:top-24 lg:max-h-[calc(100dvh-7rem)] lg:self-start lg:overflow-y-auto lg:pr-1 lg:overscroll-contain"
+        >
           <section className="rounded-xl border border-line bg-surface p-5 shadow-[0_1px_2px_rgba(11,26,40,0.04)]">
             <h2 className="font-display text-xl font-semibold">Aturan singkat</h2>
             <ul className="mt-3 space-y-3 text-sm leading-relaxed text-muted">
