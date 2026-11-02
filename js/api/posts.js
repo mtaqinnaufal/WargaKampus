@@ -1,4 +1,5 @@
 import { supabase } from "../supabase.js";
+import { assetUrl } from "../utils.js";
 
 const POST_SELECT =
   "id,user_id,place_id,campus_id,category,body,visibility,status,like_count,comment_count,created_at,author:profiles!posts_user_id_fkey(id,name,avatar_url,role),place:places(id,slug,name,latitude,longitude,category:place_categories(id,name,slug,icon,sort_order)),photos:post_photos(image_url,sort_order),comments(id,post_id,user_id,parent_id,body,created_at,author:profiles!comments_user_id_fkey(id,name,avatar_url,role)),likes:post_likes(user_id)";
@@ -19,7 +20,7 @@ function normalizePost(row, userId, savedIds) {
 
   const photos = (Array.isArray(row.photos) ? row.photos : [])
     .sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0))
-    .map((photo) => photo.image_url);
+    .map((photo) => assetUrl(photo.image_url));
 
   const place = Array.isArray(row.place) ? row.place[0] : row.place;
 

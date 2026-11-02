@@ -23,6 +23,14 @@ export function initials(name) {
     .join("");
 }
 
+// The static build keeps the old Next.js public/demo assets under /assets/demo.
+// Database rows still reference /demo/... so normalize them at read time.
+export function assetUrl(value) {
+  if (typeof value !== "string") return value;
+  if (value.startsWith("/demo/")) return `/assets/demo/${value.slice("/demo/".length)}`;
+  return value;
+}
+
 export function formatRupiah(value) {
   if (value === null || value === undefined) return "Belum ada harga";
   return new Intl.NumberFormat("id-ID", {

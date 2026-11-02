@@ -1,6 +1,6 @@
 import { supabase } from "../supabase.js";
 import { CAMPUS_CENTER } from "../config.js";
-import { distanceKm } from "../utils.js";
+import { assetUrl, distanceKm } from "../utils.js";
 
 function normalizeCategory(value) {
   const category = Array.isArray(value) ? value[0] : value;
@@ -95,7 +95,7 @@ export async function getPlacePhotos(placeId) {
     .eq("place_id", placeId)
     .order("created_at", { ascending: false });
   if (error) throw new Error(error.message);
-  return data ?? [];
+  return (data ?? []).map((photo) => ({ ...photo, image_url: assetUrl(photo.image_url) }));
 }
 
 export async function getPlaceReviews(placeId) {
@@ -118,7 +118,7 @@ export async function getPlaceReviews(placeId) {
     author: Array.isArray(row.author) ? row.author[0] : row.author,
     photos: (Array.isArray(row.photos) ? row.photos : [])
       .sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0))
-      .map((photo) => photo.image_url),
+      .map((photo) => assetUrl(photo.image_url)),
   }));
 }
 
