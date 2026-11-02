@@ -31,7 +31,7 @@ export function PlaceMap({
 }: PlaceMapProps) {
   return (
     <div
-      className={`relative overflow-hidden rounded-md border border-line bg-paper-deep ${height} ${className ?? ""}`}
+      className={`relative isolate overflow-hidden rounded-md border border-line bg-paper-deep ${height} ${className ?? ""}`}
       role="region"
       aria-label={ariaLabel}
     >
