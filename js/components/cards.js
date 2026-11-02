@@ -111,8 +111,8 @@ export function placeCarousel(places) {
       });
       return `<a href="${url(`/tempat/${place.slug}`)}" draggable="false" data-carousel-card class="group flex w-[280px] shrink-0 snap-start flex-col overflow-hidden rounded-md border border-line bg-surface transition-all duration-300 hover:-translate-y-1 hover:border-ink hover:shadow-lift focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal/70 sm:w-[320px]">
         <div class="relative aspect-[4/3] overflow-hidden bg-paper-deep">
-          <img src="${image}" alt="Ilustrasi kategori ${escapeHtml(place.category.name)}" draggable="false" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]" onerror="this.remove()">
-          <div class="pointer-events-none absolute inset-0 grid place-items-center">${art}</div>
+          <div class="pointer-events-none absolute inset-0">${art}</div>
+          <img src="${image}" alt="Ilustrasi kategori ${escapeHtml(place.category.name)}" draggable="false" loading="lazy" class="relative h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]" onerror="this.remove()">
           <div class="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/25 to-transparent" aria-hidden="true"></div>
           <div class="absolute left-3 top-3">${badge(place.category.name, { variant: "signal" })}</div>
           <div class="absolute bottom-3 left-3 right-3">
@@ -291,26 +291,35 @@ export function bindCarousels(root = document) {
     track.addEventListener("scroll", updateEdges);
     window.addEventListener("resize", updateEdges);
 
+    let captured = false;
     track.addEventListener("pointerdown", (event) => {
       if (event.pointerType === "touch") return;
       drag.active = true;
       drag.startX = event.clientX;
       drag.scrollLeft = track.scrollLeft;
       drag.moved = false;
-      track.classList.add("cursor-grabbing", "select-none");
-      track.setPointerCapture(event.pointerId);
     });
     track.addEventListener("pointermove", (event) => {
       if (!drag.active) return;
       const delta = event.clientX - drag.startX;
-      if (Math.abs(delta) > 5) drag.moved = true;
-      track.scrollLeft = drag.scrollLeft - delta;
+      if (!drag.moved && Math.abs(delta) > 5) {
+        drag.moved = true;
+        if (!captured) {
+          track.setPointerCapture(event.pointerId);
+          captured = true;
+          track.classList.add("cursor-grabbing", "select-none");
+        }
+      }
+      if (drag.moved) track.scrollLeft = drag.scrollLeft - delta;
     });
     const endDrag = (event) => {
       if (!drag.active) return;
       drag.active = false;
       track.classList.remove("cursor-grabbing", "select-none");
-      if (track.hasPointerCapture(event.pointerId)) track.releasePointerCapture(event.pointerId);
+      if (captured && track.hasPointerCapture(event.pointerId)) {
+        track.releasePointerCapture(event.pointerId);
+      }
+      captured = false;
     };
     track.addEventListener("pointerup", endDrag);
     track.addEventListener("pointercancel", endDrag);
