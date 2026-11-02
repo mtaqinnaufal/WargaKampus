@@ -87,6 +87,13 @@ export function createPlaceMap(container, options = {}) {
         marker.setIcon(pinIcon(places[index], places[index].id === id));
       });
     },
+    focus(id) {
+      const place = places.find((item) => item.id === id);
+      if (!place) return;
+      map.flyTo([place.latitude, place.longitude], Math.max(map.getZoom(), 16), {
+        duration: 0.45,
+      });
+    },
     destroy() {
       observer.disconnect();
       map.remove();

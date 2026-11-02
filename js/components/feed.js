@@ -27,19 +27,19 @@ function postPhotos(photos, authorName) {
     .join("")}</div>`;
 }
 
-export function postCardHtml(post, { currentUserId } = {}) {
-  const comments = post.comments
-    .map(
-      (comment) => `<div class="flex gap-2.5 py-2">
+function commentItemHtml(comment) {
+  return `<div class="flex gap-2.5 py-2">
         ${avatar({ name: comment.author.name, src: comment.author.avatar_url, size: "xs", decorative: true })}
         <div class="min-w-0"><p class="text-xs"><span class="font-medium text-ink">${escapeHtml(comment.author.name)}</span> <time datetime="${escapeHtml(
           comment.created_at,
         )}" class="text-muted">${escapeHtml(relativeTime(comment.created_at))}</time></p><p class="prose-kp mt-0.5 text-sm text-ink-soft">${escapeHtml(
           comment.body,
         )}</p></div>
-      </div>`,
-    )
-    .join("");
+      </div>`;
+}
+
+export function postCardHtml(post, { currentUserId } = {}) {
+  const comments = post.comments.map(commentItemHtml).join("");
 
   const commentForm = currentUserId
     ? `<form data-comment class="mt-4 flex items-end gap-2"><input type="hidden" name="post_id" value="${escapeHtml(post.id)}"><label class="sr-only" for="comment-${escapeHtml(
@@ -294,9 +294,27 @@ export function mountFeed(container, { posts, places, currentUserId, isDemo, cam
         event.preventDefault();
         if (!currentUserId) return redirectLogin();
         const form = event.currentTarget;
+        const submit = form.querySelector("button[type=submit]");
+        submit.disabled = true;
         const result = await addComment(id, form.body.value);
-        if (result.ok) window.location.reload();
-        else cardMessage(card, result.message);
+        submit.disabled = false;
+        if (!result.ok) {
+          cardMessage(card, result.message);
+          return;
+        }
+        if (result.comment) {
+          const box = card.querySelector("[data-comments]");
+          const listEl = card.querySelector("[data-comments-list]");
+          if (listEl) listEl.insertAdjacentHTML("beforeend", commentItemHtml(result.comment));
+          if (box) box.classList.remove("hidden");
+          const counter = card.querySelector("[data-comment-count]");
+          if (counter) counter.textContent = String(Number(counter.textContent || 0) + 1);
+          card.querySelector("[data-show-comments]")?.remove();
+          const messageEl = card.querySelector("[data-card-message]");
+          if (messageEl) messageEl.replaceChildren();
+          form.reset();
+          refreshIcons();
+        }
       });
     });
   }

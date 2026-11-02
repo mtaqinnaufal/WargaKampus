@@ -60,13 +60,29 @@ export async function addComment(postId, body) {
     return { ok: false, message: "Masuk terlebih dahulu untuk berkomentar." };
   }
 
-  const { error } = await supabase.from("comments").insert({
-    post_id: postId,
-    user_id: current.profile.id,
-    body: text,
-  });
+  const { data: comment, error } = await supabase
+    .from("comments")
+    .insert({
+      post_id: postId,
+      user_id: current.profile.id,
+      body: text,
+    })
+    .select("id,post_id,user_id,body,created_at")
+    .single();
   if (error) return { ok: false, message: error.message };
-  return { ok: true, message: "Komentar ditambahkan." };
+  return {
+    ok: true,
+    message: "Komentar ditambahkan.",
+    comment: {
+      ...comment,
+      author: {
+        id: current.profile.id,
+        name: current.profile.name,
+        avatar_url: current.profile.avatar_url,
+        role: current.profile.role,
+      },
+    },
+  };
 }
 
 export async function savePost(postId, shouldSave) {

@@ -410,7 +410,10 @@ function setSelected(id) {
     .querySelectorAll("[data-place-id]")
     .forEach((row) => applyRowActive(row, row.dataset.placeId === id));
 
-  if (mapInstance) mapInstance.setSelected(id);
+  if (mapInstance) {
+    mapInstance.setSelected(id);
+    mapInstance.focus(id);
+  }
 }
 
 function syncMobileView() {
