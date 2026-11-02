@@ -3,7 +3,7 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
 import { ImagePlus } from "lucide-react";
-import { uploadPlaceMediaClient } from "@/lib/place-media-client";
+import { uploadPlaceMedia } from "@/lib/storage-client";
 import { Button } from "@/components/ui/button";
 import { FormMessage } from "@/components/ui/form-message";
 
@@ -40,7 +40,7 @@ export function PlaceMediaForm({
     setMessage(null);
 
     try {
-      await uploadPlaceMediaClient(placeId, { banner, pricelist, photos });
+      await uploadPlaceMedia(placeId, { banner, pricelist, photos });
       window.location.assign(`/tempat/${slug}?media=ok`);
     } catch (error) {
       setMessage(

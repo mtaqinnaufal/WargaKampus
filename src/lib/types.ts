@@ -83,6 +83,7 @@ export interface Review {
   created_at: string;
   author: Pick<Profile, "id" | "name" | "avatar_url" | "role">;
   place?: Pick<Place, "id" | "slug" | "name">;
+  photos: string[];
 }
 
 export interface PostComment {

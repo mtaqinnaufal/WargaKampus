@@ -2,12 +2,14 @@
 
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useRef, useState } from "react";
+import type { ChangeEvent } from "react";
 import { ImagePlus, PenLine } from "lucide-react";
 import { createPostAction } from "@/app/actions/posts";
 import { FormMessage } from "@/components/ui/form-message";
-import { FieldHint, FieldLabel, Input, Select, Textarea } from "@/components/ui/input";
+import { FieldHint, FieldLabel, Select, Textarea } from "@/components/ui/input";
 import { SubmitButton } from "@/components/ui/submit-button";
 import { POST_CATEGORIES } from "@/lib/constants";
+import { uploadPostPhotos } from "@/lib/storage-client";
 import type { Place } from "@/lib/types";
 
 export function PostComposer({
@@ -20,14 +22,42 @@ export function PostComposer({
   const router = useRouter();
   const [state, formAction] = useActionState(createPostAction, null);
   const formRef = useRef<HTMLFormElement>(null);
+  const photoFilesRef = useRef<File[]>([]);
+  const handledRef = useRef(false);
   const [open, setOpen] = useState(false);
+  const [uploading, setUploading] = useState(false);
+
+  function handlePhotosChange(event: ChangeEvent<HTMLInputElement>) {
+    photoFilesRef.current = Array.from(event.target.files ?? []).filter(
+      (file) => file.size > 0,
+    );
+  }
 
   useEffect(() => {
-    if (state?.ok) {
+    if (!state?.ok || handledRef.current) return;
+    handledRef.current = true;
+
+    const postId = (state.data as { postId?: string } | undefined)?.postId;
+    const files = photoFilesRef.current;
+
+    const finish = () => {
+      handledRef.current = false;
+      photoFilesRef.current = [];
+      setUploading(false);
       formRef.current?.reset();
       setOpen(false);
       router.refresh();
+    };
+
+    if (!postId || files.length === 0) {
+      finish();
+      return;
     }
+
+    setUploading(true);
+    uploadPostPhotos(postId, files)
+      .catch(() => undefined)
+      .finally(finish);
   }, [state, router]);
 
   return (
@@ -95,18 +125,18 @@ export function PostComposer({
           </p>
 
           <div>
-            <FieldLabel htmlFor="post-photo">URL foto</FieldLabel>
-            <Input
-              id="post-photo"
-              name="photo_url"
-              type="url"
-              placeholder="https://..."
-              inputMode="url"
+            <FieldLabel htmlFor="post-photos" hint="opsional">
+              Foto
+            </FieldLabel>
+            <input
+              id="post-photos"
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={handlePhotosChange}
+              className="mt-2 block w-full cursor-pointer text-xs text-muted file:mr-3 file:rounded-sm file:border-0 file:bg-paper-deep file:px-3 file:py-2 file:text-xs file:font-medium file:text-ink"
             />
-            <FieldHint>
-              Untuk MVP, foto memakai URL. Unggah langsung ke Supabase Storage bisa ditambahkan setelah
-              kredensial aktif.
-            </FieldHint>
+            <FieldHint>JPG, PNG, WebP, atau GIF. Maksimal 5 MB per gambar.</FieldHint>
           </div>
 
           {isDemo ? (
@@ -121,7 +151,7 @@ export function PostComposer({
             <SubmitButton pendingLabel="Mengirim...">Kirim postingan</SubmitButton>
             <span className="flex items-center gap-1.5 text-xs text-muted">
               <ImagePlus className="h-3.5 w-3.5" aria-hidden="true" />
-              Foto bersifat opsional
+              {uploading ? "Mengunggah foto..." : "Foto bersifat opsional"}
             </span>
           </div>
         </form>

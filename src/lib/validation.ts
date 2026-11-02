@@ -37,14 +37,12 @@ export const postSchema = z.object({
   category: z.enum(["tips", "promo", "review", "cari-teman", "info-kampus", "curhat"]),
   place_id: z.string().trim().optional(),
   visibility: z.enum(["campus", "public"]).default("campus"),
-  photo_url: z.string().trim().url("URL foto tidak valid.").optional().or(z.literal("")),
 });
 
 export const profileSchema = z.object({
   name: z.string().trim().min(2, "Nama minimal 2 karakter.").max(80),
   bio: z.string().trim().max(280).optional().default(""),
   campus_id: z.string().trim().optional(),
-  avatar_url: z.string().trim().url("URL avatar tidak valid.").optional().or(z.literal("")),
 });
 
 export const reportSchema = z.object({

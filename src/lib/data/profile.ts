@@ -58,7 +58,7 @@ export async function getContributions(userId: string): Promise<{
     supabase
       .from("place_reviews")
       .select(
-        "id,place_id,user_id,rating,body,visited_at,created_at,author:profiles!place_reviews_user_id_fkey(id,name,avatar_url,role),place:places(id,slug,name)",
+        "id,place_id,user_id,rating,body,visited_at,created_at,author:profiles!place_reviews_user_id_fkey(id,name,avatar_url,role),place:places(id,slug,name),photos:place_review_photos(image_url,sort_order)",
       )
       .eq("user_id", userId)
       .order("created_at", { ascending: false }),
@@ -98,6 +98,9 @@ export async function getContributions(userId: string): Promise<{
     ...row,
     author: Array.isArray(row.author) ? row.author[0] : row.author,
     place: Array.isArray(row.place) ? row.place[0] : row.place,
+    photos: (Array.isArray(row.photos) ? row.photos : [])
+      .sort((a: any, b: any) => (a.sort_order ?? 0) - (b.sort_order ?? 0))
+      .map((photo: any) => photo.image_url),
   })) as Review[];
 
   return { places, posts, reviews };

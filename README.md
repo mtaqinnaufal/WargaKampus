@@ -72,11 +72,13 @@ src/app/
 src/lib/
   data/                    query Supabase + fallback demo
   supabase/                client, server, middleware
+  storage-client.ts        unggah gambar ke Supabase Storage
   mock-data.ts             data demo
   seed-places.json         26 tempat dari OpenStreetMap
 supabase/
   schema.sql               tabel, RLS, trigger, storage
   seed.sql                 kampus, kategori, tempat
+  migrations/              migrasi untuk project Supabase yang sudah ada
 scripts/
   seed-demo.mjs            akun dan konten demo
 ```
@@ -87,6 +89,7 @@ scripts/
 - Peta Leaflet dengan pin, filter kategori, harga, jarak, dan fasilitas.
 - Detail tempat: rating, ulasan, fasilitas, jam buka, jarak, tombol arah, simpan, laporan.
 - Media usaha: banner, pricelist, dan galeri foto; bisa diunggah dari form tempat atau halaman detail oleh pemilik usaha/admin.
+- Unggah foto langsung ke Supabase Storage: media tempat (banner, pricelist, galeri), foto postingan, foto ulasan, dan avatar profil.
 - Tambah tempat dengan pin drop dan status menunggu verifikasi.
 - Linimasa: kartu postingan, tag tempat, foto, like, komentar, simpan.
 - Pencarian dan filter di peta.
@@ -118,16 +121,15 @@ Tombol **Login Cepat Akun Demo** ada di `/masuk`, di bawah form login, dan membu
 
 ## Batasan
 
-- Unggah foto langsung ke Supabase Storage belum diimplementasikan; form memakai URL foto.
-- Notifikasi, badge, klaim usaha, follow, PWA, pesan langsung, dan multi-kota belum masuk UI. Tabelnya sudah ada di schema untuk tahap berikutnya.
+- Unggah foto berjalan langsung dari browser ke Supabase Storage untuk media tempat, foto postingan, foto ulasan, dan avatar. Bila unggahan berhasil tetapi penyimpanan baris gagal, berkas bisa tertinggal di bucket dan perlu dibersihkan manual.
+- Notifikasi, badge, klaim usaha, follow, PWA, pesan langsung, dan multi-kota belum diimplementasikan; tabel pendukung (notifications, business_claims, follows) belum disertakan di skema.
 - Deployment Vercel tersedia; pastikan environment variables dan commit terbaru sudah di-deploy.
 - Data OpenStreetMap tidak lengkap untuk semua kategori. Beberapa tempat mungkin belum punya harga atau jam buka terverifikasi.
 
 ## Langkah berikutnya
 
 1. Buat project Supabase dan isi `.env.local`.
-2. Jalankan `schema.sql`, `seed.sql`, dan `npm run seed:demo`.
+2. Jalankan `schema.sql`, `seed.sql`, dan `npm run seed:demo`. Untuk project yang sudah ada, jalankan migrasi di `supabase/migrations/`.
 3. Buat admin pertama lewat Authentication lalu update role.
-4. Uji alur: daftar, cari tempat, simpan, tulis ulasan, buat postingan, verifikasi tempat.
-5. Tambahkan upload foto ke Supabase Storage.
-6. Deploy ke Vercel dan atur environment variables.
+4. Uji alur: daftar, cari tempat, simpan, tulis ulasan, buat postingan, unggah foto, verifikasi tempat.
+5. Deploy ke Vercel dan atur environment variables.

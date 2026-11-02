@@ -16,7 +16,6 @@ export async function updateProfileAction(
     name: safeString(formData.get("name")),
     bio: safeString(formData.get("bio")),
     campus_id: safeString(formData.get("campus_id")) || undefined,
-    avatar_url: safeString(formData.get("avatar_url")),
   });
 
   if (!parsed.success) {
@@ -43,7 +42,6 @@ export async function updateProfileAction(
       name: parsed.data.name,
       bio: parsed.data.bio || null,
       campus_id: parsed.data.campus_id || profile.campus_id,
-      avatar_url: parsed.data.avatar_url || null,
     })
     .eq("id", profile.id);
 

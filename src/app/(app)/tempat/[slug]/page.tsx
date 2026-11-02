@@ -293,6 +293,27 @@ export default async function PlacePage({
                             {review.body}
                           </p>
                         ) : null}
+                        {review.photos.length > 0 ? (
+                          <div className="mt-3 grid grid-cols-3 gap-2">
+                            {review.photos.map((photo, index) => (
+                              <a
+                                key={photo}
+                                href={photo}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="relative aspect-square overflow-hidden rounded-lg border border-line bg-paper-deep"
+                              >
+                                <Image
+                                  src={photo}
+                                  alt={`Foto ulasan ${review.author.name} ${index + 1}`}
+                                  fill
+                                  sizes="120px"
+                                  className="object-cover"
+                                />
+                              </a>
+                            ))}
+                          </div>
+                        ) : null}
                       </div>
                     </div>
                   </article>

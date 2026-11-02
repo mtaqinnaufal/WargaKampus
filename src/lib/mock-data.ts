@@ -194,6 +194,7 @@ export const MOCK_REVIEWS: Review[] = reviewSeed.map(([placeSlug, name, rating, 
   visited_at: daysAgo(days + 1),
   created_at: daysAgo(days),
   author: author(name),
+  photos: [],
 }));
 
 function reviewsFor(placeSlug: string) {

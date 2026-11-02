@@ -20,7 +20,6 @@ export async function createPostAction(
     category: safeString(formData.get("category")),
     place_id: safeString(formData.get("place_id")) || undefined,
     visibility: "public",
-    photo_url: safeString(formData.get("photo_url")),
   });
 
   if (!parsed.success) {
@@ -52,17 +51,9 @@ export async function createPostAction(
 
   if (error) return { ok: false, message: error.message };
 
-  if (parsed.data.photo_url) {
-    await supabase.from("post_photos").insert({
-      post_id: post.id,
-      image_url: parsed.data.photo_url,
-      sort_order: 0,
-    });
-  }
-
   revalidatePath("/linimasa");
   revalidatePath("/");
-  return { ok: true, message: "Postingan dibuat." };
+  return { ok: true, message: "Postingan dibuat.", data: { postId: post.id } };
 }
 
 export async function toggleLikeAction(postId: string, like: boolean): Promise<ActionResult> {

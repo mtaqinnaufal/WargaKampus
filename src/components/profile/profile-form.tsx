@@ -1,11 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
+import type { ChangeEvent } from "react";
 import { updateProfileAction } from "@/app/actions/profile";
+import { Avatar } from "@/components/ui/avatar";
 import { FormMessage } from "@/components/ui/form-message";
 import { FieldHint, FieldLabel, Input, Select, Textarea } from "@/components/ui/input";
 import { SubmitButton } from "@/components/ui/submit-button";
+import { uploadAvatar } from "@/lib/storage-client";
 import type { Campus, Profile } from "@/lib/types";
 
 export function ProfileForm({
@@ -21,9 +24,40 @@ export function ProfileForm({
 }) {
   const router = useRouter();
   const [state, formAction] = useActionState(updateProfileAction, null);
+  const avatarFileRef = useRef<File | null>(null);
+  const handledRef = useRef(false);
+  const [uploading, setUploading] = useState(false);
+  const [fileName, setFileName] = useState<string | null>(null);
+
+  function handleAvatarChange(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    const hasFile = Boolean(file && file.size > 0);
+    avatarFileRef.current = hasFile ? (file as File) : null;
+    setFileName(hasFile && file ? file.name : null);
+  }
 
   useEffect(() => {
-    if (state?.ok) router.refresh();
+    if (!state?.ok || handledRef.current) return;
+    handledRef.current = true;
+
+    const file = avatarFileRef.current;
+    const finish = () => {
+      handledRef.current = false;
+      avatarFileRef.current = null;
+      setFileName(null);
+      setUploading(false);
+      router.refresh();
+    };
+
+    if (!file) {
+      finish();
+      return;
+    }
+
+    setUploading(true);
+    uploadAvatar(file)
+      .catch(() => undefined)
+      .finally(finish);
   }, [state, router]);
 
   return (
@@ -77,16 +111,23 @@ export function ProfileForm({
 
       <div>
         <FieldLabel htmlFor="profile-avatar" hint="opsional">
-          URL avatar
+          Foto profil
         </FieldLabel>
-        <Input
-          id="profile-avatar"
-          name="avatar_url"
-          type="url"
-          defaultValue={profile.avatar_url ?? ""}
-          placeholder="https://..."
-        />
-        <FieldHint>Unggah langsung ke Supabase Storage bisa ditambahkan setelah kredensial aktif.</FieldHint>
+        <div className="mt-2 flex items-center gap-3">
+          <Avatar name={profile.name} src={profile.avatar_url} size="lg" decorative />
+          <input
+            id="profile-avatar"
+            type="file"
+            accept="image/*"
+            onChange={handleAvatarChange}
+            className="block w-full cursor-pointer text-xs text-muted file:mr-3 file:rounded-sm file:border-0 file:bg-paper-deep file:px-3 file:py-2 file:text-xs file:font-medium file:text-ink"
+          />
+        </div>
+        <FieldHint>
+          {fileName
+            ? `Gambar baru: ${fileName}. Simpan untuk mengganti foto profil.`
+            : "JPG, PNG, WebP, atau GIF. Maksimal 5 MB."}
+        </FieldHint>
       </div>
 
       {isDemo ? (
@@ -98,7 +139,7 @@ export function ProfileForm({
       <FormMessage message={state?.message} ok={state?.ok} />
 
       <SubmitButton pendingLabel="Menyimpan..." className="w-full">
-        Simpan profil
+        {uploading ? "Mengunggah foto..." : "Simpan profil"}
       </SubmitButton>
     </form>
   );

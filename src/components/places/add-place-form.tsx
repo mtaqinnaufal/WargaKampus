@@ -3,11 +3,11 @@
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useRef, useState } from "react";
-import type { FormEvent } from "react";
+import type { ChangeEvent } from "react";
 import { CheckCircle2, ImagePlus, Info } from "lucide-react";
 import { createPlaceAction } from "@/app/actions/places";
-import { uploadPlaceMediaClient } from "@/lib/place-media-client";
-import type { PlaceMediaFiles } from "@/lib/place-media-client";
+import { uploadPlaceMedia } from "@/lib/storage-client";
+import type { PlaceMediaFiles } from "@/lib/storage-client";
 import { FormMessage } from "@/components/ui/form-message";
 import { FieldHint, FieldLabel, Input, Select, Textarea } from "@/components/ui/input";
 import { SubmitButton } from "@/components/ui/submit-button";
@@ -45,18 +45,20 @@ export function AddPlaceForm({
     longitude: CAMPUS_CENTER.longitude,
   });
 
-  function captureMediaFiles(event: FormEvent<HTMLFormElement>) {
-    const data = new FormData(event.currentTarget);
-    const bannerValue = data.get("banner");
-    const pricelistValue = data.get("pricelist");
-    mediaFilesRef.current = {
-      banner: bannerValue instanceof File && bannerValue.size > 0 ? bannerValue : null,
-      pricelist:
-        pricelistValue instanceof File && pricelistValue.size > 0 ? pricelistValue : null,
-      photos: data
-        .getAll("photos")
-        .filter((value): value is File => value instanceof File && value.size > 0),
-    };
+  function handleBannerChange(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    mediaFilesRef.current.banner = file && file.size > 0 ? file : null;
+  }
+
+  function handlePricelistChange(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    mediaFilesRef.current.pricelist = file && file.size > 0 ? file : null;
+  }
+
+  function handlePhotosChange(event: ChangeEvent<HTMLInputElement>) {
+    mediaFilesRef.current.photos = Array.from(event.target.files ?? []).filter(
+      (file) => file.size > 0,
+    );
   }
 
   useEffect(() => {
@@ -73,7 +75,7 @@ export function AddPlaceForm({
     }
 
     setMediaPending(true);
-    uploadPlaceMediaClient(state.placeId, files)
+    uploadPlaceMedia(state.placeId, files)
       .then(() => router.push(`/tempat/${state.slug}?media=ok`))
       .catch(() => router.push(`/tempat/${state.slug}?media=error`));
   }, [state, router]);
@@ -81,8 +83,6 @@ export function AddPlaceForm({
   return (
     <form
       action={formAction}
-      onSubmit={captureMediaFiles}
-      encType="multipart/form-data"
       className="grid gap-8 lg:grid-cols-[1fr_0.9fr]"
     >
       <input type="hidden" name="latitude" value={coordinates.latitude} />
@@ -206,9 +206,9 @@ export function AddPlaceForm({
                 Banner usaha
                 <input
                   id="place-banner"
-                  name="banner"
                   type="file"
                   accept="image/*"
+                  onChange={handleBannerChange}
                   className="mt-2 block w-full cursor-pointer text-xs text-muted file:mr-3 file:rounded-sm file:border-0 file:bg-paper-deep file:px-3 file:py-2 file:text-xs file:font-medium file:text-ink"
                 />
               </label>
@@ -216,9 +216,9 @@ export function AddPlaceForm({
                 Gambar pricelist
                 <input
                   id="place-pricelist"
-                  name="pricelist"
                   type="file"
                   accept="image/*"
+                  onChange={handlePricelistChange}
                   className="mt-2 block w-full cursor-pointer text-xs text-muted file:mr-3 file:rounded-sm file:border-0 file:bg-paper-deep file:px-3 file:py-2 file:text-xs file:font-medium file:text-ink"
                 />
               </label>
@@ -226,10 +226,10 @@ export function AddPlaceForm({
                 Foto usaha
                 <input
                   id="place-photos"
-                  name="photos"
                   type="file"
                   accept="image/*"
                   multiple
+                  onChange={handlePhotosChange}
                   className="mt-2 block w-full cursor-pointer text-xs text-muted file:mr-3 file:rounded-sm file:border-0 file:bg-paper-deep file:px-3 file:py-2 file:text-xs file:font-medium file:text-ink"
                 />
                 <span className="mt-1 block text-[10px] text-muted">Bisa pilih beberapa foto.</span>

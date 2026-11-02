@@ -66,11 +66,11 @@ supabase/schema.sql
 
 Schema membuat:
 
-- 19 tabel: profiles, campuses, places, reviews, posts, comments, likes, saves, reports, audit logs, dan lainnya.
+- 14 tabel: campuses, profiles, place_categories, places, place_photos, place_reviews, place_review_photos, posts, post_photos, comments, post_likes, saves, reports, audit_logs.
 - RLS untuk setiap tabel.
 - Trigger profil otomatis saat user mendaftar.
 - Trigger hitung like, komentar, dan rating tempat.
-- Bucket storage `place-photos`, `post-photos`, dan `avatars`.
+- Bucket storage `place-photos`, `post-photos`, `review-photos`, dan `avatars`.
 
 Setelah schema selesai, jalankan:
 
@@ -144,6 +144,17 @@ supabase/migrations/20261021_public_posts.sql
 
 Migrasi ini membuat semua postingan berstatus `published` bisa dibaca tanpa login. Like, komentar, simpan, lapor, dan membuat postingan tetap memerlukan login.
 
+## Migrasi terbaru (unggah foto & pembersihan tabel)
+
+Jika project Supabase sudah dibuat sebelum perubahan ini, jalankan juga file berikut di SQL Editor:
+
+```
+supabase/migrations/20261102_add_review_photos.sql
+supabase/migrations/20261102_drop_unused_tables.sql
+```
+
+`20261102_add_review_photos.sql` menambah tabel `place_review_photos` dan bucket `review-photos`. `20261102_drop_unused_tables.sql` menghapus tabel yang tidak dipakai aplikasi: `place_updates`, `tags`, `post_tags`, `follows`, `notifications`, dan `business_claims`.
+
 ## Catatan keamanan
 
 - RLS aktif di semua tabel. Pengguna biasa hanya bisa menulis data miliknya sendiri.
@@ -170,9 +181,9 @@ Pastikan trigger `place_reviews_sync_rating` ada. Jalankan ulang bagian trigger 
 
 Cek `status = 'published'`. Setelah migrasi `20261021_public_posts.sql`, semua postingan published bisa dibaca publik. Kalau masih tidak muncul, cek policy `posts_read` dan jalankan `notify pgrst, 'reload schema';`.
 
-**Upload foto belum jalan**
+**Upload foto gagal**
 
-MVP memakai URL foto. Bucket storage sudah dibuat, tetapi form unggah langsung belum diimplementasikan. Tambahkan upload ke `place-photos` atau `post-photos` dengan folder `auth.uid()`.
+Pastikan bucket `place-photos`, `post-photos`, `review-photos`, dan `avatars` ada serta policy `wargakampus_authenticated_upload` aktif. Unggahan berjalan langsung dari browser ke Supabase Storage: pengguna harus login, dan berkas disimpan di folder `auth.uid()`. Ukuran maksimal 5 MB per gambar (JPG, PNG, WebP, atau GIF).
 
 **Data OpenStreetMap perlu diperbarui**
 

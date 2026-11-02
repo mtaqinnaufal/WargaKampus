@@ -122,15 +122,19 @@ export async function reviewAction(
   }
 
   const supabase = await createClient();
-  const { error } = await supabase.from("place_reviews").upsert(
-    {
-      place_id: parsed.data.place_id,
-      user_id: profile.id,
-      rating: parsed.data.rating,
-      body: parsed.data.body || null,
-    },
-    { onConflict: "place_id,user_id" },
-  );
+  const { data: review, error } = await supabase
+    .from("place_reviews")
+    .upsert(
+      {
+        place_id: parsed.data.place_id,
+        user_id: profile.id,
+        rating: parsed.data.rating,
+        body: parsed.data.body || null,
+      },
+      { onConflict: "place_id,user_id" },
+    )
+    .select("id")
+    .single();
 
   if (error) {
     return { ok: false, message: error.message };
@@ -138,7 +142,7 @@ export async function reviewAction(
 
   if (slug) revalidatePath(`/tempat/${slug}`);
   revalidatePath("/jelajah");
-  return { ok: true, message: "Ulasan disimpan." };
+  return { ok: true, message: "Ulasan disimpan.", data: { reviewId: review.id } };
 }
 
 export async function savePlaceAction(placeId: string, shouldSave: boolean): Promise<ActionResult> {
