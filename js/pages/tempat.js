@@ -87,7 +87,10 @@ function reviewHtml(review) {
 }
 
 async function init() {
-  const slug = new URLSearchParams(window.location.search).get("slug");
+  const pathMatch = window.location.pathname.match(/\/tempat\/([^/]+)\/?$/);
+  const slug =
+    (pathMatch ? decodeURIComponent(pathMatch[1]) : null) ||
+    new URLSearchParams(window.location.search).get("slug");
   const { current } = await initPage();
 
   if (!slug) {
