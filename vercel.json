@@ -1,0 +1,17 @@
+{
+  "rewrites": [
+    { "source": "/jelajah", "destination": "/jelajah/index.html" },
+    { "source": "/linimasa", "destination": "/linimasa/index.html" },
+    { "source": "/simpan", "destination": "/simpan/index.html" },
+    { "source": "/profil", "destination": "/profil/index.html" },
+    { "source": "/admin", "destination": "/admin/index.html" },
+    { "source": "/masuk", "destination": "/masuk/index.html" },
+    { "source": "/daftar", "destination": "/daftar/index.html" },
+    { "source": "/setup", "destination": "/setup/index.html" },
+    { "source": "/tempat", "destination": "/tempat/index.html" },
+    { "source": "/tempat/baru", "destination": "/tempat/baru/index.html" },
+    { "source": "/tempat/:slug", "destination": "/tempat/index.html?slug=:slug" },
+    { "source": "/auth/callback", "destination": "/auth/callback/index.html" },
+    { "source": "/auth/signout", "destination": "/auth/signout/index.html" }
+  ]
+}

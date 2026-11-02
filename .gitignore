@@ -1,58 +1,22 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# --- Dependencies ---
+node_modules/
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
+# --- Kredensial rahasia (JANGAN di-commit) ---
+# Catatan: js/config.local.js SENGAJA di-commit untuk deploy statis.
+# Isinya hanya publishable/anon key yang memang PUBLIK (dilindungi RLS).
+# Jangan pernah menaruh SUPABASE_SECRET_KEY / service_role di sana.
+.env
+.env.*
 
-# testing
-/coverage
-
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-
-# env files (can opt-in for committing if needed)
-.env*
-!.env.local.example
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
-
-# local design reference kit (not required to run the app)
-/tokens/
-/taste/
-/design-systems/
-/frameworks/
-/accessibility/
-/components/
-/content/
-
-# editor and OS
-.vscode/
-.idea/
+# --- Cache & log ---
+.cache/
 *.log
+npm-debug.log*
+
+# --- OS / editor ---
+.DS_Store
 Thumbs.db
-desktop.ini
+.idea/
+.vscode/
+
+# Catatan: css/styles.css SENGAJA di-commit agar situs jalan tanpa build.

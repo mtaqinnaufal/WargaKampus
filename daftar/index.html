@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Daftar | WargaKampus</title>
+    <meta name="description" content="Buat akun WargaKampus untuk berbagi info tempat di sekitar kampus." />
+    <link rel="icon" href="/assets/icon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div class="grid min-h-dvh bg-paper lg:grid-cols-[1.05fr_0.95fr]">
+      <aside aria-label="Tentang WargaKampus" class="relative hidden overflow-hidden bg-ink p-10 text-surface lg:flex lg:flex-col lg:justify-between">
+        <div class="grid-paper absolute inset-0 opacity-[0.1]" aria-hidden="true"></div>
+        <div class="relative">
+          <span data-brand="light"></span>
+          <h1 class="mt-16 max-w-[12ch] font-display text-5xl font-bold leading-[0.94] tracking-[-0.05em]">Tempat yang masuk akal, dari mahasiswa.</h1>
+          <p class="mt-6 max-w-[44ch] text-sm leading-relaxed text-surface/70">WargaKampus mengumpulkan info makan, nugas, nongkrong, laundry, dan kebutuhan harian di sekitar kampus.</p>
+        </div>
+        <div class="relative">
+          <ul class="space-y-3 border-t border-surface/20 pt-5 text-sm text-surface/70">
+            <li>Data awal dari OpenStreetMap, dirawat komunitas.</li>
+            <li>Setiap tempat baru dicek admin sebelum tampil.</li>
+            <li>Fokus di sekitar ITPLN, Jakarta Barat.</li>
+          </ul>
+          <p class="mt-6 font-mono text-[10px] text-surface/70">© OpenStreetMap contributors, ODbL</p>
+        </div>
+      </aside>
+      <main class="flex min-h-dvh flex-col">
+        <div class="flex items-center justify-between border-b border-line px-5 py-4 lg:hidden">
+          <span data-brand="dark"></span>
+          <a href="/" class="text-sm font-medium text-muted">Beranda</a>
+        </div>
+        <div class="flex flex-1 items-center justify-center px-5 py-10 sm:px-8">
+          <div class="w-full max-w-md">
+            <p class="font-mono text-[11px] text-muted">Akun komunitas</p>
+            <h1 class="mt-2 font-display text-4xl font-bold leading-tight">Daftar WargaKampus.</h1>
+            <p class="mt-3 text-sm leading-relaxed text-muted">Pakai nama yang kamu nyaman dilihat orang lain. Email hanya dipakai untuk akun.</p>
+            <div id="auth-form" class="mt-7"></div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script src="/vendor/supabase/supabase.js"></script>
+    <script src="/vendor/lucide/lucide.js"></script>
+    <script type="module" src="/js/pages/daftar.js"></script>
+  </body>
+</html>

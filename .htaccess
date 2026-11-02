@@ -1,0 +1,39 @@
+# WargaKampus static — Apache routing (no PHP).
+# Serves pretty URLs like /jelajah and /tempat/<slug> from static files.
+
+Options -MultiViews
+DirectoryIndex index.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # If the app lives in a subfolder, set the base, e.g. /wargakampus-static/
+  # RewriteBase /wargakampus-static/
+
+  # Top-level routes -> folder index.html (no trailing slash required)
+  RewriteRule ^jelajah/?$ jelajah/index.html [L]
+  RewriteRule ^linimasa/?$ linimasa/index.html [L]
+  RewriteRule ^simpan/?$ simpan/index.html [L]
+  RewriteRule ^profil/?$ profil/index.html [L]
+  RewriteRule ^admin/?$ admin/index.html [L]
+  RewriteRule ^masuk/?$ masuk/index.html [L]
+  RewriteRule ^daftar/?$ daftar/index.html [L]
+  RewriteRule ^setup/?$ setup/index.html [L]
+
+  # Place detail: /tempat/<slug> -> tempat/index.html?slug=<slug>
+  # Keep this AFTER the more specific /tempat/baru rule.
+  RewriteRule ^tempat/baru/?$ tempat/baru/index.html [L]
+  RewriteRule ^tempat/?$ tempat/index.html [L]
+  RewriteRule ^tempat/([^/]+)/?$ tempat/index.html?slug=$1 [L,QSA]
+
+  # Auth callback / sign out pages
+  RewriteRule ^auth/callback/?$ auth/callback/index.html [L]
+  RewriteRule ^auth/signout/?$ auth/signout/index.html [L]
+
+  # Existing files and directories win
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+</IfModule>
+
+ErrorDocument 404 /404.html
